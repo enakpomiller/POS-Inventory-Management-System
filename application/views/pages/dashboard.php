@@ -1,5 +1,18 @@
 
 
+   <!-- jQuery (required by Toastr) -->
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            <?php if ($this->session->flashdata('toastr')){ ?>
+                toastr.<?php echo $this->session->flashdata('toastr')['type']; ?>('<?php echo $this->session->flashdata('toastr')['message']; ?>');
+            <?php }else{?>
+                toastr.<?php echo $this->session->flashdata('toastr')['type']; ?>('<?php echo $this->session->flashdata('toastr')['message']; ?>');
+             <?php } ?>
+        });
+    </script>
 
     <!-- begin app-main -->
     <div class="app-main" id="main">
@@ -11,7 +24,18 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                         <div class="page-title mb-2 mb-sm-0">
-                            <h1>Dating</h1>
+                            <h1> Dashboard </h1>
+                            <h5>
+                                 <?php
+                                  $timer = DATE('H');
+                                  if($timer > 12){
+                                     echo " good evening ";
+                                   }
+
+                                    date_default_timezone_set('Africa/Lagos');
+                                    echo date('Y-m-d H:i:s'); 
+                                 ?>
+                                 </h5> 
                         </div>
                         <div class="ml-auto d-flex align-items-center">
                             <nav>

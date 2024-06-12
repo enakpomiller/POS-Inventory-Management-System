@@ -19,17 +19,52 @@ class Login extends CI_Controller {
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
 
-   public function __construct(){
-
-     parent:: __construct();
+	public function __construct(){
+		parent::__construct();
      $this->load->helper(array('form','url','text'));
      $this->load->library(array('form_validation','session'));
-	 $this->load->db->database();
+	//  $this->load->model(array('login'));
+	 $this->load->database();
+	 $this->load->model('login_m');
+	 
    }
 
 	public function index()
 	{
       $this->load->view('admin_login/login');
+	}
+
+	public function processlogin(){
+			$username   = $this->input->post('username');
+			$password   = $this->myhash($this->input->post('password'));
+			$AdminExist = $this->login_m->checkuserlogin($username,$password);
+			if($AdminExist){
+				echo  true; 
+				$admin_arr = [
+					'adminID'   => $AdminExist->adminID,
+					'username'  => $AdminExist->username,
+					'role'		=> $AdminExist->role,
+					'logged_in' => TRUE
+				];
+				$this->session->set_userdata($admin_arr);
+				$this->session->set_flashdata('toastr', ['type' => 'success','message' => 'Welcome '.$username ]);
+			}else{
+				echo false; 
+			}
+
+	}
+    
+	public function signout(){
+		$this->session->unset_userdata('adminID');
+		$this->session->unset_userdata('username');
+		$this->session->sess_destroy();
+		 redirect(base_url('login'));
+	 }
+	
+   public function myhash($string){
+	  return   hash("sha512", $string . config_item("encryption_key"));
+	  
+	 
 	}
 
 

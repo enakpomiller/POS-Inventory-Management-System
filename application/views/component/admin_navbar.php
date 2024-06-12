@@ -4,13 +4,15 @@
     <!-- begin app-nabar -->
     <aside class="app-navbar">
         <!-- begin sidebar-nav -->
+   
         <div class="sidebar-nav scrollbar scroll_ligh bg-infot">
+        
             <ul class="metismenu " id="sidebarNav">
-                <li class="nav-static-title">Personal</li>
+                <a class="text-light" href="<?=base_url('dashboard')?>"><center> Dashboard </center> </a>
                 <li class="active">
-                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                    <a class="has-arrow" href="" aria-expanded="false">
                         <i class="nav-icon ti ti-rocket"></i>
-                        <span class="nav-title">Dashboard</span>
+                        <span class="nav-title"> Menu Options</span>
                         <span class="nav-label label label-danger">9</span>
                     </a>
                     <ul aria-expanded="false">
@@ -36,7 +38,7 @@
                 </li> -->
 
 
-                <li><a href="mail-inbox.html" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title">Mail</span></a> </li>
+                <li><a href="<?=base_url('users/create_manager')?>" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title"> Create Manager</span></a> </li>
               <!--                 
                 <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="nav-icon ti ti-bag"></i> <span class="nav-title">UI Kit</span></a>

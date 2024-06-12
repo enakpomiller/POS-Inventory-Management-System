@@ -400,20 +400,28 @@
                                     </div>
                                 </div>
                             </li>
+
                             <li class="nav-item dropdown user-profile">
-                                <a href="javascript:void(0)" class="nav-link dropdown-toggle " id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="assets/img/avtar/02.jpg" alt="avtar-img">
-                                    <span class="bg-success user-status"></span>
-                                </a>
+                              <?php if($this->session->logged_in){ ?>
+                                    <a href="javascript:void(0)" class="nav-link dropdown-toggle " id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="<?=base_url()?>assets/img/avtar/02.jpg" alt="avtar-img">
+                                        <span class="bg-success user-status"></span>
+                                    </a>
+                              <?php }?>
+                             
                                 <div class="dropdown-menu animated fadeIn" aria-labelledby="navbarDropdown">
                                     <div class="bg-gradient px-4 py-3">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="mr-1">
-                                                <h4 class="text-white mb-0">Alice Williams</h4>
+                                                <h4 class="text-white mb-0"> 
+                                                    <?php if($this->session->logged_in){ ?>
+                                                         <?=$this->session->role?>
+                                                    <?php }?>
+                                                </h4>
                                                 <small class="text-white">Henry@example.com</small>
                                             </div>
-                                            <a href="#" class="text-white font-20 tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout"> <i
-                                                            class="zmdi zmdi-power"></i></a>
+                                            <a href="#" class="text-white font-20 tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout"> 
+                                                <i class="zmdi zmdi-power"></i></a>
                                         </div>
                                     </div>
                                     <div class="p-4">
@@ -430,9 +438,10 @@
                                             <i class="fa fa-compass pr-2 text-warning"></i> Need help?</a>
                                         <div class="row mt-2">
                                             <div class="col">
-                                                <a class="bg-light p-3 text-center d-block" href="#">
-                                                    <i class="fe fe-mail font-20 text-primary"></i>
-                                                    <span class="d-block font-13 mt-2">My messages</span>
+                                                <a class="bg-light p-3 text-center d-block" href="<?=base_url('login/signout')?>" onclick="return confirm(' Do you wish to signout?')">
+                                                    <i class="fe fe-home font-20 text-primary"></i>
+                                                    <span class="d-block font-13 mt-2">Sign out </span>
+                                                    
                                                 </a>
                                             </div>
                                             <div class="col">
