@@ -24,18 +24,38 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                         <div class="page-title mb-2 mb-sm-0">
-                            <h4> <?=$title?></h4>
-                            <h5>
-                                 <?php
-                                  $timer = DATE('H');
-                                  if($timer > 12){
-                                     echo " good evening ";
-                                   }
+                             
+                        <h4> <?=$title?>  </h4>
 
-                                    date_default_timezone_set('Africa/Lagos');
-                                    echo date('Y-m-d H:i:s'); 
+                             <nav>
+                                <ol class="breadcrumb p-0 m-b-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="<?=base_url('/')?>"><i class="ti ti-timer"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                       <?php 
+                                          date_default_timezone_set('Africa/Lagos');
+                                          $timer =  date('H'); 
+                                          echo date('Y-m-d H:i:s');
+                                        ?>
+                                    </li>
+                                    <li class="breadcrumb-item active text-primary" aria-current="page">
+                                 <?php
+                                    if($timer ==00){
+                                        echo " Good Morning ".$this->session->username;
+                                      }elseif($timer <= 11){
+                                        echo " Good Morning ".(ucfirst($this->session->username));
+                                      }elseif($timer == 12 || $tminer ==13 || $timer ==14 || $timer == 15 || $timer == 16 || $timer == 17){
+                                        echo " Good Afternoon".$this->session->username;
+                                      }else{
+                                        echo " Good Evening ".$this->session->username;
+                                     }
                                  ?>
-                                 </h5> 
+                                        </li>
+                                </ol>
+                            </nav>
+
+                           
                         </div>
 
                         <div class="ml-auto d-flex align-items-center">

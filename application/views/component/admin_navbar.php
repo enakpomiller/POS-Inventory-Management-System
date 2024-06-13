@@ -37,8 +37,11 @@
                     </ul>
                 </li> -->
 
+            
+               <li> <a href="<?=base_url('users/create_manager')?>" class="nav-link<?=$this->uri->segment(2)=='create_manager'?'active':''?>" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title"> Create Manager</span></a> </li> 
+             
 
-                <li><a href="<?=base_url('users/create_manager')?>" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title"> Create Manager</span></a> </li>
+
               <!--                 
                 <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="nav-icon ti ti-bag"></i> <span class="nav-title">UI Kit</span></a>

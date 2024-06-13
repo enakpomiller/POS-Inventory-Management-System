@@ -27,6 +27,10 @@ class Users extends CI_Controller {
       //$this->load->model('users_m');
 	 $this->load->database();
 
+     if(!isset($this->session->logged_in)){
+       return redirect(base_url('login'));
+     }
+
    }
 
 	public function index()
