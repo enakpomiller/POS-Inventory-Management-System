@@ -23,8 +23,9 @@ class Users extends CI_Controller {
 
      parent:: __construct();
      $this->load->helper(array('form','url','text'));
-     $this->load->library(array('form_validation','session'));
-      //$this->load->model('users_m');
+     $this->load->library('form_validation');
+	 $this->load->library('session');
+     $this->load->model('users_m');
 	 $this->load->database();
 
      if(!isset($this->session->logged_in)){
@@ -40,10 +41,145 @@ class Users extends CI_Controller {
 	}
 
     public function create_manager(){
-      $this->data['title'] = " Create Managers Role";
-      $this->data['page_name'] = "create_manager";
-      $this->load->view('admin_index',$this->data);;
+		$this->data['title'] = " Create User Account ";
+		$this->data['page_name'] = "create_manager";
+		$this->load->view('admin_index',$this->data);;
+      
     }
 
+	public function assign_role(){
+	    $this->data['title'] = " Assign Roles to Users";
+		$this->data['getroles'] = $this->users_m->getallroles();
+		$this->data['page_name'] = "assign_role";
+		$this->load->view('admin_index',$this->data);
+	}
+
+
+   public function process_manager(){
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		  $rules = $this->manager_rules();
+			$this->form_validation->set_rules($rules);
+			if($this->form_validation->run() == TRUE){
+			  $usercheck = $_POST['username']; 
+			  $UserExist = $this->users_m->CheckUserExist($usercheck);
+		       if($UserExist || $_POST['password'] != $_POST['confpass']){
+			     echo '400';
+			   }else{
+				 echo true;
+					$data_input = [
+						'fname'  =>  $this->input->post('fname'),
+						'lname'  =>  $this->input->post('lname'),
+						'phone'  =>  $this->input->post('phone'),
+						'username'=> $this->input->post('username'),
+						'password'=> $this->myhash($this->input->post('password')),
+						'date_created' => date('y-m-d H:i:sa')
+					];
+					$getlastID = $this->users_m->createusers($data_input);
+					 
+					  $setdata_arr = [
+						  'userID'  => $getlastID,
+						  'fname'  => $this->input->post('fname'),
+						  'lname'  => $this->input->post('lname')
+
+					  ];
+					  $this->session->set_userdata($setdata_arr);
+				
+			     }
+			
+			}else{ 
+				$this->data['title'] = " Create Managers Account ";
+				$this->data['page_name'] = "create_manager";
+				$this->load->view('admin_index',$this->data);;
+			}
+			}else{
+			 return redirect(base_url('users/create_manager'));
+		}
+
+
+
+
+    }
+
+
+
+	public function manager_rules() {
+		$rules = array(
+			array(
+				'label' => 'First Name',
+				'field' => 'fname',
+				'rules' => 'trim|required'
+			),
+			array(
+				'label' => 'Last Name',
+				'field' => 'lname',
+				'rules' => 'trim|required'
+			),
+			array(
+				'label' => 'Phone Number',
+				'field' => 'phone',
+				'rules' => 'trim|required'
+			),
+			array(
+				'label' => 'Username',
+				'field' => 'username',
+				'rules' => 'trim|required'
+			),
+			array(
+				'label' => 'Password',
+				'field' => 'password',
+				'rules' => 'trim|required'
+			),
+			array(
+				'label' => 'Confirm Password',
+				'field' => 'confpass',
+				'rules' => 'trim|required'
+			)
+		);
+		return $rules;
+	}
+
+
+	// public function manager_rules() {
+	// 	$rules = array(
+	// 		array(
+	// 			'label' => 'First Name',
+	// 			'field' => 'fname',
+	// 			'rules' => 'trim|required|min_length[3]|max_length[50]'
+	// 		),
+	// 		array(
+	// 			'label' => 'Last Name',
+	// 			'field' => 'lname',
+	// 			'rules' => 'trim|required|min_length[3]|max_length[50]'
+	// 		),
+	// 		array(
+	// 			'label' => 'Phone Number',
+	// 			'field' => 'phone',
+	// 			'rules' => 'trim|required|min_length[10]|max_length[15]'
+	// 		),
+	// 		array(
+	// 			'label' => 'Username',
+	// 			'field' => 'username',
+	// 			'rules' => 'trim|required|min_length[3]|max_length[20]'
+	// 		),
+	// 		array(
+	// 			'label' => 'Password',
+	// 			'field' => 'password',
+	// 			'rules' => 'trim|required|min_length[6]'
+	// 		),
+	// 		array(
+	// 			'label' => 'Confirm Password',
+	// 			'field' => 'confpass',
+	// 			'rules' => 'trim|required|matches[password]|min_length[6]'
+	// 		)
+	// 	);
+	// 	return $rules;
+	// }
+	
+		
+	
+ public function myhash($string){
+    return hash("sha512", $string . config_item("encryption_key"));
+ }
 
 }

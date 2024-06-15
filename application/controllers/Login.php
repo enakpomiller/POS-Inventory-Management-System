@@ -44,6 +44,8 @@ class Login extends CI_Controller {
 					'adminID'   => $AdminExist->adminID,
 					'username'  => $AdminExist->username,
 					'role'		=> $AdminExist->role,
+					'title'		=> $AdminExist->title,
+					'firstname'		=> $AdminExist->firstname,
 					'logged_in' => TRUE
 				];
 				$this->session->set_userdata($admin_arr);

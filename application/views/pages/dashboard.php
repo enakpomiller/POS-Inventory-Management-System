@@ -25,17 +25,32 @@
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                         <div class="page-title mb-2 mb-sm-0">
                             <h1> Dashboard </h1>
-                            <h5>
-                                 <?php
-                                  $timer = DATE('H');
-                                  if($timer > 12){
-                                     echo " good evening ";
-                                   }
 
-                                    date_default_timezone_set('Africa/Lagos');
-                                    echo date('Y-m-d H:i:s'); 
+                            <ol class="breadcrumb p-0 m-b-0 pt-4">
+                                    <li class="breadcrumb-item">
+                                        <a href="<?=base_url('/')?>"><i class="ti ti-timer"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                       <?php 
+                                          date_default_timezone_set('Africa/Lagos');
+                                          $timer =  date('H'); 
+                                          echo date('Y-m-d H:i:s');
+                                        ?>
+                                    </li>
+                                    <li class="breadcrumb-item active text-primary" aria-current="page">
+                                 <?php
+                                    if($timer ==00){
+                                        echo " Good Morning ".$this->session->username;
+                                      }elseif($timer <= 11){
+                                        echo " Good Morning ".(ucfirst($this->session->title." ".$this->session->firstname));
+                                      }elseif($timer == 12 || $tminer ==13 || $timer ==14 || $timer == 15 || $timer <= 16){
+                                        echo " Good Afternoon ".(ucfirst($this->session->title." ".$this->session->firstname));
+                                      }else{
+                                        echo " Good Evening ".$this->session->title." ".$this->session->firstname;
+                                     }
                                  ?>
-                                 </h5> 
+                                        </li>
+                                </ol>
                         </div>
                         <div class="ml-auto d-flex align-items-center">
                             <nav>

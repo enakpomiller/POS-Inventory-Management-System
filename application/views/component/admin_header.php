@@ -2,9 +2,11 @@
 <html lang="en">
 
 
+
 <head>
     <title> POS Inventary Management System</title>
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Admin template that can be used to build dashboards for CRM, CMS, etc." />
     <meta name="author" content="Potenza Global Solutions" />
@@ -438,16 +440,16 @@
                                             <i class="fa fa-compass pr-2 text-warning"></i> Need help?</a>
                                         <div class="row mt-2">
                                             <div class="col">
-                                                <a class="bg-light p-3 text-center d-block" href="<?=base_url('login/signout')?>" onclick="return confirm(' Do you wish to signout?')">
+                                                <a class="bg-light p-3 text-center d-block" href="<?=base_url('login/signout')?>">
                                                     <i class="fe fe-home font-20 text-primary"></i>
-                                                    <span class="d-block font-13 mt-2">Sign out </span>
+                                                    <span class="d-block font-13 mt-2">Change Password </span>
                                                     
                                                 </a>
                                             </div>
                                             <div class="col">
-                                                <a class="bg-light p-3 text-center d-block" href="#">
+                                                <a class="bg-light p-3 text-center d-block" href="<?=base_url('login/signout')?>" onclick="return confirm(' Do you wish to signout?')">
                                                     <i class="fe fe-plus font-20 text-primary"></i>
-                                                    <span class="d-block font-13 mt-2">Compose new</span>
+                                                    <span class="d-block font-13 mt-2"> Signout</span>
                                                 </a>
                                             </div>
                                         </div>

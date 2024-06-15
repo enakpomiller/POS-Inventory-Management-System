@@ -23,38 +23,9 @@
                 <div class="col-md-12 m-b-30">
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
-                        <div class="page-title mb-2 mb-sm-0">
+                  <div class="page-title mb-2 mb-sm-0">
                              
                         <h4> <?=$title?>  </h4>
-
-                             <nav>
-                                <ol class="breadcrumb p-0 m-b-0">
-                                    <li class="breadcrumb-item">
-                                        <a href="<?=base_url('/')?>"><i class="ti ti-timer"></i></a>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                       <?php 
-                                          date_default_timezone_set('Africa/Lagos');
-                                          $timer =  date('H'); 
-                                          echo date('Y-m-d H:i:s');
-                                        ?>
-                                    </li>
-                                    <li class="breadcrumb-item active text-primary" aria-current="page">
-                                 <?php
-                                    if($timer ==00){
-                                        echo " Good Morning ".$this->session->username;
-                                      }elseif($timer <= 11){
-                                        echo " Good Morning ".(ucfirst($this->session->username));
-                                      }elseif($timer == 12 || $tminer ==13 || $timer ==14 || $timer == 15 || $timer == 16 || $timer == 17){
-                                        echo " Good Afternoon".$this->session->username;
-                                      }else{
-                                        echo " Good Evening ".$this->session->username;
-                                     }
-                                 ?>
-                                        </li>
-                                </ol>
-                            </nav>
-
                            
                         </div>
 
@@ -86,28 +57,38 @@
 
                     <div class="container mt-5 mb-5 col-md-9">
                         <h2>User Form</h2>
-                        <form>
+                        <?//= form_open(base_url('users/process_manager')) ?>
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                                <label for="name">First Name</label>
+                                <input type="text" class="form-control"  name="fname" autocomplete="off" id="fname" placeholder="Enter your first name">
                             </div>
+
                             <div class="form-group">
-                                <label for="email">Email address</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                <label for="email">Last Name</label>
+                                <input type="text" class="form-control"   name="lname" id="lname" autocomplete="off" placeholder="Enter your lastname">
                             </div>
+
                             <div class="form-group">
-                                <label for="email">Email address</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-                            </div>
+                                <label for="email"> PHone number </label>
+                                <input type="text" class="form-control" name="phone"  id="phone" autocomplete="off" placeholder="Enter your username">
+                            </div>     
                             <div class="form-group">
-                                <label for="email">Email address</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-                            </div>                            
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="subscribe">
-                                <label class="form-check-label" for="subscribe">Subscribe to newsletter</label>
+                                <label for="email"> Username </label>
+                                <input type="text" class="form-control" name="username"  id="username" autocomplete="off" placeholder="Enter your password">
+                            </div> 
+                            <div class="form-group">
+                                <label for="email">  Password </label>
+                                <input type="text" class="form-control" name="password"  id="password" autocomplete="off" placeholder="Confirm Password">
+                            </div> 
+                            <div class="form-group">
+                                <label for="email"> Confirm  Password </label>
+                                <input type="text" class="form-control" name="confpass"  id="confpass" autocomplete="off" placeholder="Confirm Password">
+                            </div> 
+                            
+                            <div class="form-group mt-4">
+                               <!-- <button type="submit" class="btn btn-primary" id="butsave"> Proceed </button> -->
+                                <button type="submit" id="butsave"  class="btn id= text-light" style="width:100%;background:#8e54e9;"> Proceed </button>
                             </div>
-                            <button type="submit" class="btn btn-primary"> Create User </button>
                         </form>
                     </div>
                       
@@ -155,3 +136,59 @@
         <!-- end container-fluid -->
     </div>
     <!-- end app-main -->
+
+
+         <script>
+            $(document).ready(function() {
+                $('#butsave').on('click', function() {
+                       //location.reload();
+                    var fname = $('#fname').val();
+                    var lname = $('#lname').val();
+                    var phone = $('#phone').val();
+                    var username = $('#username').val();
+                    var password = $('#password').val();
+                    var confpass = $('#confpass').val();
+                  
+                    if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
+                      
+                            $("#butsave").attr("disabled", "disabled");
+                                    $.ajax({
+                                        url: "<?php echo base_url("users/process_manager");?>",
+                                        type: "POST",
+                                        data: {
+                                            type: 1,
+                                            fname,
+                                            lname,
+                                            phone,
+                                            username,
+                                            password,
+                                            confpass
+                                        },
+                                        cache: false,
+                                        success: function(res){
+                                        if(res == '400' ){
+                                            toastr.info(' Sorry! This user already exist or Password mismatch, please check entries ');
+                                                $("#butsave").removeAttr("disabled");
+                                                $('#fupForm').find('input:text').val('');
+                                                $("#success").show();
+                                        }else if(res == true){
+                                            window.location = "<?=base_url('users/create_role')?>";
+                                        }else{
+                                            toastr.error(' please check enyries before submision ');
+                                          $("#butsave").removeAttr("disabled");
+                                            $('#fupForm').find('input:text').val('');
+                                            $("#success").show();
+                                        } 
+                                    }
+                                });
+
+                
+                             
+
+                    }else {
+                        toastr.error(' Please Fill All Given Entries ');
+
+                    }
+                });
+            });
+       </script> 
