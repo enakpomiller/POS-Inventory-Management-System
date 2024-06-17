@@ -38,6 +38,7 @@ class Login extends CI_Controller {
 			$username   = $this->input->post('username');
 			$password   = $this->myhash($this->input->post('password'));
 			$AdminExist = $this->login_m->checkuserlogin($username,$password);
+			$StaffCheck = $this->db->get_where('tbl_users',array('username'=>$username,'password'=>$this->myhash($password) ))->row();
 			if($AdminExist){
 				echo  true; 
 				$admin_arr = [
@@ -50,8 +51,10 @@ class Login extends CI_Controller {
 				];
 				$this->session->set_userdata($admin_arr);
 				$this->session->set_flashdata('toastr', ['type' => 'success','message' => 'Welcome '.$username ]);
+			}else if($StaffCheck){
+				echo '400';
 			}else{
-				echo false; 
+			 echo false;
 			}
 
 	}

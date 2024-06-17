@@ -40,9 +40,8 @@
 				<form class="login100-form validate-form" action="<?=base_url('login/processlogin')?>" method="POST">
 				    <?=$this->session->flashdata('error')?>
 					<span class="login100-form-title p-b-43">
-					Admin Login
+					User  Login
 					</span>
-
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<input class="input100" type="text"  autocomlpete="off" name="username" id="username">
@@ -136,6 +135,12 @@
 					if(res==true){
 						window.location = "<?=base_url('dashboard')?>";
                         //window.location = "<?=base_url('home/seller_buy')?>"+prod_id;
+					}
+					else if(res=='400'){
+                           //location.reload();
+					       //alert(" Wrong Username Or Password!");
+                          toastr.error('Incorrect Login Credentials!');
+
 					}
 					else if(res==false){
                            //location.reload();

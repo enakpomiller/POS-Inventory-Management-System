@@ -1,18 +1,7 @@
 
 
-   <!-- jQuery (required by Toastr) -->
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Toastr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            <?php if ($this->session->flashdata('toastr')){ ?>
-                toastr.<?php echo $this->session->flashdata('toastr')['type']; ?>('<?php echo $this->session->flashdata('toastr')['message']; ?>');
-            <?php }else{?>
-                toastr.<?php echo $this->session->flashdata('toastr')['type']; ?>('<?php echo $this->session->flashdata('toastr')['message']; ?>');
-             <?php } ?>
-        });
-    </script>
+
+
 
     <!-- begin app-main -->
     <div class="app-main" id="main">
@@ -172,7 +161,7 @@
                                                 $('#fupForm').find('input:text').val('');
                                                 $("#success").show();
                                         }else if(res == true){
-                                            window.location = "<?=base_url('users/create_role')?>";
+                                            window.location = "<?=base_url('users/assign_role')?>";
                                         }else{
                                             toastr.error(' please check enyries before submision ');
                                           $("#butsave").removeAttr("disabled");

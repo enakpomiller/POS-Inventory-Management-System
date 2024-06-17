@@ -50,6 +50,7 @@ class Users extends CI_Controller {
 	public function assign_role(){
 	    $this->data['title'] = " Assign Roles to Users";
 		$this->data['getroles'] = $this->users_m->getallroles();
+		$this->data['staffrole'] = $this->users_m->getallstaffrole();
 		$this->data['page_name'] = "assign_role";
 		$this->load->view('admin_index',$this->data);
 	}
@@ -77,13 +78,7 @@ class Users extends CI_Controller {
 					];
 					$getlastID = $this->users_m->createusers($data_input);
 					 
-					  $setdata_arr = [
-						  'userID'  => $getlastID,
-						  'fname'  => $this->input->post('fname'),
-						  'lname'  => $this->input->post('lname')
-
-					  ];
-					  $this->session->set_userdata($setdata_arr);
+					$_SESSION['userID'] = $getlastID;
 				
 			     }
 			
@@ -96,10 +91,35 @@ class Users extends CI_Controller {
 			 return redirect(base_url('users/create_manager'));
 		}
 
-
-
-
     }
+
+	public function processstaffrole(){
+		if($this->input->post('type')==1){
+
+				$data_arr = [
+					'userID'  => $_POST['userid'],
+					'office'  => $_POST['office'],
+					'user_roles' => json_encode($_POST['roles'])
+				]; 
+			$privillege_id =  $this->users_m->createprivilleges($data_arr);
+			if($privillege_id){
+				echo '400';
+			 }else{
+				echo false;
+			}
+
+		}else{
+	        
+			$this->data['title'] = " Assign Roles to Users";
+			$this->data['getroles'] = $this->users_m->getallroles();
+			$this->data['staffrole'] = $this->users_m->getallstaffrole();
+			$this->data['page_name'] = "assign_role";
+			$this->load->view('admin_index',$this->data);
+		}
+
+
+		 
+	}
 
 
 
