@@ -8,6 +8,16 @@
 	          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
               <!-- Toastr CSS -->
               <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+			  <script type="text/javascript">
+					$(document).ready(function() {
+						<?php if ($this->session->flashdata('toastr')){ ?>
+							toastr.<?php echo $this->session->flashdata('toastr')['type']; ?>('<?php echo $this->session->flashdata('toastr')['message']; ?>');
+						<?php }else{?>
+							toastr.<?php echo $this->session->flashdata('toastr')['type']; ?>('<?php echo $this->session->flashdata('toastr')['message']; ?>');
+						<?php } ?>
+					});
+              </script>
+
 
 <!--===============================================================================================-->
 	<link rel="icon" type="<?=base_url()?>assets2/image/png" href="images/icons/favicon.ico"/>
@@ -56,7 +66,7 @@
 
 					<div class="flex-sb-m w-full p-t-3 p-b-32">
 						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1"  required type="checkbox" name="remember-me">
+							<!-- <input class="input-checkbox100" id="ckb1"  required type="checkbox" name=""> -->
 							<label class="label-checkbox100" for="ckb1">
 								Remember me
 							</label>
@@ -114,49 +124,127 @@
 
 
 	<script>
- $(document).ready(function() {
-	$('#btnsubmit').on('click', function(e) {
-        e.preventDefault();
-        var username = $('#username').val();
-		var password = $('#password').val();
+		// $(document).ready(function() {
+		// 	$('#btnsubmit').on('click', function(event) {
+		// 		event.preventDefault();
+		// 		var username = $('#username').val();
+		// 		var password = $('#password').val();
 
-		if(username!="" && password!=""){
-			$("#butsave").attr("disabled", "disabled");
-			$.ajax({
-				url: "<?php echo base_url("login/processlogin");?>",
-				type: "POST",
-				data: {
-					type: 1,
-					username,
-					password
-				},
-				cache: false,
-				success: function(res){
-					if(res==true){
-						window.location = "<?=base_url('dashboard')?>";
-                        //window.location = "<?=base_url('home/seller_buy')?>"+prod_id;
-					}
-					else if(res=='400'){
-                           //location.reload();
-					       //alert(" Wrong Username Or Password!");
-                          toastr.error('Incorrect Login Credentials!');
+		// 		if(username!="" && password!=""){
+		// 			$("#butsave").attr("disabled", "disabled");
+		// 			$.ajax({
+		// 				url: "<?php echo base_url("login/processlogin");?>",
+		// 				type: "POST",
+		// 				data: {
+		// 					type: 1,
+		// 					username,
+		// 					password
+		// 				},
+		// 				cache: false,
+		// 				success: function(res){
+		// 					if(res==true){
+		// 						window.location = "<?=base_url('dashboard')?>";
+		// 						//window.location = "<?=base_url('home/seller_buy')?>"+prod_id;
+		// 					}
+		// 				else if(res == '400'){ 
+		// 						window.location = "<?=base_url('dashboard')?>";
 
-					}
-					else if(res==false){
-                           //location.reload();
-					       //alert(" Wrong Username Or Password!");
-                          toastr.error('Incorrect Login Credentials!');
+		// 					}
+		// 					else  {
+		// 						//location.reload();
+		// 						//alert(" Wrong Username Or Password!");
+		// 						toastr.error('Incorrect Login Credentials!');
 
-					}
+		// 					}
 
-				}
-			});
-		}
-		else{
-            $('#error').html('please fill all entries !');
-		}
-	});
-});
+		// 				}
+		// 			});
+		// 		}
+		// 		else{
+		// 			$('#error').html('please fill all entries !');
+		// 		}
+		// 	});
+		// });
+
+
+// 	$(document).ready(function() {
+//         $('#btnsubmit').on('click', function(event) {
+//         event.preventDefault();
+//         var username = $('#username').val();
+//         var password = $('#password').val();
+
+//         if(username != "" && password != ""){
+//             $("#btnsubmit").attr("disabled", true);
+//             $.ajax({
+//                 url: "<?php echo base_url('login/processlogin');?>",
+//                 type: "POST",
+//                 data: {
+//                     type: 1,
+//                     username: username,
+//                     password: password
+//                 },
+//                 cache: false,
+//                 success: function(res){
+//                     if(res == true || res == '400'){
+//                         window.location = "<?=base_url('dashboard')?>";
+//                     } else {
+//                         toastr.error('Incorrect Login Credentials!');
+//                         $("#btnsubmit").attr("disabled", false);
+//                     }
+//                 },
+//                 error: function() {
+//                     toastr.error('An error occurred. Please try again.');
+//                     $("#btnsubmit").attr("disabled", false);
+//                 }
+//             });
+//         } else {
+//             $('#error').html('Please fill all entries!');
+//         }
+//     });
+//   });
+
+
+
+
+//   $(document).ready(function() {
+//     $('#btnsubmit').on('click', function(event) {
+//         event.preventDefault();
+//         var username = $('#username').val();
+//         var password = $('#password').val();
+
+//         if (username != "" && password != "") {
+//             $("#btnsubmit").attr("disabled", true);
+//             $.ajax({
+//                 url: "<?php echo base_url('login/processlogin'); ?>",
+//                 type: "POST",
+//                 data: {
+//                     username: username,
+//                     password: password
+//                 },
+//                 cache: false,
+//                 success: function(res) {
+//                     res = JSON.parse(res);
+//                     if (res.status === true) {
+//                         window.location = "<?= base_url('dashboard') ?>";
+//                     } else if (res.status === '400') {
+//                         window.location = "<?= base_url('dashboard') ?>";
+//                     } else {
+//                         toastr.error('Incorrect Login Credentials!');
+//                         $("#btnsubmit").attr("disabled", false);
+//                     }
+//                 },
+//                 error: function() {
+//                     toastr.error('An error occurred. Please try again.');
+//                     $("#btnsubmit").attr("disabled", false);
+//                 }
+//             });
+//         } else {
+//             $('#error').html('Please fill all entries!');
+//         }
+//     });
+// });
+
+
 </script>
 
 

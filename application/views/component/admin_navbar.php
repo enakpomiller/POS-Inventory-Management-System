@@ -6,9 +6,103 @@
         <!-- begin sidebar-nav -->
    
         <div class="sidebar-nav scrollbar scroll_ligh bg-infot">
+
+     
         
             <ul class="metismenu " id="sidebarNav">
-                <a class="text-light" href="<?=base_url('dashboard')?>"><center> Dashboard </center> </a>
+              
+
+                <?php  if($this->session->role == 'Staff'){?>
+  
+                         <?php 
+                            $this->db->where('userID',$this->session->userID);
+                            $getuserID = $this->db->get('tbl_privilleges')->row();
+                            if($getuserID){  ?>
+                                <li class="text-light text-center" > <?="Role: ".$getuserID->office?>  </li>                       
+                             <a class="text-light" href="<?=base_url('dashboard')?>"><center> Dashboardxx </center> </a>
+                            <?php  if(in_array('1', json_decode($getuserID->user_roles))){ ?>   
+
+                                 <li class="active">
+                                    <a class="has-arrow" href="" aria-expanded="false">
+                                        <i class="nav-icon ti ti-rocket"></i>
+                                        <span class="nav-title"> Staff Management  </span>
+                                        <span class="nav-label label label-danger">9</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li> <a href='index-crm.html'>CRM</a> </li>
+                                        <li> <a href='index-real-estate.html'> View Staff Records </a> </li>
+                                        <li> <a href="<?=base_url('users/create_manager')?>"> Create Staff Account </a> </li>
+                                    </ul>
+                                </li> 
+
+                                    <li class="active">
+                                        <a class="has-arrow" href="" aria-expanded="false">
+                                            <i class="nav-icon ti ti-rocket"></i>
+                                            <span class="nav-title">Invoice Management   </span>
+                                            <span class="nav-label label label-danger">9</span>
+                                        </a>
+                                        <ul aria-expanded="false">
+                                            <li> <a href='index-crm.html'> Create New Product  </a> </li>
+                                            <li> <a href='index-real-estate.html'> View Staff Records </a> </li>
+                                            <li> <a href="<?=base_url('users/create_manager')?>"> Create Staff Account </a> </li>
+                                        </ul>
+                                    </li>
+                                 
+                                <li class="active">
+                                    <a class="has-arrow" href="" aria-expanded="false">
+                                        <i class="nav-icon ti ti-rocket"></i>
+                                        <span class="nav-title"> Sales Management    </span>
+                                        <span class="nav-label label label-danger">9</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li> <a href='index-crm.html'> Create New Order  </a> </li>
+                                        <li> <a href='index-real-estate.html'> Confirm Order  </a> </li>
+                                        <li> <a href="<?=base_url('users/create_manager')?>"> View Order History  </a> </li>
+                                    </ul>
+                                </li>
+                             <?php  }elseif(in_array('3',json_decode($getuserID->user_roles))){ ?>
+                                    <li class="active">
+                                        <a class="has-arrow" href="" aria-expanded="false">
+                                            <i class="nav-icon ti ti-rocket"></i>
+                                            <span class="nav-title"> Sales Management    </span>
+                                            <span class="nav-label label label-danger">9</span>
+                                        </a>
+                                        <ul aria-expanded="false">
+                                            <li> <a href='index-crm.html'> Create New Order  </a> </li>
+                                            <li> <a href='index-real-estate.html'> Confirm Order  </a> </li>
+                                            <li> <a href="<?=base_url('users/create_manager')?>"> View Order History  </a> </li>
+                                        </ul>
+                                    </li>
+                              <?php  }elseif(in_array('2', json_decode($getuserID->user_roles))) { ?>
+                                 <li class="active">
+                                        <a class="has-arrow" href="" aria-expanded="false">
+                                            <i class="nav-icon ti ti-rocket"></i>
+                                            <span class="nav-title">Inventory Management   </span>
+                                            <span class="nav-label label label-danger">9</span>
+                                        </a>
+                                        <ul aria-expanded="false">
+                                            <li> <a href='<?=base_url("products/addproduct")?>'> Create Product  </a> </li>
+                                            <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Multiple   </a> </li>
+                                            <li> <a href='index-real-estate.html'> View Products </a> </li>
+                                        </ul>
+                                    </li>
+                            
+                              <?php }?>
+
+
+
+                        <?php }else{ ?>
+
+                            echo " staff not found ";
+                         <?php } ?>
+
+
+
+
+
+
+                <?php  }else{ ?>
+
                 <li class="active">
                     <a class="has-arrow" href="" aria-expanded="false">
                         <i class="nav-icon ti ti-rocket"></i>
@@ -40,7 +134,7 @@
             
                <li> <a href="<?=base_url('users/create_manager')?>" class="nav-link<?=$this->uri->segment(2)=='create_manager'?'active':''?>" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title"> Create Manager</span></a> </li> 
              
-
+               <?php  } ?>
 
               <!--                 
                 <li>

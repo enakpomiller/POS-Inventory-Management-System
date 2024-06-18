@@ -48,11 +48,17 @@ class Users extends CI_Controller {
     }
 
 	public function assign_role(){
-	    $this->data['title'] = " Assign Roles to Users";
-		$this->data['getroles'] = $this->users_m->getallroles();
-		$this->data['staffrole'] = $this->users_m->getallstaffrole();
-		$this->data['page_name'] = "assign_role";
-		$this->load->view('admin_index',$this->data);
+		if($this->session->role == "Supper Admin" || $this->session->office == 'Manager'){
+			$this->data['title'] = " Assign Roles to Users";
+			$this->data['getroles'] = $this->users_m->getallroles();
+			$this->data['staffrole'] = $this->users_m->getallstaffrole();
+			$this->data['page_name'] = "assign_role";
+			$this->load->view('admin_index',$this->data);
+		}else{
+			$this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Access Denied ' ]);
+			return redirect(base_url('dashboard'));
+		}
+	  
 	}
 
 
@@ -103,7 +109,7 @@ class Users extends CI_Controller {
 				]; 
 			$privillege_id =  $this->users_m->createprivilleges($data_arr);
 			if($privillege_id){
-				echo '400';
+				echo true;
 			 }else{
 				echo false;
 			}
@@ -116,8 +122,6 @@ class Users extends CI_Controller {
 			$this->data['page_name'] = "assign_role";
 			$this->load->view('admin_index',$this->data);
 		}
-
-
 		 
 	}
 

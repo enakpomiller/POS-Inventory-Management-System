@@ -231,11 +231,11 @@ $(document).ready(function() {
                         },
                         cache: false,
                         success: function(res){
-                            if(res == '400'){
+                            if(res == true){
                                 toastr.success(' Privillege Assigned Successfully ');                    
                             }
                             else if(res == 'false'){
-                            toastr.success(' Privillege Assigned Successfully ');
+                            toastr.success(' Unable to  Assigned Privillege');
                             }
                         },
                         error: function(xhr, status, error) {

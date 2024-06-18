@@ -5,6 +5,7 @@
 
 class Login_m extends CI_Model{
     public $admin_table = "tbl_admin";
+    public $tbLusers   = 'tbl_privilleges';
 
 
 

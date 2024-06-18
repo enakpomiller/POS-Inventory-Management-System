@@ -35,12 +35,12 @@ class Login extends CI_Controller {
 	}
 
 	public function processlogin(){
-			$username   = $this->input->post('username');
-			$password   = $this->myhash($this->input->post('password'));
+			$username   = $this->input->post('username', true);
+			$password   = $this->myhash($this->input->post('password', true));
 			$AdminExist = $this->login_m->checkuserlogin($username,$password);
-			$StaffCheck = $this->db->get_where('tbl_users',array('username'=>$username,'password'=>$this->myhash($password) ))->row();
+			$StaffCheck = $this->db->get_where('tbl_users',array('username'=>$username,'password'=>$password ))->row();
 			if($AdminExist){
-				echo  true; 
+				//echo json_encode(['status' => true]);
 				$admin_arr = [
 					'adminID'   => $AdminExist->adminID,
 					'username'  => $AdminExist->username,
@@ -51,10 +51,24 @@ class Login extends CI_Controller {
 				];
 				$this->session->set_userdata($admin_arr);
 				$this->session->set_flashdata('toastr', ['type' => 'success','message' => 'Welcome '.$username ]);
+				return redirect(base_url('dashboard'));
 			}else if($StaffCheck){
-				echo '400';
+				  //echo json_encode(['status' => '400']);
+				 $staff_arr = [
+					'userID'   => $StaffCheck->userID,
+					'username'  => $StaffCheck->username,
+					'firstname'		=> $StaffCheck->fname,
+					'role'			=> 'Staff',
+					'office' => $this->db->get_where('tbl_privilleges',array('userID'=>$StaffCheck->userID))->row()->office,
+					'logged_in' => TRUE
+				];
+				$this->session->set_userdata($staff_arr);
+				$this->session->set_flashdata('toastr', ['type' => 'success','message' => 'Welcome '.$username ]);
+				return redirect(base_url('dashboard'));
 			}else{
-			 echo false;
+			    //echo json_encode(['status' => false]);
+				$this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Wrong Username or Password ' ]);
+				return redirect(base_url('login'));
 			}
 
 	}

@@ -31,11 +31,11 @@
                                     if($timer ==00){
                                         echo " Good Morning ".$this->session->username;
                                       }elseif($timer <= 11){
-                                        echo " Good Morning ".(ucfirst($this->session->title." ".$this->session->firstname));
+                                        echo " Good Morning ".(ucfirst($this->session->title." ".($this->session->firstname) ));
                                       }elseif($timer == 12 || $tminer ==13 || $timer ==14 || $timer == 15 || $timer <= 16){
-                                        echo " Good Afternoon ".(ucfirst($this->session->title." ".$this->session->firstname));
+                                        echo " Good Afternoon ".(ucfirst($this->session->title." ".($this->session->firstname) ));
                                       }else{
-                                        echo " Good Evening ".$this->session->title." ".$this->session->firstname;
+                                        echo " Good Evening ".$this->session->title." ".(ucfirst($this->session->firstname));
                                      }
                                  ?>
                                         </li>
