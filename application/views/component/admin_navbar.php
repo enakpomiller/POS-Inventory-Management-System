@@ -83,7 +83,7 @@
                                         <ul aria-expanded="false">
                                             <li> <a href='<?=base_url("products/addproduct")?>'> Create Product  </a> </li>
                                             <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Multiple   </a> </li>
-                                            <li> <a href='index-real-estate.html'> View Products </a> </li>
+                                            <li> <a href="<?=base_url('products/viewprod')?>"> View Products </a> </li>
                                         </ul>
                                     </li>
                             

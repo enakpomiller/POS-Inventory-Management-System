@@ -78,7 +78,7 @@
                         <!-- <img src="<?=base_url()?>assets/img/logo.png" class="img-fluid logo-desktop" alt="logo" /> -->
                          
                         <img src="<?=base_url()?>assets/img/logo-icon.png" class="img-fluid logo-mobile" alt="logo" />
-                        <span> POS INVENTARY  SYSTEM </span>
+                        <span> POS INVENTORY  SYSTEM </span>
                     </a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

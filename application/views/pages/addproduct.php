@@ -45,110 +45,67 @@
                     <div class="container mt-5 mb-5 col-md-9">
                         <h4>Add Products </h4>
 
-
+                        <form>
                         <div class="row">
                             <div class="col-md-6">
                                  <div class="form-group">
                                     <label for="name">Product  Name</label>
-                                    <input type="text" class="nput100 form-control"  name="fname" autocomplete="off" id="fname">
+                                    <input type="text"   class="nput100 form-control"  name="prodname" id="prodname" autocomplete="off" id="fname">
                                 </div>
                              <div class="form-group">
-                                 <label for="name">Product Category </label>
-                                 <input type="text" class="nput100 form-control"  name="fname" autocomplete="off" id="fname">
+                                 <label for="name">Product Proce</label>
+                                 <input type="text"   class="nput100 form-control"  name="prodprice" id="prodprice"  autocomplete="off" id="fname">
                               </div>
 
                              <div class="form-group">
-                                  <label for="email">Product Price</label>
-                                  <input type="text" class="nput100 form-control"   name="lname" id="lname" autocomplete="off">
+                                  <label for="email">Product Category</label>
+                                  <input type="text"  class="nput100 form-control"   name="prodcategory" id="prodcategory" autocomplete="off">
                              </div>
 
                               <div class="form-group">
                                    <label for="email"> NAFDAC Reg N0</label>
-                                   <input type="text" class="nput100 form-control" name="phone"  id="phone" autocomplete="off">
+                                   <input type="text"   class="nput100 form-control" name="nafdacno"  id="nafdacno" autocomplete="off">
                                </div> 
                               <div class="form-group">
                                    <label for="email"> Product Serial Number  </label>
-                                   <input type="text" class="nput100 form-control" name="username"  id="username" autocomplete="off">
+                                   <input type="text"  class="nput100 form-control" name="prodserialno"  id="prodserialno" autocomplete="off">
                                </div> 
                             </div>
 
 
                          <div class="col-md-6">
                                 <div class="form-group">
-                                  <label for="email">  Quantity</label>
-                                  <input type="number" class="input100 form-control" name="password"  id="password" autocomplete="off">
+                                  <label for="email"> Product Quantity</label>
+                                  <input type="number"   class="input100 form-control" name="prodqty"  id="prodqty" autocomplete="off">
                                </div> 
                               <div class="form-group">
                                   <label for="email"> Date Purchased  </label>
-                                   <input type="date" class="input100 form-control" name="confpass"  id="confpass" autocomplete="off">
+                                   <input type="date"   class="input100 form-control" name="purchase_date"  id="purchase_date" autocomplete="off">
                                </div> 
                               <div class="form-group">
                                    <label for="email"> Expiry Date  </label>
-                                  <input type="text" class="input100 form-control" name="confpass"  id="confpass" autocomplete="off">
+                                  <input type="text"   class="input100 form-control" name="expiring_date"  id="expiring_date" autocomplete="off">
                               </div> 
                                <div class="form-group">
                                    <label for="email"> Brand  </label>
-                                  <input type="date" class="input100 form-control" name="confpass"  id="confpass" autocomplete="off">
+                                  <input type="date"   class="input100 form-control" name="prodbrand"  id="prodbrand" autocomplete="off">
                                </div> 
-                              
-
-
-                               <div class="form-group mt-4">
-                               <input type="checkbox"  name="confpass" required  id="confpass" autocomplete="off" placeholder="Confirm Password"> I Agree to consent 
-                                  <!-- <button type="submit" class="btn btn-primary" id="butsave"> Proceed </button> -->
-                                  <button type="submit" id="butsave"  class="btn id= text-light" style="width:100%;background:#8e54e9;"> Create Product </button>
-                               </div>
+                        
+                                <div class="form-group mt-4" style="position:relative;top:20px;">
+                                    <button type="submit"  class="btn text-light" id="butsave" style="width:100%;background:#8e54e9;"> Create Product </button>
+                                </div>
+                                     
+                                 
+                            
                             </div>
                         </div>
                     </form>
                   </div>
-                   
-
-
-
 
                  </div>
             </div>
 
                 
-
-           
-
-
-
-                                <!-- 
-                                <div class="col-xxl-4 m-b-30">
-                                    <div class="card card-statistics h-100 mb-0">
-                                        <div class="card-header">
-                                            <h4 class="card-title">User Feedback</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="mb-1">
-                                                <div class="d-flex">
-                                                    <p>Positive</p>
-                                                    <h5 class="text-muted ml-auto mb-0">4251</h5>
-                                                </div>
-                                                <div class="progress progress-sm m-b-10" style="height: 5px;">
-                                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-1">
-                                                <div class="d-flex">
-                                                    <p>Negative</p>
-                                                    <h5 class="text-muted ml-auto mb-0">1459</h5>
-                                                </div>
-                                                <div class="progress progress-sm m-b-10" style="height: 5px;">
-                                                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="apexchart-wrapper">
-                                            <div id="datingdemo4"></div>
-                                        </div>
-                                    </div>
-                                </div> -->
 
 
 
@@ -163,52 +120,63 @@
     <!-- end app-main -->
 
 
-         <script>
+
+
+    <script src="<?=base_url()?>assets/js/jquery.js"></script>
+      <script>
             $(document).ready(function() {
-                $('#butsave').on('click', function() {
-                       //location.reload();
-                    var fname = $('#fname').val();
-                    var lname = $('#lname').val();
-                    var phone = $('#phone').val();
-                    var username = $('#username').val();
-                    var password = $('#password').val();
-                    var confpass = $('#confpass').val();
+                $('#butsave').on('click', function(event) {
+                    event.preventDefault();
+                     // location.reload();
+                    var prodname = $('#prodname').val();
+                    var prodprice = $('#prodprice').val();
+                    var prodcategory = $('#prodcategory').val();
+                    var nafdacno = $('#nafdacno').val();
+                    var prodserialno = $('#prodserialno').val();
+                    var prodqty = $('#prodqty').val();     
+
+                    var purchase_date = $('#purchase_date').val();
+                    var expiring_date = $('#expiring_date').val();
+                    var prodbrand = $('#prodbrand').val();
                   
-                    if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
+                    if(prodname !="" && prodprice!="" && prodcategory!="" && nafdacno!="" || prodserialno!="" || prodqty !="" || purchase_date!="" || expiring_date!="" || prodbrand!=""){
                       
                             $("#butsave").attr("disabled", "disabled");
                                     $.ajax({
-                                        url: "<?php echo base_url("users/process_manager");?>",
+                                        url: "<?php echo base_url("products/addproduct");?>",
                                         type: "POST",
                                         data: {
                                             type: 1,
-                                            fname,
-                                            lname,
-                                            phone,
-                                            username,
-                                            password,
-                                            confpass
+                                            prodname,
+                                            prodprice,
+                                            prodcategory,
+                                            nafdacno,
+                                            prodserialno ,
+                                            prodqty,
+                                            purchase_date,
+                                            expiring_date,
+                                            prodbrand
+
                                         },
                                         cache: false,
                                         success: function(res){
-                                        if(res == '400' ){
-                                            toastr.info(' Sorry! This user already exist or Password mismatch, please check entries ');
+                                        if(res == true ){
+                                            alert(' product created successfully ');
+                                            //swal.fire('success','Product Created Successfully','success');
+                                        
+                                                //toastr.success(' Sorry! This user already exist or Password mismatch, please check entries ');
                                                 $("#butsave").removeAttr("disabled");
                                                 $('#fupForm').find('input:text').val('');
                                                 $("#success").show();
-                                        }else if(res == true){
-                                            window.location = "<?=base_url('users/assign_role')?>";
-                                        }else{
+                                        }else if(res ==false){
+                                            alert(' cannot insert ');
                                             toastr.error(' please check enyries before submision ');
-                                          $("#butsave").removeAttr("disabled");
+                                            $("#butsave").removeAttr("disabled");
                                             $('#fupForm').find('input:text').val('');
                                             $("#success").show();
                                         } 
                                     }
-                                });
-
-                
-                             
+                                });       
 
                     }else {
                         toastr.error(' Please Fill All Given Entries ');
