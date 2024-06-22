@@ -56,7 +56,7 @@
                                     <th scope="col">NAFDAC NO</th>
                                     <th scope="col">Date Purchased</th>
                                     <th scope="col">Expiring Date </th>
-                                    <th scope="col"> Action  </th>
+                                    <th scope="col" class="text-center"> Action  </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,16 +71,57 @@
                                     <td>  <?=$product->purchase_date?></td>
                                     <td>  <?=$product->prodname?></td>
                                     <td> 
-                                      <i class="fa fa-trash" style="width:30%;"></i>
-                                      <i class="fa fa-pencil"></i>
+                                       <a href="" class="bg-danger pt-2 pb-2 pl-2 pr-2 text-light" onclick="btndelete()">delete</a>
+                                       <a href="" class="bg-primary pt-2 pb-2 pl-2 pr-2 text-light" data-toggle="modal" data-target="#exampleModal<?=$product->prodID?>">Edit Prod </a>
                                     </td>
                                    </tr>
+
+                                     <!-- modal --> 
+                                        <div class="modal fade" id="exampleModal<?=$product->prodID?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                <div class="modal-header bg-light">
+                                                    <h5 class="modal-title" id="exampleModalLabel">  Edit Product </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                               <form action="<?=base_url('products/updateproducts')?>" method="POST">
+                                                    <div class="modal-body">
+                                                    <input type="hidden" name="prod_id" class="form-control" value="<?=$product->prodID?>">
+                                                    <div class="form-group">
+                                                        <label> Product Name </label>
+                                                        <input type="text" name="prodname"  class="form-control" value="<?=$product->prodname?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                       <label> Product Price </label>
+                                                        <input type="text" name="prodprice" class="form-control" value="<?=$product->prodprice?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                    <label> Product Category </label>
+                                                        <input type="text" name="prodcategory" class="form-control" value="<?=$product->prodcategory?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                    <label> Product Quantity </label>
+                                                        <input type="text" name="prodqty" class="form-control" value="<?=$product->prodqty?>">
+                                                    </div>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                  </div>
+                                               </form>
+                                                </div>
+                                            </div>
+                                            </div>
+                                 <!-- close modal --> 
                                 <?php } ?>
                              <?php }else {?>
                                  <?= " No Record Found  " ?>
                                <?php } ?>
                             </tbody>
                         </table>
+     
 
 
 
@@ -89,9 +130,6 @@
             </div>
         </div>
 
-
-
-            <!-- end row -->
         </div>
         <!-- end container-fluid -->
     </div>
@@ -100,8 +138,14 @@
 
 
 
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table').DataTable();
     });
+
+    function btndelete(){
+    
+      alert('hello');
+    }
 </script>

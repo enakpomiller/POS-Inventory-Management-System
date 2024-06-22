@@ -13,6 +13,7 @@ class Products extends CI_Controller {
         $this->load->model('users_m');
         $this->load->database();
         $this->load->helper('uuid_helper');
+        $this->load->model(array('products_m'));
    
         if(!isset($this->session->logged_in)){
           return redirect(base_url('login'));
@@ -67,7 +68,7 @@ class Products extends CI_Controller {
     } 
 
     public function addproduct (){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_POST){
             $product_arr = [
                 'userID' => $this->session->userID,
                 'prodname' => $_POST['prodname'],
@@ -82,8 +83,8 @@ class Products extends CI_Controller {
                 'date_created' => date('M-D-Y H:i:sa'),
                 'prodUnique'  => rand(4000000,999999999).date('y-m-d H:i:sa').generate_uuid()
             ];
-              //echo "<pre>"; print_r($product_arr);exit;
-            $insert = $this->db->insert('tbl_products',$product_arr);
+              //$insert = $this->db->insert('tbl_products',$product_arr);
+            $insert  = $this->products_m->createproduct($product_arr);
             if($insert){
                echo true;
              }else{
@@ -109,6 +110,35 @@ class Products extends CI_Controller {
     $this->data['page_name'] = "viewprod";
     $this->load->view("admin_index",$this->data);
   }
+ 
+  public function updateproducts(){
+        if($_POST){
+          $data_update = [
+             'prodID' => $_POST['prod_id'],
+             'prodname' => $_POST['prodname'],
+             'prodprice' => $_POST['prodprice'],
+             'prodcategory' => $_POST['prodcategory'],
+             'prodqty' => $_POST['prodqty']
+          ];
+           $updateprod = $this->products_m->updateproducts($data_update);
+            if($updateprod){
+                $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Product Updated Successfully']);
+                return redirect(base_url('products/viewprod'));
+
+             }else{ 
+                $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Unable to Delete']);
+                return redirect(base_url('products/viewprod'));
+            }
+    
+        }else{
+            return redirect(base_url('products/viewprod'));
+     
+        }
+  }
+
+
+
+
 
 
   public function addproduct_rules() {
