@@ -57,9 +57,7 @@ class Products extends CI_Controller {
                 $this->load->view("admin_index",$this->data);
             }
         }else{
-            
-
-            $this->data['title'] =  " create products items  ";
+            $this->data['title'] =  " create products items ";
             $this->data['page_name'] = "addproduct";
             $this->load->view("admin_index",$this->data);
         }
@@ -81,8 +79,11 @@ class Products extends CI_Controller {
                 'expiring_date' => $_POST['expiring_date'],
                 'prodbrand'  =>  $_POST['prodbrand'],
                 'date_created' => date('M-D-Y H:i:sa'),
-                'prodUnique'  => rand(4000000,999999999).date('y-m-d H:i:sa').generate_uuid()
+                'prodUnique'  => rand(4000000,999999999).date('y-m-d H:i:sa').generate_uuid(),
+                'barcode' => $this->barcode()
             ];
+            
+            //echo "<pre>"; print_r($product_arr);die; 
               //$insert = $this->db->insert('tbl_products',$product_arr);
             $insert  = $this->products_m->createproduct($product_arr);
             if($insert){
@@ -136,10 +137,34 @@ class Products extends CI_Controller {
         }
   }
 
+  public function printbarcode(){
+      $this->data['title'] =  "Print Products Barcodes ";
+      $this->data['subtitle'] =  " Barcode Display ";
+      $this->data['allbarcode'] = $this->db->get('tbl_products')->result();
+      $this->data['page_name'] = "printbarcode";
+      $this->load->view("admin_index",$this->data);
+   
+   }
+
+ public  function deleteproduct ($id){
+       $this->db->where('prodID',$id);
+       $del = $this->db->delete('tbl_products');
+       if($del){
+          echo true; 
+        }else{
+          echo false; 
+        }
 
 
+  }
 
 
+  public function barcode(){
+	// Generate a random barcode number for demonstration
+	$barcode_number = mt_rand(100000000, 999999999);
+	return  $barcode_number."-".date('YmdHis');
+
+ }
 
   public function addproduct_rules() {
     $rules = array(

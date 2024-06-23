@@ -1,6 +1,7 @@
 
 
-
+    <!-- barcode -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
 
 
     <!-- begin app-main -->
@@ -84,18 +85,18 @@
                                </div> 
                               <div class="form-group">
                                    <label for="email"> Expiry Date  </label>
-                                  <input type="text"   class="input100 form-control" name="expiring_date"  id="expiring_date" autocomplete="off">
+                                  <input type="date"   class="input100 form-control" name="expiring_date"  id="expiring_date" autocomplete="off">
                               </div> 
                                <div class="form-group">
                                    <label for="email"> Brand  </label>
-                                  <input type="date"   class="input100 form-control" name="prodbrand"  id="prodbrand" autocomplete="off">
+                                  <input type="text"   class="input100 form-control" name="prodbrand"  id="prodbrand" autocomplete="off">
                                </div> 
                         
                                 <div class="form-group mt-4" style="position:relative;top:20px;">
-                                    <button type="submit"  class="btn text-light" id="butsave" style="width:100%;background:#8e54e9;"> Create Product </button>
+                                   <button type="reset" class="btn btn-primary" style="width:24%;"> Reset Form  </button>
+                                    <button type="submit"  class="btn text-light" id="butsave" style="width:75%;background:#8e54e9;"> Create Product </button>
+                                  
                                 </div>
-                                     
-                                 
                             
                             </div>
                         </div>
@@ -139,7 +140,7 @@
                     var expiring_date = $('#expiring_date').val();
                     var prodbrand = $('#prodbrand').val();
                   
-                    if(prodname !="" && prodprice!="" && prodcategory!="" && nafdacno!="" || prodserialno!="" || prodqty !="" || purchase_date!="" || expiring_date!="" || prodbrand!=""){
+                    if( purchase_date !="" && prodname !="" && prodprice !="" && prodcategory !="" && nafdacno !="" || prodserialno !="" || prodqty !=""  && expiring_date !="" || prodbrand !=""){
                       
                             $("#butsave").attr("disabled", "disabled");
                                     $.ajax({
@@ -161,16 +162,15 @@
                                         cache: false,
                                         success: function(res){
                                         if(res == true ){
-                                            alert(' product created successfully ');
-                                            //swal.fire('success','Product Created Successfully','success');
-                                        
-                                                //toastr.success(' Sorry! This user already exist or Password mismatch, please check entries ');
+                                            //alert(' product created successfully ');
+                                              //swal.fire('success','Product Created Successfully','success');
+                                            toastr.success('Product Created Successfully ');
                                                 $("#butsave").removeAttr("disabled");
                                                 $('#fupForm').find('input:text').val('');
                                                 $("#success").show();
+                                               
                                         }else if(res ==false){
-                                            alert(' cannot insert ');
-                                            toastr.error(' please check enyries before submision ');
+                                            toastr.error(' unable to crate product ');
                                             $("#butsave").removeAttr("disabled");
                                             $('#fupForm').find('input:text').val('');
                                             $("#success").show();
@@ -184,4 +184,20 @@
                     }
                 });
             });
-       </script> 
+
+
+
+    // // Get the barcode number from PHP
+    // var barcodeNumber = "<?= $barcode_number; ?>";
+    // // Generate barcode
+    // JsBarcode("#barcode", barcodeNumber, {
+    //     format: "CODE128",
+    //     lineColor: "#000",
+    //     width: 2,
+    //     height: 100,
+    //     displayValue: true
+    // });
+
+ </script> 
+
+

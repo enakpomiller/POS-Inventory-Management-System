@@ -52,7 +52,7 @@
                                     <th scope="col">S/N</th>
                                     <th scope="col">Product Name</th>
                                     <th scope="col">Product Price</th>
-                                    <th scope="col">Category</th>
+                                    <th scope="col" class="text-center"> Barcode</th>
                                     <th scope="col">NAFDAC NO</th>
                                     <th scope="col">Date Purchased</th>
                                     <th scope="col">Expiring Date </th>
@@ -62,17 +62,17 @@
                             <tbody>
                                 <?php if($allprod) { ?>
                                   <?php $counter =1; foreach($allprod as $product) {  ?>
-                                   <tr>
+                                   <tr id="<?=$product->prodID?>">
                                    <td>  <?=$counter++?>    </td> 
                                     <td>  <?=$product->prodname?></td> 
                                     <td>  <?=$product->prodprice?></td>
-                                    <td>  <?=$product->prodcategory?></td>
+                                    <td> <?=$product->barcode?> </td>
                                     <td>  <?=$product->nafdacno?></td>
                                     <td>  <?=$product->purchase_date?></td>
                                     <td>  <?=$product->prodname?></td>
                                     <td> 
-                                       <a href="" class="bg-danger pt-2 pb-2 pl-2 pr-2 text-light" onclick="btndelete()">delete</a>
-                                       <a href="" class="bg-primary pt-2 pb-2 pl-2 pr-2 text-light" data-toggle="modal" data-target="#exampleModal<?=$product->prodID?>">Edit Prod </a>
+                                        <button type="submit" class="btn btn-danger remove" tooltip="delete"><i class="fa fa-trash"></i></button>
+                                       <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-trash"></i></button>
                                     </td>
                                    </tr>
 
@@ -81,14 +81,14 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                 <div class="modal-header bg-light">
-                                                    <h5 class="modal-title" id="exampleModalLabel">  Edit Product </h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel"><p>  Edit Product</p> </h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                <form action="<?=base_url('products/updateproducts')?>" method="POST">
                                                     <div class="modal-body">
-                                                    <input type="hidden" name="prod_id" class="form-control" value="<?=$product->prodID?>">
+                                                    <input type="hidden" name="prod_id"  class="form-control" value="<?=$product->prodID?>">
                                                     <div class="form-group">
                                                         <label> Product Name </label>
                                                         <input type="text" name="prodname"  class="form-control" value="<?=$product->prodname?>">
@@ -144,8 +144,36 @@
         $('#table').DataTable();
     });
 
-    function btndelete(){
-    
-      alert('hello');
-    }
+
+        $(".remove").click(function(){
+            var id = $(this).parents("tr").attr("id");
+
+            if(confirm(' ARE YOU SURE YOU WANT TO DELETE THIS PRODUCT? ?'))
+
+            {
+                $.ajax({
+                url: '<?=base_url('products/deleteproduct/')?>'+id,
+                type: 'DELETE',
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function(data) {
+                    if(data == true){
+                        $("#"+id).remove();
+                        //alert("Record removed successfully");
+                        swal.fire("success"," PRODUCT DELETED SUCCESSFULLY","success");
+                    }else{
+                        swal.fire("error","UNABLE TO DELETE RECORD","error");
+                    }
+                    
+                }
+                });
+            }else{
+            //alert(" ACTION IS BEEN CANCELLED");
+            swal.fire("error","ACTION IS CANCELLED","error");
+            }
+        });
+
 </script>
+
+
