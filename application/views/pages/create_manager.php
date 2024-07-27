@@ -13,9 +13,9 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                   <div class="page-title mb-2 mb-sm-0">
-                             
+
                         <h4> <?=$title?>  </h4>
-                           
+
                         </div>
 
                         <div class="ml-auto d-flex align-items-center">
@@ -60,27 +60,27 @@
                             <div class="form-group">
                                 <label for="email"> PHone number </label>
                                 <input type="text" class="form-control" name="phone"  id="phone" autocomplete="off" placeholder="Enter your username">
-                            </div>     
+                            </div>
                             <div class="form-group">
                                 <label for="email"> Username </label>
                                 <input type="text" class="form-control" name="username"  id="username" autocomplete="off" placeholder="Enter your password">
-                            </div> 
+                            </div>
                             <div class="form-group">
                                 <label for="email">  Password </label>
                                 <input type="text" class="form-control" name="password"  id="password" autocomplete="off" placeholder="Confirm Password">
-                            </div> 
+                            </div>
                             <div class="form-group">
                                 <label for="email"> Confirm  Password </label>
                                 <input type="text" class="form-control" name="confpass"  id="confpass" autocomplete="off" placeholder="Confirm Password">
-                            </div> 
-                            
+                            </div>
+
                             <div class="form-group mt-4">
                                <!-- <button type="submit" class="btn btn-primary" id="butsave"> Proceed </button> -->
                                 <button type="submit" id="butsave"  class="btn id= text-light" style="width:100%;background:#8e54e9;"> Proceed </button>
                             </div>
                         </form>
                     </div>
-                      
+
 
                  </div>
                 </div>
@@ -137,9 +137,9 @@
                     var username = $('#username').val();
                     var password = $('#password').val();
                     var confpass = $('#confpass').val();
-                  
+
                     if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
-                      
+
                             $("#butsave").attr("disabled", "disabled");
                                     $.ajax({
                                         url: "<?php echo base_url("users/process_manager");?>",
@@ -167,12 +167,12 @@
                                           $("#butsave").removeAttr("disabled");
                                             $('#fupForm').find('input:text').val('');
                                             $("#success").show();
-                                        } 
+                                        }
                                     }
                                 });
 
-                
-                             
+
+
 
                     }else {
                         toastr.error(' Please Fill All Given Entries ');
@@ -180,4 +180,4 @@
                     }
                 });
             });
-       </script> 
+       </script>

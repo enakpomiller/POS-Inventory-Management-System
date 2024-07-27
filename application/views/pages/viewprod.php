@@ -1,7 +1,8 @@
-       <!-- datatable bootstrap --> 
+       <!-- datatable bootstrap -->
            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
 		<!-- enddatatable bootstrap -->
-
+    <!-- barcode -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
 
 
     <!-- begin app-main -->
@@ -14,9 +15,9 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                   <div class="page-title mb-2 mb-sm-0">
-                             
+
                         <h4> <?=$title?>  </h4>
-                           
+
                         </div>
 
                         <div class="ml-auto d-flex align-items-center">
@@ -45,7 +46,7 @@
                     <div class="card card-statistics h-100 mb-0">
                     <div class="container mt-5 mb-5 col-md-12">
                         <h4><?=$title?></h4>
-
+               <?php if(!empty($allprod)) { ?>
                         <table class="table table-striped" id="table">
                             <thead>
                                 <tr>
@@ -60,23 +61,41 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if($allprod) { ?>
-                                  <?php $counter =1; foreach($allprod as $product) {  ?>
+
+                                  <?php
+                                  $counter =1;   //foreach($allprod as $product) {
+                                    foreach($allprod as $index => $product) {
+                                     ?>
                                    <tr id="<?=$product->prodID?>">
-                                   <td>  <?=$counter++?>    </td> 
-                                    <td>  <?=$product->prodname?></td> 
-                                    <td>  <?=$product->prodprice?></td>
-                                    <td> <?=$product->barcode?> </td>
-                                    <td>  <?=$product->nafdacno?></td>
-                                    <td>  <?=$product->purchase_date?></td>
-                                    <td>  <?=$product->prodname?></td>
-                                    <td> 
-                                        <button type="submit" class="btn btn-danger remove" tooltip="delete"><i class="fa fa-trash"></i></button>
-                                       <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-trash"></i></button>
-                                    </td>
+                                       <td>  <?=$counter++?>  </td>
+                                        <td>  <?=$product->prodname?></td>
+                                        <td>  <?=$product->prodprice?></td>
+                                        <td>
+                                          <?//=$product->barcode?>
+
+                                          <svg id="barcode<?= $index ?>"></svg>
+                                          <script>
+                                              // Generate barcode
+                                              JsBarcode("#barcode<?= $index ?>", "<?= $product->barcode ?>", {
+                                                  format: "CODE128",
+                                                  lineColor: "#000",
+                                                  width: 2,
+                                                  height: 50,
+                                                  displayValue: true
+                                              });
+                                          </script>
+
+                                         </td>
+                                        <td>  <?=$product->nafdacno?></td>
+                                        <td>  <?=$product->purchase_date?></td>
+                                        <td>  <?=$product->prodname?></td>
+                                        <td>
+                                           <button type="submit" class="btn btn-danger remove" tooltip="delete"><i class="fa fa-trash"></i></button>
+                                           <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-pencil"></i></button>
+                                        </td>
                                    </tr>
 
-                                     <!-- modal --> 
+                                     <!-- modal -->
                                         <div class="modal fade" id="exampleModal<?=$product->prodID?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -114,15 +133,18 @@
                                                 </div>
                                             </div>
                                             </div>
-                                 <!-- close modal --> 
-                                <?php } ?>
-                             <?php }else {?>
-                                 <?= " No Record Found  " ?>
-                               <?php } ?>
-                            </tbody>
-                        </table>
-     
+                                 <!-- close modal -->
+                            <?php } ?>
+                                      </tbody>
+                                  </table>
 
+                      <?php }else {?>
+                               <center>
+                                 <img  src="<?=base_url('assets/img/notfound.png')?>" height="200px" width="25%" >
+                               <?= "<h4> No Product Found Yet! </h4> " ?>
+                           </center>
+
+                      <?php } ?>
 
 
                   </div>
@@ -165,7 +187,7 @@
                     }else{
                         swal.fire("error","UNABLE TO DELETE RECORD","error");
                     }
-                    
+
                 }
                 });
             }else{
@@ -174,6 +196,17 @@
             }
         });
 
+
+
+        // Get the barcode number from PHP
+        var barcodeNumber = "<?=$allbarcode?>";
+        // Generate barcode
+        JsBarcode("#barcode", barcodeNumber, {
+            format: "CODE128",
+            lineColor: "#000",
+            width: 2,
+            height: 100,
+            displayValue: true
+        });
+
 </script>
-
-

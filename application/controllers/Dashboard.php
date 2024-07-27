@@ -24,9 +24,10 @@ class Dashboard extends CI_Controller {
      parent:: __construct();
      $this->load->helper(array('form','url','text'));
      $this->load->library(array('form_validation','session'));
-	 $this->load->database();
+     $this->load->database();
+
 	 if(!$this->session->logged_in){
-	  return redirect(base_url('login'));
+	     return redirect(base_url('login'));
 	 }
 
    }

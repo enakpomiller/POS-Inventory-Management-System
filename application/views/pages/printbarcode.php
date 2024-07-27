@@ -14,9 +14,9 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                   <div class="page-title mb-2 mb-sm-0">
-                             
+
                         <h4> <?=$title?>  </h4>
-                           
+
                         </div>
 
                         <div class="ml-auto d-flex align-items-center">
@@ -45,8 +45,8 @@
                     <div class="card card-statistics h-100 mb-0">
                     <button class="btn btn-primary mt-2 pr-2" style="width:20%;margin-left:80%;"> Print Barcode </button>
                        <div class="container mt-5 mb-5 col-md-6">
-                        
-                              <?php foreach($allbarcode as $index => $allbar): ?>
+
+                          <?php foreach($allbarcode as $index => $allbar): ?>
                                 <hr>
                                  <?=$allbar->prodname?>
                                 <svg id="barcode<?= $index ?>"></svg>
@@ -62,10 +62,10 @@
                                 </script>
                                 </hr>
                                 <?php endforeach; ?>
-                               
+
                          </div>
 
-                        
+
                  </div>
                 </div>
 
@@ -128,5 +128,3 @@
             displayValue: true
         });
     </script>
-
-

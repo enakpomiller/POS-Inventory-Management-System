@@ -35,9 +35,9 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                   <div class="page-title mb-2 mb-sm-0">
-                             
+
                         <h4> <?=$title?>  </h4>
-                           
+
                         </div>
 
                         <div class="ml-auto d-flex align-items-center">
@@ -73,31 +73,31 @@
                                 <label for="name"> Role </label>
                                  <input type="hidden" name="userID" id="userID" value="<?=$_SESSION['userID']?>">
                                         <select name="office" id="office" class="form-control select2" style="padding:20px;">
-                                            <?php 
+                                            <?php
                                                 if (!empty($staffrole)) {
                                                     foreach ($staffrole as $num_roles) {
                                                         // Determine if the current role should be selected
                                                         $selected = ($num_roles->staffrole == $office) ? "selected" : "";
-                                                        
+
                                                         // Output the option element with properly escaped values
                                                         echo "<option value='" . htmlspecialchars($num_roles->staffrole) . "' $selected>" . htmlspecialchars($num_roles->staffrole) . "</option>";
                                                     }
                                                 }
                                             ?>
                                        </select>
-                              
+
                             </div>
 
-                            <div>
-                                <label for="basiInput" class="form-label pt-2"> Previlleges </label>
+                               <div>
+                                   <label for="basiInput" class="form-label pt-2"> Previlleges </label>
                                </div>
-                              <?php foreach($getroles as $allroles) {  ?>
-                                <div class="list-group-item clearfix">
-                                    <input type="checkbox"   name="user_roles[]" id="user_roles" value="<?=$allroles->roleID?>" <?=$allrole->roleID=='9'?'checked':'' ?> >
-                                    <?php echo $allroles->role_name;?>
-                                </div>
-                              <?php }?>
-                            
+                                <?php foreach($getroles as $allroles) {  ?>
+                                  <div class="list-group-item clearfix mt-2 mb-2">
+                                      <input type="checkbox"   name="user_roles[]" id="user_roles" value="<?=$allroles->roleID?>" <?=$allrole->roleID=='9'?'checked':'' ?> >
+                                      <?php echo $allroles->rolename;?>
+                                  </div>
+                                <?php }?>
+
                             <div class="form-group mt-4">
                                 <button type="submit" id="butsave"  class="btn id= text-light" style="width:20%;background:#8e54e9;"> Create Role  </button>
                             </div>
@@ -105,7 +105,7 @@
                     </div>
 
 
-      
+
 
                  </div>
                 </div>
@@ -152,7 +152,7 @@
     <!-- end app-main -->
 
 
-<!-- 
+<!--
     <script>
 $(document).ready(function() {
 	$('#butsave').on('click', function() {
@@ -167,7 +167,7 @@ $(document).ready(function() {
             });
 
 
-      
+
 		if(userid!="" && office!="" && roles!=""){
 			 $("#butsave").attr("disabled", "disabled");
 			$.ajax({
@@ -178,7 +178,7 @@ $(document).ready(function() {
 					userid,
                     office,
                     roles
-			
+
 				},
 				cache: false,
 				success: function(res){
@@ -187,13 +187,13 @@ $(document).ready(function() {
 						//  $("#butsave").removeAttr("disabled");
 						// $('#fupForm').find('input:text').val('');
 						// $("#success").show();
-						// $('#success').html('Data added successfully !'); 
-                        alert('success');						
+						// $('#success').html('Data added successfully !');
+                        alert('success');
 					}
 					else if(res == false){
 					   alert("Error occured !");
 					}
-					
+
 				}
 
 
@@ -232,7 +232,7 @@ $(document).ready(function() {
                         cache: false,
                         success: function(res){
                             if(res == true){
-                                toastr.success(' Privillege Assigned Successfully ');                    
+                                toastr.success(' Privillege Assigned Successfully ');
                             }
                             else if(res == 'false'){
                             toastr.success(' Unable to  Assigned Privillege');
@@ -256,4 +256,3 @@ $(document).ready(function() {
 
 
 </script>
-

@@ -18,6 +18,18 @@ class Products_m extends CI_Model {
        return $this->db->update($this->tbl_products,$data_update);
    }
 
+   public function productsDetails(){
+       $respone = array();
+       $this->db->select('*');
+       $q = $this->db->get($this->tbl_products);
+       $response = $q->result_array();
+       return $response;
+   }
+
+  public function insert_csv($insert_data){
+    return $this->db->insert($this->tbl_products,$insert_data);
+  }
+
 }
 
 

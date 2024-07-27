@@ -20,9 +20,9 @@
                                         <a href="<?=base_url('/')?>"><i class="ti ti-timer"></i></a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                       <?php 
+                                       <?php
                                           date_default_timezone_set('Africa/Lagos');
-                                          $timer =  date('H'); 
+                                          $timer =  date('H');
                                           echo date('Y-m-d H:i:s');
                                         ?>
                                     </li>
@@ -282,7 +282,13 @@
                     <div class="card card-statistics dating-contant h-100 mb-0">
                         <div class="card-header">
                             <h4 class="card-title">View all tickets</h4>
+                              <div class="input-group">
+                                  <button class="input-group-text">-</button>
+                                     <input type="text" value="1" class="qty quantifying">
+                                  <button class="input-group-text">+</button>
+                              </div>
                         </div>
+
                         <div class="card-body pt-2 scrollbar scroll_dark" style="height: 300px">
                             <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-striped">

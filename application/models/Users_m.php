@@ -7,7 +7,7 @@ class Users_m extends CI_model {
     public  $tbl_staffrole = 'tbl_staffrole';
     public  $tbl_privilleges = 'tbl_privilleges';
 
-    
+
 
    public function createusers($array){
       $this->db->insert('tbl_users',$array);

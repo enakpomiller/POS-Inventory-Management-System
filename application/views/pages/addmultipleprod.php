@@ -2,6 +2,17 @@
 
 
 
+		  <script type="text/javascript">
+					$(document).ready(function() {
+						<?php if ($this->session->flashdata('toastr')){ ?>
+                            ('<?php echo $this->session->flashdata('toastr')['message']; ?>');
+						<?php }else{?>
+                            ('<?php echo $this->session->flashdata('toastr')['message']; ?>');
+
+						<?php } ?>
+					});
+              </script>
+
 
     <!-- begin app-main -->
     <div class="app-main" id="main">
@@ -13,9 +24,9 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                   <div class="page-title mb-2 mb-sm-0">
-                             
+
                         <h4> <?=$title?>  </h4>
-                           
+
                         </div>
 
                         <div class="ml-auto d-flex align-items-center">
@@ -38,32 +49,32 @@
             <!-- end row -->
 
 
-
             <div class="row">
                 <div class="col-xxl-8 m-b-30">
                     <div class="card card-statistics h-100 mb-0">
                        <div class="container mt-5 mb-5 col-md-9">
                            <h4>Upload Bulk Products </h4>
-                           <?//= form_open(base_url('users/process_manager')) ?>
+                         <form method="post" action="<?= base_url('products/upload_bulk_products') ?>" enctype="multipart/form-data">
                                 <div class="form-group">
-                                     <input type="file" class="form-control">
+                                     <input type="file" name="csvFile" class="form-control" accept=".csv">
                                 </div>
                                 <div class="btn-group">
-                                    <button class="btn btn-primary w-100"> Upload  Products </button> 
+                                    <button class="btn btn-primary w-100"> Upload  Product </button>
                                 </div>
                            </form>
                     </div>
-                      
-
                  </div>
                 </div>
+
+
+
                 <div class="col-xxl-4 m-b-30">
                     <div class="card card-statistics h-100 mb-0">
                         <div class="card-header ">
-                            <h4 class="card-title"> Upload Bulk Products </h4>
+                            <h4 class="card-title"> Product Template  </h4>
                         </div>
                         <div class="card-header">
-                            <a href="" class="btn btn-primary w-100"> Download Product Templat    </a>
+                            <a href="<?=base_url('products/downloadtemp')?>" class="btn btn-primary w-100"> Download Product Templat    </a>
                         </div>
                         <div class="card-body">
                             <div class="mb-1">
@@ -82,7 +93,7 @@
                                     <p>Negative</p>
                                     <h5 class="text-muted ml-auto mb-0">1459</h5>
                                 </div>
-                                
+
                                 <div class="progress progress-sm m-b-10" style="height: 5px;">
                                     <div class="progress-bar bg-info" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
                                     </div>
@@ -105,57 +116,3 @@
     <!-- end app-main -->
 
 
-         <script>
-            $(document).ready(function() {
-                $('#butsave').on('click', function() {
-                       //location.reload();
-                    var fname = $('#fname').val();
-                    var lname = $('#lname').val();
-                    var phone = $('#phone').val();
-                    var username = $('#username').val();
-                    var password = $('#password').val();
-                    var confpass = $('#confpass').val();
-                  
-                    if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
-                      
-                            $("#butsave").attr("disabled", "disabled");
-                                    $.ajax({
-                                        url: "<?php echo base_url("users/process_manager");?>",
-                                        type: "POST",
-                                        data: {
-                                            type: 1,
-                                            fname,
-                                            lname,
-                                            phone,
-                                            username,
-                                            password,
-                                            confpass
-                                        },
-                                        cache: false,
-                                        success: function(res){
-                                        if(res == '400' ){
-                                            toastr.info(' Sorry! This user already exist or Password mismatch, please check entries ');
-                                                $("#butsave").removeAttr("disabled");
-                                                $('#fupForm').find('input:text').val('');
-                                                $("#success").show();
-                                        }else if(res == true){
-                                            window.location = "<?=base_url('users/assign_role')?>";
-                                        }else{
-                                            toastr.error(' please check enyries before submision ');
-                                          $("#butsave").removeAttr("disabled");
-                                            $('#fupForm').find('input:text').val('');
-                                            $("#success").show();
-                                        } 
-                                    }
-                                });
-
-                
-                             
-
-                    }else {
-                        toastr.error(' Please Fill All Given Entries ');
-
-                    }
-                });
-            });
-       </script> 

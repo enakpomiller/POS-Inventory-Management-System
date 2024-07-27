@@ -44,7 +44,7 @@ class Users extends CI_Controller {
 		$this->data['title'] = " Create User Account ";
 		$this->data['page_name'] = "create_manager";
 		$this->load->view('admin_index',$this->data);;
-      
+
     }
 
 	public function assign_role(){
@@ -58,44 +58,43 @@ class Users extends CI_Controller {
 			$this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Access Denied ' ]);
 			return redirect(base_url('dashboard'));
 		}
-	  
+
 	}
 
 
    public function process_manager(){
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		  $rules = $this->manager_rules();
-			$this->form_validation->set_rules($rules);
-			if($this->form_validation->run() == TRUE){
-			  $usercheck = $_POST['username']; 
-			  $UserExist = $this->users_m->CheckUserExist($usercheck);
-		       if($UserExist || $_POST['password'] != $_POST['confpass']){
-			     echo '400';
-			   }else{
-				 echo true;
-					$data_input = [
-						'fname'  =>  $this->input->post('fname'),
-						'lname'  =>  $this->input->post('lname'),
-						'phone'  =>  $this->input->post('phone'),
-						'username'=> $this->input->post('username'),
-						'password'=> $this->myhash($this->input->post('password')),
-						'date_created' => date('y-m-d H:i:sa')
-					];
-					$getlastID = $this->users_m->createusers($data_input);
-					 
-					$_SESSION['userID'] = $getlastID;
-				
-			     }
-			
-			}else{ 
-				$this->data['title'] = " Create Managers Account ";
-				$this->data['page_name'] = "create_manager";
-				$this->load->view('admin_index',$this->data);;
-			}
-			}else{
-			 return redirect(base_url('users/create_manager'));
-		}
+      	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      		  $rules = $this->manager_rules();
+      			$this->form_validation->set_rules($rules);
+      			if($this->form_validation->run() == TRUE){
+      			  $usercheck = $_POST['username'];
+      			  $UserExist = $this->users_m->CheckUserExist($usercheck);
+      		       if($UserExist || $_POST['password'] != $_POST['confpass']){
+      			     echo '400';
+      			   }else{
+      				 echo true;
+      					$data_input = [
+      						'fname'  =>  $this->input->post('fname'),
+      						'lname'  =>  $this->input->post('lname'),
+      						'phone'  =>  $this->input->post('phone'),
+      						'username'=> $this->input->post('username'),
+      						'password'=> $this->myhash($this->input->post('password')),
+      						'date_created' => date('y-m-d H:i:sa')
+      					];
+      					$getlastID = $this->users_m->createusers($data_input);
+
+      					$_SESSION['userID'] = $getlastID;
+
+      			     }
+    			}else{
+    				$this->data['title'] = " Create Managers Account ";
+    				$this->data['page_name'] = "create_manager";
+    				$this->load->view('admin_index',$this->data);;
+    			}
+    			}else{
+    			 return redirect(base_url('users/create_manager'));
+    		}
 
     }
 
@@ -106,7 +105,7 @@ class Users extends CI_Controller {
 					'userID'  => $_POST['userid'],
 					'office'  => $_POST['office'],
 					'user_roles' => json_encode($_POST['roles'])
-				]; 
+				];
 			$privillege_id =  $this->users_m->createprivilleges($data_arr);
 			if($privillege_id){
 				echo true;
@@ -115,14 +114,14 @@ class Users extends CI_Controller {
 			}
 
 		}else{
-	        
+
 			$this->data['title'] = " Assign Roles to Users";
 			$this->data['getroles'] = $this->users_m->getallroles();
 			$this->data['staffrole'] = $this->users_m->getallstaffrole();
 			$this->data['page_name'] = "assign_role";
 			$this->load->view('admin_index',$this->data);
 		}
-		 
+
 	}
 
 
@@ -199,9 +198,9 @@ class Users extends CI_Controller {
 	// 	);
 	// 	return $rules;
 	// }
-	
-		
-	
+
+
+
  public function myhash($string){
     return hash("sha512", $string . config_item("encryption_key"));
  }

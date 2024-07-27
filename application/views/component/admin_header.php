@@ -29,13 +29,13 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-   <!-- close --> 
+   <!-- close -->
 
    <!-- jQuery (required by Toastr) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- Toastr JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        
+
         <script type="text/javascript">
             $(document).ready(function() {
                 <?php if ($this->session->flashdata('toastr')){ ?>
@@ -45,9 +45,9 @@
                 <?php } ?>
             });
         </script>
-    <!-- close toaster --> 
+    <!-- close toaster -->
 
-    
+
 </head>
 
 <body>
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <!-- en --> 
+        <!-- en -->
 
         <!-- begin app-header -->
         <header class="app-header top-bar bg-danger">
@@ -76,7 +76,7 @@
                     <a href="javascript:void:(0)" class="mobile-toggle"><i class="ti ti-align-right"></i></a>
                     <a class="navbar-brand" href="index.html">
                         <!-- <img src="<?=base_url()?>assets/img/logo.png" class="img-fluid logo-desktop" alt="logo" /> -->
-                         
+
                         <img src="<?=base_url()?>assets/img/logo-icon.png" class="img-fluid logo-mobile" alt="logo" />
                         <span> POS INVENTORY  SYSTEM </span>
                     </a>
@@ -439,19 +439,19 @@
                                         <span class="bg-success user-status"></span>
                                     </a>
                               <?php }?>
-                             
+
                                 <div class="dropdown-menu animated fadeIn" aria-labelledby="navbarDropdown">
                                     <div class="bg-gradient px-4 py-3">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="mr-1">
-                                                <h4 class="text-white mb-0"> 
+                                                <h4 class="text-white mb-0">
                                                     <?php if($this->session->logged_in){ ?>
                                                          <?=$this->session->role?>
                                                     <?php }?>
                                                 </h4>
                                                 <small class="text-white">Henry@example.com</small>
                                             </div>
-                                            <a href="#" class="text-white font-20 tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout"> 
+                                            <a href="#" class="text-white font-20 tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout">
                                                 <i class="zmdi zmdi-power"></i></a>
                                         </div>
                                     </div>
@@ -472,7 +472,7 @@
                                                 <a class="bg-light p-3 text-center d-block" href="<?=base_url('login/signout')?>">
                                                     <i class="fe fe-home font-20 text-primary"></i>
                                                     <span class="d-block font-13 mt-2">Change Password </span>
-                                                    
+
                                                 </a>
                                             </div>
                                             <div class="col">
