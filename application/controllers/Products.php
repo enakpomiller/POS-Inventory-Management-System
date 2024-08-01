@@ -166,13 +166,14 @@ class Products extends CI_Controller {
                  $config['file_name'] = 'product_list.csv';
                  $config['mime'] = $_FILES["csvFile"]['type'];
                  $config['overwrite'] = TRUE;
+                   
                  //$this->upload->initialize($config);
                  $this->load->library('upload', $config);
                  if(!$this->upload->do_upload("csvFile")) {
-                  $error = array('error' => $this->upload->display_errors());
-                  var_dump($error);die;
+                    $error = array('error' => $this->upload->display_errors());
                       $this->upload->display_errors();
-                    redirect(base_url("admin/add_multiple_prod"));
+                      $this->session->set_flashdata('toastr', ['type' => 'error','message' => 'Error! Please Choose a CSV FILES ']); 
+                      return redirect(base_url('products/add_multiple_prod'));
                  } else {
 
                    $file_data = $this->upload->data();
@@ -200,9 +201,9 @@ class Products extends CI_Controller {
                          "expiring_date" => $row[7],
                          "prodbrand" => $row[8],
                          "date_created" => $row[9],
-                         "produnique" => $row[10],
+                         "produnique" => rand(4000000,999999999).date('y-m-d H:i:sa').generate_uuid(),
                          "userID" => $this->session->userID,
-                         "barcode" => 'NULL'
+                         "barcode" =>  $this->barcode()
                        );
                        if($i > 1){
                          $this->products_m->insert_csv($insert_data);

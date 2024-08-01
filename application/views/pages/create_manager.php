@@ -1,6 +1,16 @@
 
 
+    <style>
 
+        .toggle-password {
+            position: absolute;
+            top: 82%;
+            right: 40px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size:15px;
+        }
+    </style>
 
 
     <!-- begin app-main -->
@@ -43,7 +53,6 @@
                 <div class="col-xxl-8 m-b-30">
                     <div class="card card-statistics h-100 mb-0">
 
-
                     <div class="container mt-5 mb-5 col-md-9">
                         <h2>User Form</h2>
                         <?//= form_open(base_url('users/process_manager')) ?>
@@ -66,12 +75,14 @@
                                 <input type="text" class="form-control" name="username"  id="username" autocomplete="off" placeholder="Enter your password">
                             </div>
                             <div class="form-group">
-                                <label for="email">  Password </label>
-                                <input type="text" class="form-control" name="password"  id="password" autocomplete="off" placeholder="Confirm Password">
+                                <label for="email">  Password</label>
+                                <input type="password" autocomplete="off" class="form-control" name="password"  id="password" autocomplete="off" placeholder="Confirm Password">
+                                <span class="toggle-password"><i class="fa fa-eye"></i></span>
                             </div>
                             <div class="form-group">
                                 <label for="email"> Confirm  Password </label>
-                                <input type="text" class="form-control" name="confpass"  id="confpass" autocomplete="off" placeholder="Confirm Password">
+                                <input type="password" autocomplete="off" class="form-control" name="confpass"  id="confpass" autocomplete="off" placeholder="Confirm Password">
+                               
                             </div>
 
                             <div class="form-group mt-4">
@@ -119,13 +130,12 @@
             </div>
 
 
-
+            <div id="strength">Weak password!</div>
             <!-- end row -->
         </div>
         <!-- end container-fluid -->
     </div>
     <!-- end app-main -->
-
 
          <script>
             $(document).ready(function() {
@@ -138,9 +148,16 @@
                     var password = $('#password').val();
                     var confpass = $('#confpass').val();
 
-                    if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
 
-                            $("#butsave").attr("disabled", "disabled");
+                    if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
+                      
+                        if(password.length < 8){
+                            toastr.error(' Sorry! Password should be more than 8 characters ');
+
+                         }else if(phone.length < 11){
+                            toastr.error(' Sorry! Phone Number Should be 11 digits and above');
+                          }else{ 
+                               $("#butsave").attr("disabled", "disabled");
                                     $.ajax({
                                         url: "<?php echo base_url("users/process_manager");?>",
                                         type: "POST",
@@ -155,15 +172,15 @@
                                         },
                                         cache: false,
                                         success: function(res){
-                                        if(res == '400' ){
-                                            toastr.info(' Sorry! This user already exist or Password mismatch, please check entries ');
+                                        if(res == '401' ){
+                                            toastr.error(' Sorry! Password Mismatch ');
                                                 $("#butsave").removeAttr("disabled");
                                                 $('#fupForm').find('input:text').val('');
                                                 $("#success").show();
                                         }else if(res == true){
                                             window.location = "<?=base_url('users/assign_role')?>";
                                         }else{
-                                            toastr.error(' please check enyries before submision ');
+                                            toastr.error(' User Already Exist ');
                                           $("#butsave").removeAttr("disabled");
                                             $('#fupForm').find('input:text').val('');
                                             $("#success").show();
@@ -171,7 +188,7 @@
                                     }
                                 });
 
-
+                            }
 
 
                     }else {
@@ -180,4 +197,15 @@
                     }
                 });
             });
-       </script>
+
+    
+    document.querySelector('.toggle-password').addEventListener('click', function (e) {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle the text of the button
+         //this.textContent = type === 'password' ? "show" : 'Hide';
+    });
+
+    </script>

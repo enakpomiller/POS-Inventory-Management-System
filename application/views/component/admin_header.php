@@ -446,10 +446,12 @@
                                             <div class="mr-1">
                                                 <h4 class="text-white mb-0">
                                                     <?php if($this->session->logged_in){ ?>
-                                                         <?=$this->session->role?>
+                                                         <?=(ucfirst($this->session->firstname." ".$this->session->lastname))?><br> 
+                                                         <small> <?=(strtolower("Postion: ".$this->session->role)) ?></small> <br>
+                                                         <small class="text-white"><?=$this->session->phone?></small>
                                                     <?php }?>
                                                 </h4>
-                                                <small class="text-white">Henry@example.com</small>
+                                               
                                             </div>
                                             <a href="#" class="text-white font-20 tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout">
                                                 <i class="zmdi zmdi-power"></i></a>
@@ -458,15 +460,10 @@
                                     <div class="p-4">
                                         <a class="dropdown-item d-flex nav-link" href="javascript:void(0)">
                                             <i class="fa fa-user pr-2 text-success"></i> Profile</a>
-                                        <a class="dropdown-item d-flex nav-link" href="javascript:void(0)">
-                                            <i class="fa fa-envelope pr-2 text-primary"></i> Inbox
-                                            <span class="badge badge-primary ml-auto">6</span>
-                                        </a>
+                                 
                                         <a class="dropdown-item d-flex nav-link" href="javascript:void(0)">
                                             <i class=" ti ti-settings pr-2 text-info"></i> Settings
-                                        </a>
-                                        <a class="dropdown-item d-flex nav-link" href="javascript:void(0)">
-                                            <i class="fa fa-compass pr-2 text-warning"></i> Need help?</a>
+                                        </a>>
                                         <div class="row mt-2">
                                             <div class="col">
                                                 <a class="bg-light p-3 text-center d-block" href="<?=base_url('login/signout')?>">

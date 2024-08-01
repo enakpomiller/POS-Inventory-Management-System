@@ -21,7 +21,9 @@ class Users_m extends CI_model {
     return $this->db->get($this->tbl_users)->row();
    }
 
-
+  public function getallusers(){
+      return $this->db->get($this->tbl_users)->result();
+   }
   public function getallroles(){
    return $this->db->get($this->tbl_roles)->result();
 

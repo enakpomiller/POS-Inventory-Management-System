@@ -70,9 +70,11 @@ class Users extends CI_Controller {
       			if($this->form_validation->run() == TRUE){
       			  $usercheck = $_POST['username'];
       			  $UserExist = $this->users_m->CheckUserExist($usercheck);
-      		       if($UserExist || $_POST['password'] != $_POST['confpass']){
-      			     echo '400';
-      			   }else{
+      		       if($_POST['password'] != $_POST['confpass']){
+      			     echo '401';
+      			   }elseif($UserExist){
+				     echo '400';
+				   }else{
       				 echo true;
       					$data_input = [
       						'fname'  =>  $this->input->post('fname'),
@@ -97,6 +99,14 @@ class Users extends CI_Controller {
     		}
 
     }
+
+	public function manageusers(){
+        $this->data['title'] = " All Users";
+		$this->data['allusers'] = $this->users_m->getallusers();
+		$this->data['page_name'] = "viewusers";
+		$this->load->view('admin_index',$this->data);
+	
+	}
 
 	public function processstaffrole(){
 		if($this->input->post('type')==1){

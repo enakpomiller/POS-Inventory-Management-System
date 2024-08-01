@@ -58,6 +58,8 @@ class Login extends CI_Controller {
 								'userID'   => $StaffCheck->userID,
 								'username'  => $StaffCheck->username,
 								'firstname'		=> $StaffCheck->fname,
+								'lastname' => $StaffCheck->lname,
+								 'phone' => $StaffCheck->phone,
 								'role'			=> 'Staff',
 								'office' => $this->db->get_where('tbl_privilleges',array('userID'=>$StaffCheck->userID))->row()->office,
 								'logged_in' => TRUE
