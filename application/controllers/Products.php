@@ -273,7 +273,32 @@ class Products extends CI_Controller {
 
    }
 
- public  function deleteproduct ($id){
+   public function order(){
+       $this->data['title'] = " Create Order ";
+       $this->data['allprod'] = $this->db->get('tbl_products')->result();
+       $this->data['page_name'] = "order";
+       $this->load->view("admin_index",$this->data);
+   }
+
+
+   public function process_createorder(){
+         $input_order = [$_POST];
+         var_dump($input_order);die;
+  
+   }
+   public function fetch_records(){
+      $value = $this->input->post('selected_value');
+      $price = $this->db->where('prodID',$value)->get('tbl_products')->row();
+
+      $response =[
+        'prodprice'=>$price->prodprice
+      ];
+      echo json_encode($response);
+  
+   }
+
+
+  public  function deleteproduct ($id){
        $this->db->where('prodID',$id);
        $del = $this->db->delete('tbl_products');
        if($del){
@@ -283,7 +308,7 @@ class Products extends CI_Controller {
         }
 
 
-  }
+   }
 
 
   public function barcode(){

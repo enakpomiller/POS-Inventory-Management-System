@@ -22,11 +22,32 @@ class Users_m extends CI_model {
    }
 
   public function getallusers(){
-      return $this->db->get($this->tbl_users)->result();
+      
+        $this->db->select('tbl_users.userID,tbl_users.plainpassword, tbl_users.fname,tbl_users.lname,tbl_users.phone,tbl_users.username,tbl_users.date_created,tbl_privilleges.office');
+        $this->db->from($this->tbl_users);
+        $this->db->join('tbl_privilleges','tbl_users.userID = tbl_privilleges.userID');
+        $query = $this->db->get()->result();
+        return $query;
    }
   public function getallroles(){
    return $this->db->get($this->tbl_roles)->result();
 
+   }
+
+
+
+   public function updateuserrecord($userdata){
+         //echo "<pre>"; print_r($userdata['user_update']);die; 
+      $this->db->where('userID',$userdata['user_update']['userID']);
+       $query  =  $this->db->update($this->tbl_users,$userdata['user_update']);
+         if($query){
+             $this->db->where('userID',$userdata['user_update']['userID']);
+             return  $this->db->update($this->tbl_privilleges,$userdata['office_arr'] );
+         }else{
+           echo " cannot update ";
+         }
+     
+       
    }
 
   public function getallstaffrole(){
@@ -39,6 +60,11 @@ class Users_m extends CI_model {
       return $last_id;
 
    }
+
+  public function resetpassword($userdata,$where){
+      $this->db->where($where);
+      return $this->db->update($this->tbl_users,$userdata);
+  }
 
 }
 

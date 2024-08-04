@@ -47,6 +47,7 @@ class Login extends CI_Controller {
 					'role'		=> $AdminExist->role,
 					'title'		=> $AdminExist->title,
 					'firstname'		=> $AdminExist->firstname,
+					'role' => 'Supper Admin',
 					'logged_in' => TRUE
 				];
 				$this->session->set_userdata($admin_arr);
@@ -60,10 +61,11 @@ class Login extends CI_Controller {
 								'firstname'		=> $StaffCheck->fname,
 								'lastname' => $StaffCheck->lname,
 								 'phone' => $StaffCheck->phone,
-								'role'			=> 'Staff',
+								'role' => 'Staff',
 								'office' => $this->db->get_where('tbl_privilleges',array('userID'=>$StaffCheck->userID))->row()->office,
 								'logged_in' => TRUE
 							];
+						
 							$this->session->set_userdata($staff_arr);
 							$this->session->set_flashdata('toastr', ['type' => 'success','message' => 'Welcome '.$username ]);
 							return redirect(base_url('dashboard'));

@@ -147,11 +147,11 @@
                     var username = $('#username').val();
                     var password = $('#password').val();
                     var confpass = $('#confpass').val();
-
+                    
 
                     if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
                       
-                        if(password.length < 8){
+                        if(password.length < 7){
                             toastr.error(' Sorry! Password should be more than 8 characters ');
 
                          }else if(phone.length < 11){

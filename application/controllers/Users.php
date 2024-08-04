@@ -40,15 +40,8 @@ class Users extends CI_Controller {
       $this->load->view('admin_index',$this->data);;
 	}
 
-    public function create_manager(){
-		$this->data['title'] = " Create User Account ";
-		$this->data['page_name'] = "create_manager";
-		$this->load->view('admin_index',$this->data);;
-
-    }
-
 	public function assign_role(){
-		if($this->session->role == "Supper Admin" || $this->session->office == 'Manager'){
+		if($this->session->role == "Supper Admin" || $this->session->role == 'Staff'){
 			$this->data['title'] = " Assign Roles to Users";
 			$this->data['getroles'] = $this->users_m->getallroles();
 			$this->data['staffrole'] = $this->users_m->getallstaffrole();
@@ -56,11 +49,18 @@ class Users extends CI_Controller {
 			$this->load->view('admin_index',$this->data);
 		}else{
 			$this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Access Denied ' ]);
-			return redirect(base_url('dashboard'));
+			return redirect(base_url('login'));
 		}
 
 	}
 
+
+	public function create_manager(){
+		$this->data['title'] = " Create User Account ";
+		$this->data['page_name'] = "create_manager";
+		$this->load->view('admin_index',$this->data);;
+
+    }
 
    public function process_manager(){
 
@@ -82,7 +82,8 @@ class Users extends CI_Controller {
       						'phone'  =>  $this->input->post('phone'),
       						'username'=> $this->input->post('username'),
       						'password'=> $this->myhash($this->input->post('password')),
-      						'date_created' => date('y-m-d H:i:sa')
+      						'date_created' => date('y-m-d H:i:sa'),
+							'plainpassword' => $this->input->post('password')
       					];
       					$getlastID = $this->users_m->createusers($data_input);
 
@@ -103,11 +104,97 @@ class Users extends CI_Controller {
 	public function manageusers(){
         $this->data['title'] = " All Users";
 		$this->data['allusers'] = $this->users_m->getallusers();
+		$this->data['roles'] = $this->users_m->getallstaffrole();
 		$this->data['page_name'] = "viewusers";
 		$this->load->view('admin_index',$this->data);
 	
 	}
 
+  public function updateusers(){
+      if(isset($_POST)){
+
+		$supper_array = array(
+			'user_update' => array(
+				'userID' => $_POST['userID'],
+				'fname' => $_POST['fname'],
+				'lname' => $_POST['lname'],
+				'phone' => $_POST['phone'],
+				'username' => $_POST['username'],
+			),
+			'office_arr' => array(
+				'office' => $_POST['office']
+			)
+		);
+		
+	
+		    if(!empty($_POST['office'] == "MANAGER" )){
+			
+				$x['result'] = $this->db->get('tbl_roletemplate')->result();
+				$input_arr = [];
+				foreach($x['result'] as $rows){
+					$input_arr[] = $rows->roleID;
+					}
+				
+					$user_roles_json = json_encode($input_arr);
+					$update_arr =[
+						'user_roles' => $user_roles_json
+					];
+					
+					$this->db->where('userID',$_POST['userID']);
+					$this->db->update('tbl_privilleges',$update_arr);
+
+			}elseif(!empty($_POST['office'] == "INVENTORY MANAGER" )){
+				    $x['result'] = $this->db->get_where('tbl_roletemplate',array('roleID'=>'2'))->row();
+				    $dim = $x['result']->roleID;
+					$input_arr = [];
+					$input_arr[] = $dim;
+				    $user_roles_json = json_encode($input_arr);
+					$update_arr =[
+						'user_roles' => $user_roles_json
+					   ];
+		          
+				   $this->db->where('userID',$_POST['userID']);
+				   $this->db->update('tbl_privilleges',$update_arr);
+
+			} elseif(!empty($_POST['office'] == "ACCOUNTANT" )){
+				   $dim = $this->db->get_where('tbl_roletemplate',array('roleID'=>'3'))->row()->roleID;
+
+				   $input_arr = [];
+				   $input_arr[] = $dim;
+				   $user_roles_json = json_encode($input_arr);
+				   $update_arr =[
+					'user_roles' => $user_roles_json
+				   ];
+					
+				$this->db->where('userID',$_POST['userID']);
+				$this->db->update('tbl_privilleges',$update_arr);
+			}
+			
+			
+		
+		  $updateuser = $this->users_m->updateuserrecord($supper_array);
+		  if($updateuser){
+			$this->session->set_flashdata('toastr', ['type' => 'success','message' => ' User Record Updated Successfully']);
+			return redirect(base_url('users/manageusers'));
+		  }else{
+			$this->session->set_flashdata('toastr', ['type' => 'error','message' => ' An Error Occured']);
+			return redirect(base_url('users/manageusers'));
+		  }
+
+	  }else{
+	   return redirect(base_url('users/manageusers'));
+	  }
+  }
+   
+  public function deleteproduct($id){
+	 $delete = $this->db->delete('tbl_users', array('userID' => $id));
+	 if($delete){
+	    echo true;
+	  }else{
+	    echo false;
+	   }
+
+   }
 	public function processstaffrole(){
 		if($this->input->post('type')==1){
 
@@ -209,6 +296,39 @@ class Users extends CI_Controller {
 	// 	return $rules;
 	// }
 
+
+ public function resetpassword($id){
+ 
+		$userID = $id;
+		$password = $this->generatePassword();
+			$passsword_arr = [
+				'password' => $this->myhash($password),
+				'plainpassword' => $password
+			];
+			 
+		$where = ['userID'=>$userID];
+		$passwordReset = $this->users_m->resetpassword($passsword_arr,$where);
+		if($passwordReset){
+			$this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Password Reset Was Successfully']);
+			return redirect(base_url('users/manageusers'));
+		}else{
+			$this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Unble to reset Pasword']);
+			return redirect(base_url('users/manageusers'));
+		}
+	
+ }
+
+
+
+ function generatePassword(){
+	$rand = rand(100, 999);
+	$alpha = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+	$consonant = array("B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z");
+	$vowel = array("a", "e", "i", "o", "u");
+	$rand2 = rand(0, 9);
+
+	return $alpha[mt_rand(0, count($alpha)-1)] . $vowel[mt_rand(0, count($vowel)-1)] . strtolower($consonant[mt_rand(0, count($consonant)-1)]) . $vowel[mt_rand(0, count($vowel)-1)] . $rand;
+}
 
 
  public function myhash($string){

@@ -54,9 +54,9 @@
                                     <th scope="col">First Name</th>
                                     <th scope="col"> Last Name</th>
                                     <th scope="col"> Phone Number  </th>
+                                    <th scope="col"> Role </th>
                                     <th scope="col"> Username </th>
-                                    <th scope="col">Date Purchased</th>
-
+                                    <th scope="col"> Password</th>
                                     <th scope="col" class="text-center"> Action  </th>
                                 </tr>
                             </thead>
@@ -71,42 +71,54 @@
                                         <td>  <?=$user->fname?></td>
                                         <td>  <?=$user->lname?></td>
                                         <td>  <?=$user->phone?></td>
+                                        <td>  <?=$user->office?></td>
                                         <td>  <?=$user->username?></td>
-                                        <td>  <?=$user->date_created?></td>
+                                        <td>  <?=$user->plainpassword?></td>
                                         <td>
-                                           <button type="submit" class="btn btn-danger remove" tooltip="delete"><i class="fa fa-trash"></i></button>
-                                           <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-pencil"></i></button>
+                                            <button type="submit" class="btn btn-danger remove"><i class="fa fa-trash"></i></button>
+                                            <a href="<?=base_url('users/resetpassword/'.$user->userID)?>" class="btn btn-primary" onclick="return confirm('Do you wish to proceed?')"> Reset Password   </a>
+                                            <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$user->userID?>"><i class="fa fa-pencil"></i></button>
                                         </td>
                                    </tr>
 
                                      <!-- modal -->
-                                        <div class="modal fade" id="exampleModal<?=$product->prodID?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModal<?=$user->userID?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                 <div class="modal-header bg-light">
-                                                    <h5 class="modal-title" id="exampleModalLabel"><p>  Edit Product</p> </h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel"><p>  Edit Staff Details</p> </h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                               <form action="<?=base_url('products/updateproducts')?>" method="POST">
+                                               <form action="<?=base_url('users/updateusers')?>" method="POST">
                                                     <div class="modal-body">
-                                                    <input type="hidden" name="prod_id"  class="form-control" value="<?=$product->prodID?>">
+                                                    <input type="text" name="userID"  class="form-control" value="<?=$user->userID?>">
                                                     <div class="form-group">
-                                                        <label> Product Name </label>
-                                                        <input type="text" name="prodname"  class="form-control" value="<?=$product->prodname?>">
+                                                        <label> First Name </label>
+                                                        <input type="text" name="fname"  class="form-control" value="<?=$user->fname?>">
                                                     </div>
                                                     <div class="form-group">
-                                                       <label> Product Price </label>
-                                                        <input type="text" name="prodprice" class="form-control" value="<?=$product->prodprice?>">
+                                                       <label> Last Name </label>
+                                                        <input type="text" name="lname" class="form-control" value="<?=$user->lname?>">
                                                     </div>
                                                     <div class="form-group">
-                                                    <label> Product Category </label>
-                                                        <input type="text" name="prodcategory" class="form-control" value="<?=$product->prodcategory?>">
+                                                    <label> Phone Number </label>
+                                                        <input type="text" name="phone" class="form-control" value="<?=$user->phone?>">
                                                     </div>
                                                     <div class="form-group">
-                                                    <label> Product Quantity </label>
-                                                        <input type="text" name="prodqty" class="form-control" value="<?=$product->prodqty?>">
+                                                    <label> Ofice/Role </label>
+                                                         <select name ="office" class="form-control"> 
+                                                               <option disabled>Select Office </option>
+                                                              <?php foreach($roles as $staff) { ?>
+                                                                  <option value="<?=$staff->staffrole?>"> <?=$staff->staffrole?> </option>
+                                                               <?php } ?>
+                                                            </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                    <label> Username </label>
+                                                        <input type="text" name="username" readonly class="form-control" value="<?=$user->username?>">
                                                     </div>
                                                   </div>
                                                   <div class="modal-footer">
@@ -135,6 +147,7 @@
                  </div>
             </div>
         </div>
+                      </div>
 
         </div>
         <!-- end container-fluid -->
@@ -154,11 +167,11 @@
         $(".remove").click(function(){
             var id = $(this).parents("tr").attr("id");
 
-            if(confirm(' ARE YOU SURE YOU WANT TO DELETE THIS PRODUCT? ?'))
+            if(confirm(' ARE YOU SURE YOU WANT TO DELETE THIS USER ?'))
 
             {
                 $.ajax({
-                url: '<?=base_url('products/deleteproduct/')?>'+id,
+                url: '<?=base_url('users/deleteproduct/')?>'+id,
                 type: 'DELETE',
                 error: function() {
                     alert('Something is wrong');
@@ -167,7 +180,7 @@
                     if(data == true){
                         $("#"+id).remove();
                         //alert("Record removed successfully");
-                        swal.fire("success"," PRODUCT DELETED SUCCESSFULLY","success");
+                        swal.fire("success"," USER RECORDDELETED SUCCESSFULLY","success");
                     }else{
                         swal.fire("error","UNABLE TO DELETE RECORD","error");
                     }
@@ -179,6 +192,32 @@
             swal.fire("error","ACTION IS CANCELLED","error");
             }
         });
+
+
+
+        $(".resetpassword").click(function(){
+            var id = $(this).parents("tr").attr("id");
+
+            if(confirm('ARE YOU SURE YOU WANT TO RESET PASSWORD?')){
+                $.ajax({
+                    url: '<?=base_url('users/resetpassword/')?>'+id,
+                    type: 'POST',  // Use POST instead of DELETE for this type of action
+                    error: function() {
+                        Swal.fire("Error", "Something is wrong", "error");
+                    },
+                    success: function(data) {
+                        if(data == "true") {  // Assuming the server returns a string "true"
+                             //location.reload();
+                            Swal.fire("Success", "Password successfully reset", "success");
+                        } else {
+                            Swal.fire("Error", "Unable to reset password", "error");
+                        }
+                    }
+                });
+            } else {
+                Swal.fire("Cancelled", "Action is cancelled", "error");
+            }
+       });
 
 
 

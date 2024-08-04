@@ -47,6 +47,7 @@
                     <div class="container mt-5 mb-5 col-md-12">
                         <h4><?=$title?></h4>
                <?php if(!empty($allprod)) { ?>
+
                         <table class="table table-striped" id="table">
                             <thead>
                                 <tr>
@@ -54,9 +55,9 @@
                                     <th scope="col">Product Name</th>
                                     <th scope="col">Product Price</th>
                                     <th scope="col" class="text-center"> Barcode</th>
-                                    <th scope="col">NAFDAC NO</th>
                                     <th scope="col">Date Purchased</th>
                                     <th scope="col">Expiring Date </th>
+                                    <th scope="col"> NafDac  </th>
                                     <th scope="col" class="text-center"> Action  </th>
                                 </tr>
                             </thead>
@@ -86,12 +87,19 @@
                                           </script>
 
                                          </td>
-                                        <td>  <?=$product->nafdacno?></td>
+                                       
                                         <td>  <?=$product->purchase_date?></td>
-                                        <td>  <?=$product->prodname?></td>
+                                        <td>  <?=$product->expiring_date?></td>
+                                        <td> 
+                                          <?=$product->nafdacno?>
+                                        </td> 
                                         <td>
+                                            <?php if($this->session->office =="MANAGER" || $this->session->role == "SUPPER ADMIN"){ ?>
                                            <button type="submit" class="btn btn-danger remove" tooltip="delete"><i class="fa fa-trash"></i></button>
                                            <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-pencil"></i></button>
+                                           <?php }else{ ?>
+                                           <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-pencil"></i></button>
+                                            <?php } ?>
                                         </td>
                                    </tr>
 
@@ -114,7 +122,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                        <label> Product Price </label>
-                                                        <input type="text" name="prodprice" class="form-control" value="<?=$product->prodprice?>">
+                                                        <input type="number" name="prodprice" class="form-control" value="<?=$product->prodprice?>">
                                                     </div>
                                                     <div class="form-group">
                                                     <label> Product Category </label>
@@ -122,7 +130,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                     <label> Product Quantity </label>
-                                                        <input type="text" name="prodqty" class="form-control" value="<?=$product->prodqty?>">
+                                                        <input type="number" name="prodqty" class="form-control" value="<?=$product->prodqty?>">
                                                     </div>
                                                   </div>
                                                   <div class="modal-footer">

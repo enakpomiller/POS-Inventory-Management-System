@@ -12,16 +12,17 @@
             <ul class="metismenu " id="sidebarNav">
               
 
-                <?php  if($this->session->role == 'Staff'){?>
+                <?php if($this->session->role == 'Staff'){?>
   
-                         <?php 
-                            $this->db->where('userID',$this->session->userID);
+                          <?php 
+                            $this->db->where('userID',$this->session->userID );
                             $getuserID = $this->db->get('tbl_privilleges')->row();
+                             
                             if($getuserID){  ?>
                                     <li class="text-light text-center" > <?="Role: ".$getuserID->office?>  </li>                       
                                     <a class="text-light" href="<?=base_url('dashboard')?>"><center> Dashboardxx </center> </a>
                                     <?php if(in_array('1', json_decode($getuserID->user_roles))){ ?>   
-                                            <li class="active">
+                                               <li class="active">
                                                 <a class="has-arrow" href="" aria-expanded="false">
                                                     <i class="nav-icon ti ti-rocket"></i>
                                                     <span class="nav-title"> User Management  </span>
@@ -30,34 +31,34 @@
                                                 <ul aria-expanded="false">
                                                    <li> <a href="<?=base_url('users/create_manager')?>" class="nav-link<?=$this->uri->segment(2)=='create_manager'?'active':''?>" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title"> Create User </span></a> </li> 
                                                     <li> <a href='<?=base_url('users/manageusers')?>'><i class="fa fa-eye"></i> View All  Users </a> </li>
-                                                    <li> <a href="<?=base_url('users/create_manager')?>"> Create Staff Account </a> </li>
                                                 </ul>
                                             </li> 
-                                            <li class="active">
-                                                <a class="has-arrow" href="" aria-expanded="false">
-                                                    <i class="nav-icon ti ti-rocket"></i>
-                                                    <span class="nav-title">Invoice Management   </span>
-                                                    <span class="nav-label label label-danger">9</span>
-                                                </a>
-                                                <ul aria-expanded="false">
-                                                    <li> <a href='index-crm.html'> Create New Product  </a> </li>
-                                                    <li> <a href='index-real-estate.html'> View Staff Records </a> </li>
-                                                    <li> <a href="<?=base_url('users/create_manager')?>"> Create Staff Account </a> </li>
-                                                </ul>
-                                            </li>
-                                            <li class="active">
-                                                <a class="has-arrow" href="" aria-expanded="false">
-                                                    <i class="nav-icon ti ti-rocket"></i>
-                                                    <span class="nav-title"> Sales Management    </span>
-                                                    <span class="nav-label label label-danger">9</span>
-                                                </a>
-                                                <ul aria-expanded="false">
-                                                    <li> <a href='index-crm.html'> Create New Order  </a> </li>
-                                                    <li> <a href='index-real-estate.html'> Confirm Order  </a> </li>
-                                                    <li> <a href="<?=base_url('users/create_manager')?>"> View Order History  </a> </li>
-                                                </ul>
-                                            </li>
-                             <?php  }elseif(in_array('3',json_decode($getuserID->user_roles))){ ?>
+                                                    <!-- <li class="active">
+                                                        <a class="has-arrow" href="" aria-expanded="false">
+                                                            <i class="nav-icon ti ti-rocket"></i>
+                                                            <span class="nav-title">Invoice Management   </span>
+                                                            <span class="nav-label label label-danger">9</span>
+                                                        </a>
+                                                        <ul aria-expanded="false">
+                                                            <li> <a href='index-crm.html'> Create New Product  </a> </li>
+                                                            <li> <a href='index-real-estate.html'> View Staff Records </a> </li>
+                                                            <li> <a href="<?=base_url('users/create_manager')?>"> Create Staff Account </a> </li>
+                                                        </ul>
+                                                    </li> -->
+                                                    <!-- <li class="active">
+                                                        <a class="has-arrow" href="" aria-expanded="false">
+                                                            <i class="nav-icon ti ti-rocket"></i>
+                                                            <span class="nav-title"> Sales Management    </span>
+                                                            <span class="nav-label label label-danger">9</span>
+                                                        </a>
+                                                        <ul aria-expanded="false">
+                                                            <li> <a href='index-crm.html'> Create New Order  </a> </li>
+                                                            <li> <a href='index-real-estate.html'> Confirm Order  </a> </li>
+                                                            <li> <a href="<?=base_url('users/create_manager')?>"> View Order History  </a> </li>
+                                                        </ul>
+                                                    </li> -->
+
+                                  <?php  }if(in_array('3',json_decode($getuserID->user_roles))){ ?>
                                     <li class="active">
                                         <a class="has-arrow" href="" aria-expanded="false">
                                             <i class="nav-icon ti ti-rocket"></i>
@@ -65,35 +66,65 @@
                                             <span class="nav-label label label-danger">9</span>
                                         </a>
                                         <ul aria-expanded="false">
-                                            <li> <a href='index-crm.html'> Create New Order  </a> </li>
+                                            <li> <a href='<?=base_url('products/order')?>'> Create New Order  </a> </li>
                                             <li> <a href='index-real-estate.html'> Confirm Order  </a> </li>
                                             <li> <a href="<?=base_url('users/create_manager')?>"> View Order History  </a> </li>
                                         </ul>
                                     </li>
-                              <?php  }elseif(in_array('2', json_decode($getuserID->user_roles))) { ?>
-                                 <li class="active">
+                                    <?php  }if(in_array('2', json_decode($getuserID->user_roles))) { ?>
+                                          
+                                            <li class="active">
+                                                <a class="has-arrow" href="" aria-expanded="false">
+                                                    <i class="nav-icon ti ti-rocket"></i>
+                                                    <span class="nav-title">Inventory Management   </span>
+                                                    <span class="nav-label label label-danger">9</span>
+                                                </a>
+                                                <ul aria-expanded="false">
+                                                    <li> <a href='<?=base_url("products/addproduct")?>'> Create Product  </a> </li>
+                                                    <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Multiple   </a> </li>
+                                                    <li> <a href="<?=base_url('products/viewprod')?>"> View Products </a> </li>
+                                                    <li> <a href="<?=base_url('products/printbarcode')?>"> Print Barcodes </a> </li>
+                                                </ul>
+                                            </li>
+                                    <?php }if(in_array('4', json_decode($getuserID->user_roles))) {?>
+
+                                        <li class="active">
+                                                <a class="has-arrow" href="" aria-expanded="false">
+                                                    <i class="nav-icon ti ti-rocket"></i>
+                                                    <span class="nav-title">Log Management   </span>
+                                                    <span class="nav-label label label-danger">9</span>
+                                                </a>
+                                                <ul aria-expanded="false">
+                                                    <li> <a href='<?=base_url("products/addproduct")?>'>  Login Logs  </a> </li>
+                                                    <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Feature Access Logs  </a> </li>
+                                                  
+                                               
+                                                </ul>
+                                            </li>
+
+                                     <?php }else{ ?>
+                                         <?="<p class='text-center'>No Role Yet </p>"?>
+                                       <?php } ?>
+                                     
+
+                          <?php } else{ ?>
+                                 
+                                    <li class="active">
                                         <a class="has-arrow" href="" aria-expanded="false">
                                             <i class="nav-icon ti ti-rocket"></i>
-                                            <span class="nav-title">Inventory Management   </span>
+                                            <span class="nav-title"> User Management  </span>
                                             <span class="nav-label label label-danger">9</span>
                                         </a>
                                         <ul aria-expanded="false">
-                                            <li> <a href='<?=base_url("products/addproduct")?>'> Create Product  </a> </li>
-                                            <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Multiple   </a> </li>
-                                            <li> <a href="<?=base_url('products/viewprod')?>"> View Products </a> </li>
-                                            <li> <a href="<?=base_url('products/printbarcode')?>"> Print Barcodes </a> </li>
+                                            <li> <a href="<?=base_url('users/create_manager')?>" class="nav-link<?=$this->uri->segment(2)=='create_manager'?'active':''?>" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title"> Create User </span></a> </li> 
+                                            <li> <a href='<?=base_url('users/manageusers')?>'><i class="fa fa-eye"></i> View All  Users </a> </li>
+                                            <li> <a href="<?=base_url('users/create_manager')?>"> Create Staff Account </a> </li>
                                         </ul>
-                                    </li>
-                            
-                              <?php }else{ echo "<p class='text-center'>No Role Yet </p>";}?>
+                                    </li> 
+                          <?php } ?>
 
-                    <?php } else{ ?>
-                      echo " staff not found ";
-                   <?php } ?>
-
-             <?php }else{ ?>
-
-                <li class="active">
+        <?php }else{ ?>
+                <!-- <li class="active">
                     <a class="has-arrow" href="" aria-expanded="false">
                         <i class="nav-icon ti ti-rocket"></i>
                         <span class="nav-title"> Menu Options</span>
@@ -110,64 +141,32 @@
                         <li> <a href='index-real-estate.html'>Real Estate</a> </li>
                         <li> <a href='index-crypto-currency.html'>Crypto Currency</a> </li>
                     </ul>
+                </li> -->
+            
+              <li class="text-light text-center" > <?=$this->session->role?>  </li>                       
+              <a class="text-light" href="<?=base_url('dashboard')?>"><center>Back To Dashboard </center> </a>
+                <li class="active">
+                    <a class="has-arrow" href="" aria-expanded="false">
+                        <i class="nav-icon ti ti-rocket"></i>
+                        <span class="nav-title">Inventory Management   </span>
+                        <span class="nav-label label label-danger">9</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li> <a href='<?=base_url("products/addproduct")?>'> Create Product  </a> </li>
+                        <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Multiple   </a> </li>
+                        <li> <a href="<?=base_url('products/viewprod')?>"> View Products </a> </li>
+                        <li> <a href="<?=base_url('products/printbarcode')?>"> Print Barcodes </a> </li>
+                    </ul>
                 </li>
 
-              <!--                 
-                <li><a href="app-chat.html" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Chat</span></a> </li>
-                <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="nav-icon ti ti-calendar"></i><span class="nav-title">Calendar</span></a>
-                    <ul aria-expanded="false">
-                        <li> <a href='calendar-full.html'>Full Calendar</a> </li>
-                        <li> <a href='calendar-list.html'>Calendar List</a> </li>
-                    </ul>
-                </li> -->
-
-            
                <li> <a href="<?=base_url('users/create_manager')?>" class="nav-link<?=$this->uri->segment(2)=='create_manager'?'active':''?>" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title"> Create User </span></a> </li> 
+               <li> <a href='<?=base_url('users/manageusers')?>'><i class="fa fa-eye"></i> View All  Users </a> </li>
              
-               <?php  } ?>
-
-              <!--                 
-                <li>
-                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="nav-icon ti ti-bag"></i> <span class="nav-title">UI Kit</span></a>
-                    <ul aria-expanded="false">
-                        <li> <a href="ui-alerts.html">Alerts</a> </li>
-                        <li> <a href="ui-accordions.html">Accordions</a> </li>
-                        <li> <a class="has-arrow" href="javascript: void(0);">Buttons</a>
-                            <ul aria-expanded="false">
-                                <li> <a href="ui-button.html">Default Buttons</a> </li>
-                                <li> <a href="ui-button-icon.html">Icon Buttons</a> </li>
-                                <li> <a href="ui-button-block.html">Block Buttons</a> </li>
-                                <li> <a href="ui-button-social.html">Social Buttons</a> </li>
-                                <li> <a href="ui-button-groups.html">Group Buttons</a> </li>
-                            </ul>
-                        </li>
-                        <li> <a href="ui-badges.html">Badges</a> </li>
-                        <li> <a href="ui-cards.html">Cards</a> </li>
-                        <li> <a href="ui-carousel.html">Carousel</a> </li>
-                        <li> <a href="ui-dropdowns.html">Dropdowns</a> </li>
-
-                        <li> <a href="ui-grid.html">Grid</a> </li>
-                        <li> <a href="ui-list-group.html">List Group</a> </li>
-                        <li> <a href="ui-lightbox.html">Light Box</a> </li>
-                        <li> <a href="ui-modals.html">Modals</a> </li>
-                        <li> <a href="ui-media.html">Media</a> </li>
-                        <li> <a href="ui-nestable-list.html">Nestable List</a> </li>
-                        <li> <a href="ui-pagination.html">Pagination</a> </li>
-                        <li> <a href="ui-progressbars.html">Progress Bars</a> </li>
-
-                        <li> <a href="ui-sweet-alert.html">Sweet Alert</a> </li>
-                        <li> <a href="ui-tabs.html">Tabs</a> </li>
-                        <li> <a href="ui-nav.html">Nav</a> </li>
-                        <li> <a href="ui-tooltips-popovers.html">Tooltips & Popovers</a> </li>
-                        <li> <a href="ui-typography.html">Typography</a> </li>
-                        <li> <a href="ui-toastr.html">Toastr</a> </li>
-                        <li> <a href="ui-video.html">Video</a> </li>
-                    </ul>
-                </li> -->
+         <?php  } ?>
 
 
-            </ul>
-        </div>
+     </ul>
+</div>
         <!-- end sidebar-nav -->
     </aside>
     <!-- end app-navbar -->
