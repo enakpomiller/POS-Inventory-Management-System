@@ -4,6 +4,13 @@
 
 
 <head>
+    <!-- datatable bootstrap -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+		<!-- enddatatable bootstrap -->
+    <!-- barcode -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+
+
     <title> POS Inventary Management System</title>
     <meta charset="utf-8" />
 

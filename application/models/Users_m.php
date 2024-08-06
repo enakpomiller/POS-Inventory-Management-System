@@ -6,6 +6,8 @@ class Users_m extends CI_model {
     public  $tbl_roles = 'tbl_roletemplate';
     public  $tbl_staffrole = 'tbl_staffrole';
     public  $tbl_privilleges = 'tbl_privilleges';
+    public  $tbl_country  = "countries ";
+    public  $tbl_customers = "tbl_customers";
 
 
 
@@ -64,6 +66,16 @@ class Users_m extends CI_model {
   public function resetpassword($userdata,$where){
       $this->db->where($where);
       return $this->db->update($this->tbl_users,$userdata);
+  }
+
+  public function getallcountries(){
+      return $this->db->get($this->tbl_country)->result();
+  }
+
+  public function CreatCustomer($costumer_arr){
+      $this->db->insert('tbl_customers',$costumer_arr);
+      $lastID = $this->db->insert_id();
+      return $lastID;
   }
 
 }

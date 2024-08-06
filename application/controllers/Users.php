@@ -221,6 +221,61 @@ class Users extends CI_Controller {
 
 	}
 
+   public function addcustomers(){
+      $this->data['title'] = " Create Customer";
+	  $this->data['subtitle'] = "Customer Form";
+	  $this->data['countries'] = $this->users_m->getallcountries();
+	  $this->data['page_name'] = "addcustomer";
+	  $this->load->view('admin_index',$this->data);
+
+   }
+
+   public function processCustomer(){
+	 if($_POST){
+		$rules = $this->customer_rules();
+		$this->form_validation->set_rules($rules);
+		 if($this->form_validation->run() == TRUE ){
+				$costumer_arr = [
+					'fname'=>$this->input->post('fname'),
+					'lname' => $this->input->post('lname'),
+					'country' => $this->input->post('country'),
+					'phone' => $this->input->post('phone'),
+					'email' => $this->input->post('email'),
+					'created_at' => date('Y-M-D')
+				]; 
+			  $_SESSION['custdetails'] = $costumer_arr;
+			  $checkemail = $this->db->get_where('tbl_customers',array('email'=>$_POST['email']))->row();
+			  if($checkemail){
+			      $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Customr Already exist ']);
+				  return redirect(base_url('users/addcustomers'));
+			   }else{
+				$createcust = $this->users_m->CreatCustomer($costumer_arr);
+				if($createcust){
+				       $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Customr Created Successfully']);
+				    $_SESSION['custID'] = $createcust;
+				     return redirect(base_url('products/order'));
+				}else{
+				  $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Error! unable to insert record']);
+				  return redirect(base_url('products/order'));
+				}
+			}
+		
+		
+		}else{
+			$this->data['title'] = " Create Customer";
+			$this->data['subtitle'] = "Customer Form";
+			$this->data['countries'] = $this->users_m->getallcountries();
+			$this->data['page_name'] = "addcustomer";
+			$this->load->view('admin_index',$this->data);
+		}
+	  }else{
+	     return redirect(base_url('users/addcustomers'));
+	   }
+
+
+
+    }
+
 
 
 	public function manager_rules() {
@@ -260,6 +315,39 @@ class Users extends CI_Controller {
 	}
 
 
+
+  public function customer_rules(){
+	$rules = array(
+		array(
+			'label' => 'First Name',
+			'field' => 'fname',
+			'rules' => 'trim|required'
+		),
+		array(
+			'label' => 'Last Name',
+			'field' => 'lname',
+			'rules' => 'trim|required'
+		),
+		array(
+			'label' => 'Country',
+			'field' => 'country',
+			'rules' => 'trim|required'
+		),
+		array(
+			'label' => 'Phone Number',
+			'field' => 'phone',
+			     //'rules' => 'trim|required|min_length[11]|max_length[11]|required' 
+		    'rules' => 'trim|required|min_length[11]|max_length[11]|numeric'
+			    //'rules' => 'trim|min_length[11]|required' 
+		),
+		array(
+			'label' => 'Email',
+			'field' => 'email',
+			'rules' => 'trim|required'
+		)
+	);
+	return $rules;
+  }
 	// public function manager_rules() {
 	// 	$rules = array(
 	// 		array(

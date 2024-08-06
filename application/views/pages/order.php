@@ -25,7 +25,7 @@
         <div class="col-md-12 m-b-30">
             <!-- begin page title -->
             <div class="d-block d-sm-flex flex-nowrap align-items-center">
-          <div class="page-title mb-2 mb-sm-0">
+               <div class="page-title mb-2 mb-sm-0">
 
                 <h4> <?=$title?>  </h4>
 
@@ -80,13 +80,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name"> Quantity </label>
-                        <input type="number" class="form-control" id="quantity"  name="prodqty" autocomplete="off"  placeholder="tqy">
+                        <input type="number" class="form-control" id="quantity"  name="prodqty" autocomplete="off"  placeholder="QTY">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name"> Total </label>
-                        <input type="number" class="form-control" id="totalPrice" name="prodtotal" autocomplete="off"  placeholder=" ">
+                        <input type="number" class="form-control" id="totalPrice" name="totalprice" autocomplete="off"  placeholder=" Total Price ">
                     </div>
                 </div>
                 <div class="col-md-2" style="position:relative;top:30px;">
@@ -95,10 +95,130 @@
                     </div>
                 </div>
             </div>    
-       </form>
+        </form>
+
+             
+       <?php if($allorder){ ?>
+       
+               <div class="page-title mt-4 mb-sm-0">
+                    <h4> <?=$this->session->fname." Ordered Items"?>  </h4>
+               </div>
+   
+        <table class="table table-hover mt-4">
+             <thead class="bg-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col"> Product Name</th>
+                <th scope="col"> Product Price </th>
+                <th scope="col">Quantity</th>
+                <th scope="col"> Total Amount </th>
+                <th scope="col" class="text-right"> Action  </th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php $counter =1; foreach($allorder as $orders){  ?>
+                <tr id="<?=$orders->orderID?>">
+                  <th scope="row"><?=$counter++?></th>
+                    <td> <?=$orders->prodname?> </td>
+                    <td> <?=$orders->price?> </td>
+                    <td> <?=$orders->prodqty?> </td>
+                      <td>
+                        <?=number_format(($orders->price)*($orders->prodqty),2)?>
+                      </td>
+                    <td> 
+                    <a href=""  class="btn btn-danger remove" style="float:right;" title="delete record"><i class="fa fa-trash"></i></a> 
+                    <a href="" class="btn btn-primary" style="float:right;" title="Edit record" data-toggle="modal"  data-target="#exampleModal<?=$orders->orderID?>"><i class="fa fa-pencil"></i></a>
+                  </td>
+                 </tr>
+
+            <!-- modal -->
+            <div class="modal fade" id="exampleModal<?=$orders->orderID?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title" id="exampleModalLabel"><p>  Edit Qty </p> </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="<?=base_url('products/updateorderqty')?>" method="POST">
+                        <div class="modal-body">
+                            <label> Product Quantity  </label>
+                        <input type="hidden" name="prodid" id="prodid"  class="form-control" value="<?=$orders->orderID?>">
+                        <input type="number" name="prodqty" id="prodqty"  class="form-control" value="<?=$orders->prodqty?>">
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            <!-- close modal -->
+
+              <?php } ?>
+         
+            </tbody>
+            </table>
+        <?php }else{?>
+           <h4 class="mt-4 text-center" style="position:relative;top:20px;"> No Record Found  </h4>
+          <?php } ?>
+
+          <form action="<?=base_url('products/processpayment')?>" method="POST">
+             <div class="row mt-4" style="position:relative;top:20px;">
+
+             <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="paymentmethod"> Payment Method </label>
+                             <?php
+                                $payment_arr = [
+                                    'Online Banking'=>"Online Banking",
+                                    'Offline Banking'=> "Offline Banking",
+                                    'Cash' => "Cash",
+                                     'POS' => "POS",
+                                     'Transfer' =>"Transfer"
+                                ];
+                            ?>
+                         <select name="paymentmethod" class="form-control" required>
+                                <option disabled>    select payment method </option>
+                              <?php foreach($payment_arr as $payment){ ?>
+                                    <option> <?=$payment?>    </option>
+                               <?php }?>
+                         </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="paymentmethod"> Payment Status </label>
+                             <?php
+                                $payment_arr = [
+                                    'Paid'=>" Paid",
+                                    'Partially Paid'=> "Partially Paid",
+                                    'Pending' => "Pending",
+                                    'Refund' => "Refund",
+                                    'Unpaid' =>"Unpaid"
+                                ];
+                                ?>
+                         <select name="paymentstatus" required class="form-control">
+                                <option disabled>    select payment Status </option>
+                              <?php foreach($payment_arr as $payment){ ?>
+                                    <option> <?=$payment?>    </option>
+                               <?php }?>
+                         </select>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-top:30px;">
+                    <div class="form-group">
+                        <button class="btn btn-primary w-100"> Proceed to Place Order </button>
+                    </div>
+                </div>
             </div>
+         </form>
+    </div>
 
          </div>
+    
         </div>
 
     </div>
@@ -114,16 +234,12 @@
  <script>
     $(document).ready(function() {
         $('#butsave').on('click', function() {
-               //location.reload();
-            var fname = $('#fname').val();
-            var lname = $('#lname').val();
-            var phone = $('#phone').val();
-            var username = $('#username').val();
-            var password = $('#password').val();
-            var confpass = $('#confpass').val();
+             //location.reload();
+            var prodid = $('#prodid').val();
+            var prodqty = $('#prodqty').val();
             
 
-            if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
+            if(prodid!="" && prodqty!=""){
               
                 if(password.length < 7){
                     toastr.error(' Sorry! Password should be more than 8 characters ');
@@ -133,16 +249,13 @@
                   }else{ 
                        $("#butsave").attr("disabled", "disabled");
                             $.ajax({
-                                url: "<?php echo base_url("users/process_manager");?>",
+                                url: "<?php echo base_url("products/updateorderqty");?>",
                                 type: "POST",
                                 data: {
                                     type: 1,
-                                    fname,
-                                    lname,
-                                    phone,
-                                    username,
-                                    password,
-                                    confpass
+                                    prodid,
+                                    prodqty
+                             
                                 },
                                 cache: false,
                                 success: function(res){
@@ -152,7 +265,7 @@
                                         $('#fupForm').find('input:text').val('');
                                         $("#success").show();
                                 }else if(res == true){
-                                    window.location = "<?=base_url('users/assign_role')?>";
+                                    window.location = "<?=base_url('products/order')?>";
                                 }else{
                                     toastr.error(' User Already Exist ');
                                   $("#butsave").removeAttr("disabled");
@@ -197,6 +310,38 @@
             }
         });
     });
+
+
+    $(".remove").click(function(event){
+        event.preventDefault();
+            var id = $(this).parents("tr").attr("id");
+            console.log(id);
+            if(confirm(' ARE YOU SURE YOU WANT TO DELETE THIS PRODUCT ?'))
+
+            {
+                $.ajax({
+                url: '<?=base_url('products/deleteorder/')?>'+id,
+                type: 'DELETE',
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function(data) {
+                    if(data == true){
+                        $("#"+id).remove();
+                        //alert("Record removed successfully");
+                        swal.fire("success"," PRODUCT REMOVED SUCCESSFULLY ","success");
+                    }else{
+                        swal.fire("error","UNABLE TO DELETE RECORD","error");
+                    }
+
+                }
+                });
+            }else{
+            //alert(" ACTION IS BEEN CANCELLED");
+            swal.fire("error","ACTION IS CANCELLED","error");
+            }
+        });
+
 
 
     document.addEventListener('DOMContentLoaded', (event) => {

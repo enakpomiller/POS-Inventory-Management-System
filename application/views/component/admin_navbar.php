@@ -101,7 +101,20 @@
                                                
                                                 </ul>
                                             </li>
-
+                                    <?php }if(in_array('5', json_decode($getuserID->user_roles))){ ?>
+                                            <li class="active">
+                                                <a class="has-arrow" href="" aria-expanded="false">
+                                                    <i class="nav-icon ti ti-rocket"></i>
+                                                    <span class="nav-title">Customer Management   </span>
+                                                    <span class="nav-label label label-danger">9</span>
+                                                </a>
+                                                <ul aria-expanded="false">
+                                                    <li> <a href='<?=base_url("users/addcustomers")?>'>  Creatte Customer </a> </li>
+                                                    <li> <a href='<?=base_url("products/add_multiple_prod")?>'> View Customer History </a> </li>
+                                                  
+                                               
+                                                </ul>
+                                            </li>
                                      <?php }else{ ?>
                                          <?="<p class='text-center'>No Role Yet </p>"?>
                                        <?php } ?>

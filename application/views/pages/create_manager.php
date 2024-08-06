@@ -55,7 +55,7 @@
 
                     <div class="container mt-5 mb-5 col-md-9">
                         <h2>User Form</h2>
-                        <?//= form_open(base_url('users/process_manager')) ?>
+                        <?= form_open(base_url('users/process_manager')) ?>
                             <div class="form-group">
                                 <label for="name">First Name</label>
                                 <input type="text" class="form-control"  name="fname" autocomplete="off" id="fname" placeholder="Enter your first name">
@@ -159,7 +159,7 @@
                           }else{ 
                                $("#butsave").attr("disabled", "disabled");
                                     $.ajax({
-                                        url: "<?php echo base_url("users/process_manager");?>",
+                                           url: "<?php echo base_url("users/process_manager");?>",
                                         type: "POST",
                                         data: {
                                             type: 1,

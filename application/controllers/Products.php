@@ -276,14 +276,30 @@ class Products extends CI_Controller {
    public function order(){
        $this->data['title'] = " Create Order ";
        $this->data['allprod'] = $this->db->get('tbl_products')->result();
+       $this->data['allorder'] = $this->products_m->getallorders($_SESSION['custID']);
        $this->data['page_name'] = "order";
        $this->load->view("admin_index",$this->data);
    }
 
 
    public function process_createorder(){
-         $input_order = [$_POST];
-         var_dump($input_order);die;
+           $insert_order = [
+              'prodID' => $_POST['prodID'],
+              'prodprice' => $_POST['prodprice'],
+              'prodqty' => $_POST['prodqty'],
+              'totalprice' => $_POST['totalprice'],
+              'userID' => $_SESSION['custID']
+              
+           ];
+
+
+         $insert = $this->products_m->createorder($insert_order);
+         if($insert){
+          $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Order Created Successfully']);
+          return redirect(base_url('products/order'));
+          }else{
+             echo " cannot to insert records ";
+          }
   
    }
    public function fetch_records(){
@@ -333,6 +349,47 @@ class Products extends CI_Controller {
           echo " not found ";
         }
    }
+
+   public function deleteorder($id){
+       $where =['orderID'=>$id];
+       $delete = $this->products_m->deleteSingleOrderr($where);
+       if($delete){
+         echo true;
+       }else{
+         echo false;
+      }
+   }
+
+  
+   public function updateorderqty(){ 
+         $data_arr = ['prodqty' =>$_POST['prodqty']];
+          $this->db->where('orderID',$_POST['prodid']);
+          $dim = $this->db->update('tbl_order',$data_arr);
+          if($dim){
+               $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Order Quantity Updated Successfully']);
+               return redirect(base_url('products/order'));
+           }else{
+             echo " cannot update ";
+           }
+  
+     }
+
+    public function processpayment(){
+         $payment_arr = [
+            'userID' => $_SESSION['custID'],
+            'paymentmethod' => $_POST['paymentmethod'],
+             'paymentstatus' => $_POST['paymentstatus'],
+             'invoice_no' => "PIST-000".$_SESSION['custID'],
+              'date' => date('Y-M-D')
+         ];
+          //echo "<pre>"; print_r($payment_arr);exit;
+        $dim =  $this->db->insert('tbl_payment',$payment_arr);
+        if($dim){
+          echo " payment created ";
+        }else{
+          echo " cannot create ";
+        }
+    }
 
   public function addproduct_rules() {
     $rules = array(
