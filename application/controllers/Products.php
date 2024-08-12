@@ -288,7 +288,7 @@ class Products extends CI_Controller {
               'prodprice' => $_POST['prodprice'],
               'prodqty' => $_POST['prodqty'],
               'totalprice' => $_POST['totalprice'],
-              'userID' => $_SESSION['custID']
+              'customerID' => $_SESSION['custID']
               
            ];
 
@@ -298,7 +298,7 @@ class Products extends CI_Controller {
           $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Order Created Successfully']);
           return redirect(base_url('products/order'));
           }else{
-             echo " cannot to insert records ";
+             echo " error! unable to create order ";
           }
   
    }
@@ -350,7 +350,7 @@ class Products extends CI_Controller {
         }
    }
 
-   public function deleteorder($id){
+   public function deleteorder($id){ 
        $where =['orderID'=>$id];
        $delete = $this->products_m->deleteSingleOrderr($where);
        if($delete){
@@ -376,20 +376,39 @@ class Products extends CI_Controller {
 
     public function processpayment(){
          $payment_arr = [
-            'userID' => $_SESSION['custID'],
+            'customerID' => $_SESSION['custID'],
             'paymentmethod' => $_POST['paymentmethod'],
              'paymentstatus' => $_POST['paymentstatus'],
              'invoice_no' => "PIST-000".$_SESSION['custID'],
               'date' => date('Y-M-D')
          ];
-          //echo "<pre>"; print_r($payment_arr);exit;
-        $dim =  $this->db->insert('tbl_payment',$payment_arr);
-        if($dim){
-          echo " payment created ";
-        }else{
-          echo " cannot create ";
+           $exist = $this->db->get_where('tbl_payment',array('customerID',$_SESSION['custID']))->row();
+           if($exist){
+            var_dump(" exirted");exit;
+            $this->db->where('customerID',$_SESSION['custID']);
+            $this->db->update('tbl_payment',$payment_arr);
+          }else{ 
+         $payment =  $this->db->insert('tbl_payment',$payment_arr);
+          if($payment){
+
+            $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Order Paymnet Successfully']);
+            return redirect(base_url('products/invoice'));
+          }else{
+            echo " cannot create ";
+          }
         }
     }
+
+    public function invoice (){
+       $userID = $_SESSION['custID'];
+       $dim = $this->products_m->getpaymentrecord($userID);
+          echo "<pre>"; print_r($dim);die; 
+       $this->data['title'] = " Order Invoice ";
+       $this->data['page_name'] = "invoice";
+       $this->load->view('admin_index',$this->data);
+     }
+
+
 
   public function addproduct_rules() {
     $rules = array(

@@ -162,7 +162,8 @@
             </tbody>
             </table>
         <?php }else{?>
-           <h4 class="mt-4 text-center" style="position:relative;top:20px;"> No Record Found  </h4>
+            <center><img src="<?=base_url('assets/img/browser-logo/cart.png')?>" style="width:17%"></center>
+           <h4 class="mt-4 text-center" style="position:relative;top:0px;"> Cart is Empty  </h4>
           <?php } ?>
 
           <form action="<?=base_url('products/processpayment')?>" method="POST">
@@ -224,7 +225,7 @@
     </div>
 
 
-    <div id="strength">Weak password!</div>
+
     <!-- end row -->
 </div>
 <!-- end container-fluid -->
@@ -315,7 +316,7 @@
     $(".remove").click(function(event){
         event.preventDefault();
             var id = $(this).parents("tr").attr("id");
-            console.log(id);
+      
             if(confirm(' ARE YOU SURE YOU WANT TO DELETE THIS PRODUCT ?'))
 
             {

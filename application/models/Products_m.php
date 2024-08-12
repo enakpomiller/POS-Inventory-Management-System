@@ -36,20 +36,34 @@ class Products_m extends CI_Model {
    }
   
    public function getallorders($userID){
-      $this->db->select('tbl_order.orderID,tbl_products.prodname,tbl_order.prodprice as price,tbl_order.prodqty,tbl_order.prodprice,tbl_order.totalprice');
+      $this->db->select('tbl_order.orderID,tbl_order.customerID,tbl_products.prodname,tbl_order.prodprice as price,tbl_order.prodqty,tbl_order.prodprice,tbl_order.totalprice');
       $this->db->from($this->tbl_order);
       $this->db->join('tbl_products','tbl_order.prodID = tbl_products.prodID');
-      $this->db->where('tbl_order.userID',$userID);
+      $this->db->where('tbl_order.customerID',$userID);
       $query = $this->db->get()->result();
       return $query;
       
    }
 
+
    public function deleteSingleOrderr($where){
-    
         $this->db->where($where);
         return $this->db->delete($this->tbl_order);
    }
+
+
+   public function getpaymentrecord($userID) {
+        $this->db->distinct();
+        $this->db->select('tbl_customers.customerID,tbl_customers.fname,tbl_customers.lname,tbl_order.prodID,tbl_order.prodprice,tbl_products.prodname');
+        $this->db->join('tbl_customers','tbl_order.customerID = tbl_customers.customerID');
+        $this->db->join('tbl_products','tbl_order.prodID = tbl_products.prodID');
+
+        $this->db->where('tbl_order.customerID',$userID);
+        $query = $this->db->get('tbl_order');
+
+        return $query->result();
+  }
+
 
 }
 
