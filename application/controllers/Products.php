@@ -375,13 +375,14 @@ class Products extends CI_Controller {
      }
 
     public function processpayment(){
-         $payment_arr = [
-            'customerID' => $_SESSION['custID'],
-            'paymentmethod' => $_POST['paymentmethod'],
-             'paymentstatus' => $_POST['paymentstatus'],
-             'invoice_no' => "PIST-000".$_SESSION['custID'],
-              'date' => date('Y-M-D')
-         ];
+      if($this->session->office == 'MANAGER'){ 
+            $payment_arr = [
+                'customerID' => $_SESSION['custID'],
+                'paymentmethod' => $_POST['paymentmethod'],
+                'paymentstatus' => $_POST['paymentstatus'],
+                'invoice_no' => "PIST-000".$_SESSION['custID'],
+                  'date' => date('Y-M-D')
+            ];
            $exist = $this->db->get_where('tbl_payment',array('customerID',$_SESSION['custID']))->row();
            if($exist){
             var_dump(" exirted");exit;
@@ -397,18 +398,91 @@ class Products extends CI_Controller {
             echo " cannot create ";
           }
         }
+      }else{
+        return redirect(base_uri('login'));
+      }
     }
 
     public function invoice (){
+      if($this->session->office == 'MANAGER'){ 
        $userID = $_SESSION['custID'];
-       $dim = $this->products_m->getpaymentrecord($userID);
-          echo "<pre>"; print_r($dim);die; 
+       $where = ['customerID'=>$userID];
+       $this->data['sumprice'] = $this->products_m->sumproduct($where);
+       $this->data['custdetails'] = $this->products_m->getcustdetails($userID);
+
+       $this->data['order'] = $this->products_m->getpaymentrecord($userID);
        $this->data['title'] = " Order Invoice ";
        $this->data['page_name'] = "invoice";
        $this->load->view('admin_index',$this->data);
+      }else{
+        return redirect(base_uri('login'));
+      }
      }
 
 
+    public function updateorder(){
+     if($this->session->office == 'MANAGER'){ 
+          if($_POST){
+            $update_arr = [
+              'prodprice' => $_POST['prodprice'],
+              'prodqty' => $_POST['prodqty'],
+              'totalprice' => (($_POST['prodprice']) * ($_POST['prodqty']))
+          ];
+       
+          $this->db->where('orderID',$_POST['orderID']);
+            $updateord = $this->db->update('tbl_order', $update_arr);
+            if($updateord){
+              echo true;
+              $update_arr2 = ['prodname'=>$_POST['prodname']];
+              $this->db->where('prodID',$_POST['prodID']);
+              $this->db->update('tbl_products', $update_arr2);
+
+            }else{
+              echo false;
+            }
+          }else{
+          return redirect(base_url('products/invoice'));
+          }
+        }else{
+         return redirect(base_uri('login'));
+        }
+     }
+     
+
+  public function customercart(){
+    if($this->session->office == 'MANAGER'){ 
+    if($_POST){
+         $main_arr = array();
+         $data = $this->input->post();
+         for($i=0; $i< sizeof($data['prodname']); $i++){
+            $arr = array(
+              'customerID' => $_POST['customerID'],      
+              'invoiceNumber' => $_POST['invoiceNumber'],
+              'prodname' => $data['prodname'][$i],
+              'prodprice' => $data['prodprice'][$i],
+              'prodqty' => $data['prodqty'][$i]
+            );
+            $main_arr[] = $arr;;
+         }
+         $insertbulk = $this->products_m->insertcustomercart($main_arr);
+         if($insertbulk){
+             $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Customer Invoice Saved Successfully']);
+            return redirect(base_url('products/invoice'));
+          }else{
+            $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' An Error Occured']);
+            return redirect(base_url('products/invoice'));
+          }
+
+    }else{
+      return redirect(base_url('products/invoice'));
+    }
+  }else{
+    return redirect(base_url('login'));
+  }
+     
+   }
+   
+     
 
   public function addproduct_rules() {
     $rules = array(

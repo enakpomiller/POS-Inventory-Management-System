@@ -65,7 +65,7 @@ class Login extends CI_Controller {
 								'office' => $this->db->get_where('tbl_privilleges',array('userID'=>$StaffCheck->userID))->row()->office,
 								'logged_in' => TRUE
 							];
-						
+
 							$this->session->set_userdata($staff_arr);
 							$this->session->set_flashdata('toastr', ['type' => 'success','message' => 'Welcome '.$username ]);
 							return redirect(base_url('dashboard'));
