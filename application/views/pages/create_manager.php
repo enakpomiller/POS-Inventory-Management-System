@@ -55,7 +55,7 @@
 
                     <div class="container mt-5 mb-5 col-md-9">
                         <h2>User Form</h2>
-                        <?= form_open(base_url('users/process_manager')) ?>
+                        <?//=form_open(base_url('users/process_manager')) ?>
                             <div class="form-group">
                                 <label for="name">First Name</label>
                                 <input type="text" class="form-control"  name="fname" autocomplete="off" id="fname" placeholder="Enter your first name">
@@ -82,7 +82,7 @@
                             <div class="form-group">
                                 <label for="email"> Confirm  Password </label>
                                 <input type="password" autocomplete="off" class="form-control" name="confpass"  id="confpass" autocomplete="off" placeholder="Confirm Password">
-                               
+
                             </div>
 
                             <div class="form-group mt-4">
@@ -147,16 +147,16 @@
                     var username = $('#username').val();
                     var password = $('#password').val();
                     var confpass = $('#confpass').val();
-                    
+
 
                     if(fname!="" && lname!="" && phone!="" && username!="" || password!="" || confpass !=""){
-                      
+
                         if(password.length < 7){
                             toastr.error(' Sorry! Password should be more than 8 characters ');
 
                          }else if(phone.length < 11){
                             toastr.error(' Sorry! Phone Number Should be 11 digits and above');
-                          }else{ 
+                          }else{
                                $("#butsave").attr("disabled", "disabled");
                                     $.ajax({
                                            url: "<?php echo base_url("users/process_manager");?>",
@@ -198,7 +198,7 @@
                 });
             });
 
-    
+
     document.querySelector('.toggle-password').addEventListener('click', function (e) {
         const passwordInput = document.getElementById('password');
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';

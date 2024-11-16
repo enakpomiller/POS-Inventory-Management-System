@@ -7,7 +7,7 @@
 						<?php if ($this->session->flashdata('toastr')){ ?>
                             ('<?php echo $this->session->flashdata('toastr')['message']; ?>');
 						<?php }else{?>
-                            ('<?php echo $this->session->flashdata('toastr')['message']; ?>');
+                  ('<?php echo $this->session->flashdata('toastr')['message']; ?>');
 
 						<?php } ?>
 					});
@@ -114,5 +114,3 @@
         <!-- end container-fluid -->
     </div>
     <!-- end app-main -->
-
-

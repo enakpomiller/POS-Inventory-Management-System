@@ -20,7 +20,7 @@ public function checkuserlogin($uname,$pass){
             //  }else{
             //   return false;
             // }
-        
+
 
  }
 

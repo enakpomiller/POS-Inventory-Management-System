@@ -2,6 +2,13 @@
 
 
 
+    <style>
+        .article { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; }
+        .load-more { text-align: center; margin-top: 20px; }
+        #loadMoreBtn { padding: 10px 20px; cursor: pointer; background-color: #007BFF; color: #fff; border: none; }
+    </style>
+
+
 
     <!-- begin app-main -->
     <div class="app-main" id="main">
@@ -184,253 +191,109 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xxl-3">
-                    <div class="card card-statistics bg-gradient">
-                        <div class="card-header border-0">
-                            <h4 class="card-title text-white">Ad Mod</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <p class="text-white">Enable for all users</p>
-                                <div class="form-group ml-auto">
-                                    <div class="checkbox checbox-switch switch-success">
-                                        <label>
-                                            <input type="checkbox" name="switch8" checked="">
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <p class="text-white">Enable for free users</p>
-                                <div class="form-group ml-auto">
-                                    <div class="checkbox checbox-switch switch-success">
-                                        <label>
-                                            <input type="checkbox" name="switch8">
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-statistics">
-                        <div class="card-header border-0">
-                            <h4 class="card-title">Users Upload Image</h4>
-                        </div>
-                        <div class="card-body datting-upload-image">
-                            <div class="tab">
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active show" id="successed-tab" data-toggle="tab" href="#successed" role="tab" aria-controls="successed" aria-selected="true">Successed</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">Pending</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade active show p-0 border-top" id="successed" role="tabpanel" aria-labelledby="successed-tab">
-                                        <div class="d-flex align-items-center justify-content-between row">
-                                            <div class="upload-image d-flex align-items-center col">
-                                                <div class="icon-container m-r-10 img-icon img-icon-sm">
-                                                    <i class="fa fa-male"></i>
-                                                </div>
-                                                <div class="report-details">
-                                                    <h4 class="m-b-0">516</h4>
-                                                    <p>Male</p>
-                                                </div>
-                                            </div>
-                                            <div class="upload-image d-flex align-items-center col">
-                                                <div class="icon-container m-r-10 img-icon img-icon-sm">
-                                                    <i class="fa fa-female"></i>
-                                                </div>
-                                                <div class="report-details">
-                                                    <h4 class="m-b-0">658</h4>
-                                                    <p>Female</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade p-0 border-top" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-                                        <div class=" d-flex align-items-center justify-content-between row">
-                                            <div class="upload-image d-flex align-items-center col">
-                                                <div class="icon-container m-r-10 img-icon img-icon-sm">
-                                                    <i class="fa fa-male"></i>
-                                                </div>
-                                                <div class="report-details">
-                                                    <h4 class="m-b-0">879</h4>
-                                                    <p>Male</p>
-                                                </div>
-                                            </div>
-                                            <div class="upload-image d-flex align-items-center col">
-                                                <div class="icon-container m-r-10 img-icon img-icon-sm">
-                                                    <i class="fa fa-female"></i>
-                                                </div>
-                                                <div class="report-details">
-                                                    <h4 class="m-b-0">957</h4>
-                                                    <p>Female</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxl-9 m-b-30">
+                <div class="col-xxl-12 m-b-30">
                     <div class="card card-statistics dating-contant h-100 mb-0">
                         <div class="card-header">
-                            <h4 class="card-title">View all tickets</h4>
-                              <div class="input-group">
-                                  <button class="input-group-text">-</button>
-                                     <input type="text" value="1" class="qty quantifying">
-                                  <button class="input-group-text">+</button>
-                              </div>
+                            <h4 class="card-title">View Order History  </h4>
+
                         </div>
 
-                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 300px">
+                        <div class="card-body pt-2 scrollbar scroll_dark" style="height: 300px;">
                             <div class="table-responsive">
-                                <table id="datatable-buttons" class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">No.</th>
-                                            <th class="border-top-0">User Name</th>
-                                            <th class="border-top-0">Subject</th>
-                                            <th class="border-top-0">Status</th>
-                                            <th class="border-top-0">Date</th>
-                                            <th class="border-top-0">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-muted">
-                                        <tr>
-                                            <td>00001</td>
-                                            <td>
-                                                <div class="bg-img">
-                                                    <img class="img-fluid" src="assets/img/avtar/01.jpg" alt="user">
-                                                </div>
-                                                <p>Adrian Demiandro</p>
-                                            </td>
-                                            <td>Support Lead</td>
-                                            <td>
-                                                <label class="badge mb-0 badge-success-inverse">Completed</label>
-                                            </td>
-                                            <td>27/3/2018</td>
-                                            <td>
-                                                <a href="javascript:void(0)" class="mr-2"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a>
-                                                <a href="javascript:void(0)"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>00002</td>
-                                            <td>
-                                                <div class="bg-img">
-                                                    <img class="img-fluid" src="assets/img/avtar/02.jpg" alt="user2">
-                                                </div>
-                                                <p>Jenny Smithdro</p>
-                                            </td>
-                                            <td>Office Manager</td>
-                                            <td>
-                                                <label class="badge mb-0 badge-danger-inverse">Cancelled</label>
-                                            </td>
-                                            <td>29/3/2018</td>
-                                            <td>
-                                                <a href="javascript:void(0)" class="mr-2"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a>
-                                                <a href="javascript:void(0)"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>00003</td>
-                                            <td>
-                                                <div class="bg-img">
-                                                    <img class="img-fluid" src="assets/img/avtar/03.jpg" alt="user3">
-                                                </div>
-                                                <p>Brian Joedro</p>
-                                            </td>
-                                            <td>Sales Assistant</td>
-                                            <td>
-                                                <label class="badge mb-0 badge-warning-inverse">Pending</label>
-                                            </td>
-                                            <td>01/04/2018</td>
-                                            <td>
-                                                <a href="javascript:void(0)" class="mr-2"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a>
-                                                <a href="javascript:void(0)"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>00004</td>
-                                            <td>
-                                                <div class="bg-img">
-                                                    <img class="img-fluid" src="assets/img/avtar/04.jpg" alt="user4">
-                                                </div>
-                                                <p>Sandradro Garett</p>
-                                            </td>
-                                            <td>Integration Specialist</td>
-                                            <td>
-                                                <label class="badge mb-0 badge-success-inverse">Completed</label>
-                                            </td>
-                                            <td>10/04/2018</td>
-                                            <td>
-                                                <a href="javascript:void(0)" class="mr-2"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a>
-                                                <a href="javascript:void(0)"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>00005</td>
-                                            <td>
-                                                <div class="bg-img">
-                                                    <img class="img-fluid" src="assets/img/avtar/05.jpg" alt="user5">
-                                                </div>
-                                                <p>Garydro</p>
-                                            </td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>
-                                                <label class="badge mb-0 badge-success-inverse">Completed</label>
-                                            </td>
-                                            <td>15/04/2018</td>
-                                            <td>
-                                                <a href="javascript:void(0)" class="mr-2"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a>
-                                                <a href="javascript:void(0)"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>00006</td>
-                                            <td>
-                                                <div class="bg-img">
-                                                    <img class="img-fluid" src="assets/img/avtar/06.jpg" alt="user6">
-                                                </div>
-                                                <p>Andrew dro</p>
-                                            </td>
-                                            <td>Accountant</td>
-                                            <td>
-                                                <label class="badge mb-0 badge-warning-inverse">Pending</label>
-                                            </td>
-                                            <td>22/04/2018</td>
-                                            <td>
-                                                <a href="javascript:void(0)" class="mr-2"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a>
-                                                <a href="javascript:void(0)"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>00007</td>
-                                            <td>
-                                                <div class="bg-img">
-                                                    <img class="img-fluid" src="assets/img/avtar/01.jpg" alt="user7">
-                                                </div>
-                                                <p>Stonedro</p>
-                                            </td>
-                                            <td>System Architect</td>
-                                            <td>
-                                                <label class="badge mb-0 badge-danger-inverse">Cancelled</label>
-                                            </td>
-                                            <td>27/04/2018</td>
-                                            <td>
-                                                <a href="javascript:void(0)" class="mr-2"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a>
-                                                <a href="javascript:void(0)"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                     <!-- section menue -->
+                                        <div id="articles">
+                                            <?php if (!empty($articles)): ?>
+
+                                                    <table class="table table-striped">
+                                                    <thead class="">
+                                                        <tr>
+                                                        <th scope="col"><h4>#</h4></th>
+                                                        <th scope="col">First Name</th>
+                                                        <th scope="col">Last Name</th>
+                                                        <th scope="col">payment status</th>
+                                                        <th scope="col">Payment Method</th>
+                                                        <th scope="col">Invoice No</th>
+                                                        <th scope="col">Total Amount</th>
+                                                        <th scope="col">Country</th>
+                                                        <th scope="col"> Date </th>
+                                                        <th scope="col"> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php  $counter =1; foreach ($articles as $article): ?>
+                                                        <tr>
+                                                        <td class="text-success">
+                                                        <input type="checkbox">
+                                                              </td>
+                                                        <td><?= $article->fname; ?></td>
+                                                        <td><?= $article->fname; ?></td>
+                                                        <td><?= $article->paymentstatus == 'Paid'?'<div class="text-success">Paid</div>':'<div class="text-danger">'.$article->paymentstatus.' </div>' ; ?></td>
+                                                        <td><?= $article->paymentmethod; ?></td>
+                                                        <td><?= $article->invoiceNumber; ?></td>
+                                                        <td><?= $article->totalprice; ?></td>
+                                                        <td><?= $article->countryName; ?></td>
+                                                         <td>  <?= date('Y-M-D', strtotime($article->date_created)); ?> </td>
+                                                        <td>
+                                                          <a href="<?=base_url('products/viewcustorder/'.$article->customerID)?>" class="btn btn-info  pr-2 pl-2" title="view Record"> <i class='fa fa-eye'></i> </a>
+
+                                                    </td>
+                                                        </tr>
+                                                  <!-- modal open -->
+
+                                                    <div class="modal fade" id="exampleModal<?=$article->customerID?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                            <div class="modal-header bg-light">
+                                                                <h5 class="modal-title" id="exampleModalLabel"><p>  Edit Customer</p> </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        <form action="<?=base_url('dashboard/updatecustomer')?>" method="POST">
+                                                                <div class="modal-body">
+                                                                <input type="hidden" name="customerID"  class="form-control" value="<?=$article->customerID?>">
+                                                                <div class="form-group">
+                                                                    <label> First Name </label>
+                                                                    <input type="text" name="fname"  class="form-control" value="<?=$article->fname?>">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                <label> Username </label>
+                                                                    <input type="text" name="lname"  class="form-control" value="<?=$article->lname?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label> Ofice/Role </label>
+                                                                        <select name ="office" class="form-control">
+                                                                            <option disabled>Select Office </option>
+                                                                            <?php foreach($country as $countries) { ?>
+                                                                                <option value="<?=$countries->id?>"> <?=$countries->country?> </option>
+                                                                            <?php } ?>
+                                                                            </select>
+                                                                    </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </form>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+
+                                        <!-- modal close -->
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                    </table>
+
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <div class="load-more">
+                                            <button id="loadMoreBtn">Load More</button>
+                                        </div>
+                                     <!-- close scroll section -->
+
                             </div>
                         </div>
                     </div>
@@ -442,3 +305,42 @@
         <!-- end container-fluid -->
     </div>
     <!-- end app-main -->
+
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        var offset = 3; // Initially loaded 5 articles
+        var limit = 3;
+        var busy = false;
+
+        $('#loadMoreBtn').click(function() {
+            if (busy) return;
+            busy = true;
+
+            $.ajax({
+                url: '<?= base_url("dashboard/loadMoreArticles") ?>',
+                method: 'POST',
+                data: { offset: offset },
+                beforeSend: function() {
+                    $('#loadMoreBtn').text('Loading...');
+                },
+                success: function(data) {
+                    if (data.trim() == 'no_more') {
+                        toastr.error(' No more record ');
+                        $('#loadMoreBtn').text('No More Recored').prop('disabled', true);
+                    } else {
+                        $('#articles').append(data);
+                        offset += limit;
+                        $('#loadMoreBtn').text('Load More');
+                        busy = false;
+                    }
+                }
+            });
+        });
+    </script>

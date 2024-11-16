@@ -4,6 +4,8 @@
 
 
 <head>
+  <!-- QR CODE CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <!-- datatable bootstrap -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
 		<!-- enddatatable bootstrap -->
@@ -453,12 +455,12 @@
                                             <div class="mr-1">
                                                 <h4 class="text-white mb-0">
                                                     <?php if($this->session->logged_in){ ?>
-                                                         <?=(ucfirst($this->session->firstname." ".$this->session->lastname))?><br> 
+                                                         <?=(ucfirst($this->session->firstname." ".$this->session->lastname))?><br>
                                                          <small> <?=(strtolower("Postion: ".$this->session->role)) ?></small> <br>
                                                          <small class="text-white"><?=$this->session->phone?></small>
                                                     <?php }?>
                                                 </h4>
-                                               
+
                                             </div>
                                             <a href="#" class="text-white font-20 tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout">
                                                 <i class="zmdi zmdi-power"></i></a>
@@ -467,7 +469,7 @@
                                     <div class="p-4">
                                         <a class="dropdown-item d-flex nav-link" href="javascript:void(0)">
                                             <i class="fa fa-user pr-2 text-success"></i> Profile</a>
-                                 
+
                                         <a class="dropdown-item d-flex nav-link" href="javascript:void(0)">
                                             <i class=" ti ti-settings pr-2 text-info"></i> Settings
                                         </a>>

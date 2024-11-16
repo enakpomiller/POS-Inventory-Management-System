@@ -27,7 +27,7 @@
 
 
 
- 
+
 
 
 <!-- begin app-main -->
@@ -83,12 +83,12 @@
                              76A Kuburat Okoya Lane, Eleganza Garden Estate Opp VGC Lagos, Nigeria
                             </p>
                           </td>
-                            <td class="text-right"> 
+                            <td class="text-right">
                             <p> Names:  <?=(ucfirst($custdetails->fname)." ".(ucfirst($custdetails->lname)))?>
                              <p><i class='fa fa-envelope'></i> Email : <?=$custdetails->email?> </p>
                              <p><i class='fa fa-phone'></i> Phone Number : <?=$custdetails->phone?> </p>
                              <p> Country : <?=$custdetails->country?> </p>
-                             </p> 
+                             </p>
                         </td>
                         </tr>
                     </table>
@@ -105,21 +105,21 @@
                     <tr>
                         <td>
                            <p class="text-center"> <?="INV-000".$_SESSION['custID']?></p>
-                        
+
                          </td>
-                        <td> 
+                        <td>
                            <p class="text-center"><?=$custdetails->paymentmethod?></p>
                          </td>
-                        <td> 
+                        <td>
                         <p class="text-center">
                              <?=$custdetails->paymentstatus=='Paid'?'<span class="text-success">'.$custdetails->paymentstatus.'</span>':'<span class="text-danger">'.$custdetails->paymentstatus. '</span>'?>
                             </p>
-                            
+
                      </td>
                     </tr>
                </table>
 
-             
+
                 <h5 class="mt-4"> Ordered Items </h5>
 
              <table  class="table " style="position:relative;top:0px;bottom:100px;width:100%;">
@@ -134,7 +134,7 @@
                      </tr>
                  </thead>
                  <tbody>
-                
+
                  <?php  $total = 0; $counter =1; foreach($order as $orders){ ?>
                     <tr>
                       <td> <?=$counter++?>  </td>
@@ -147,11 +147,11 @@
                             <td> <?= $orders->prodqty ?></td>
                             <input type="hidden" name="prodqty[]" value="<?= $orders->prodqty ?>">
                             <td> <?= number_format($orders->totalprice, 2) ?></td>
-                        <td> 
+                        <td>
                          <a href="" class="btn" style="float:right;" title="Edit record" data-toggle="modal"  data-target="#exampleModal<?=$orders->orderID?>"><i class="fa fa-pencil"></i></a>
                       </td>
                     </tr>
-                        <!-- modal open --> 
+                        <!-- modal open -->
                           <div class="modal fade" id="exampleModal<?=$orders->orderID?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -181,15 +181,15 @@
                                     <button type="button" class="btn btn-danger"  data-dismiss="modal">Close</button>
                                     <button  id="ord" class="btn btn-primary"> Save Changes</button>
                                 </div>
-                              
+
                                 </div>
                             </div>
                             </div>
-                       <!-- close modal --> 
+                       <!-- close modal -->
                     <?php }?>
                  </body>
               </table>
-              <label class="text-right " style="position:relative;top:10px;float:right;"><h4> Grand Total :  <?=number_format(($sumprice->sumtotal),2)?> </h4></label> 
+              <label class="text-right " style="position:relative;top:10px;float:right;"><h4> Grand Total :  <?=number_format(($sumprice->sumtotal),2)?> </h4></label>
           </div>
           <div id="qrcode" style="position:relative;left:30px;"></div>
        </div>
@@ -198,21 +198,21 @@
      <button type="submit" class="btn btn-primary"  style="position:relative;top:30px;float:right;"><i class="fa fa-lock"></i>  Save Invoice  </button>
      </form>
      <div class="row">
-            <div class="row mt-4 mb-4" style="position:relative;left:10px;bottom:20px;left:30px;"> 
-            <a href="<?=base_url('dashboard')?>" class="btn btn-dark" style="position:relative;top:30px;float:right;"> <i class="fa fa-book"></i>  Close </a> 
-                <button  class="btn btn-danger ml-4" id="downloadinvoicecc" style="position:relative;top:30px;float:right;"><i class="fa fa-download"></i> Download  </button> 
+            <div class="row mt-4 mb-4" style="position:relative;left:10px;bottom:20px;left:30px;">
+            <a href="<?=base_url('dashboard')?>" class="btn btn-dark" style="position:relative;top:30px;float:right;"> <i class="fa fa-book"></i>  Close </a>
+                <button  class="btn btn-danger ml-4" id="downloadinvoicecc" style="position:relative;top:30px;float:right;"><i class="fa fa-download"></i> Download  </button>
                 <a href="" class="btn btn-success ml-4"  style="position:relative;top:30px;float:right;" id="printinvoice"><i class="fa fa-print"></i> Print Invoice   </a>
-        </div>  
-     </div>  
-    </div>           
+        </div>
+     </div>
+    </div>
 </div>
-     
+
 
 
      <?php }else{?>
          <?="No Record"?>
        <?php } ?>
-       
+
  </div>
 
 
@@ -260,7 +260,7 @@
 <!-- end app-main -->
 <input type="text" id="text" placeholder="Enter text or URL" />
 <button onclick="generateQRCode()">Generate QR Code</button>
-<!-- QR CODE CDN --> 
+<!-- QR CODE CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <!-- Include the html2pdf.js library -->
@@ -280,11 +280,9 @@ $(document).ready(function() {
 
 $(document).ready(function() {
         $('#downloadinvoicecc').on('click', function(event) {
-           
             event.preventDefault();
                 // Get the invoice section element
             const invoice = document.getElementById('invoice');
-
             // Options for html2pdf
             const options = {
             margin: 1,
@@ -296,7 +294,7 @@ $(document).ready(function() {
 
             // Convert the invoice section to a PDF and download it
             html2pdf().from(invoice).set(options).save();
-        
+
         });
     });
 
@@ -317,19 +315,14 @@ $(document).ready(function() {
 
 
 
-
-
 </script>
 
 
 
  <script>
-  
-
-
     $(document).ready(function() {
         $('#ord').on('click', function(event) {
-            event.preventDefault();
+        event.preventDefault();
         const orderID =  $('#orderID').val();
         const prodID =  $('#prodID').val();
         const prodname =  $('#prodname').val();
@@ -347,10 +340,10 @@ $(document).ready(function() {
                     prodname,
                     prodprice,
                     prodqty
-                    
+
                   },
             //dataType: "JSON",
-            success: function(data){     
+            success: function(data){
               if(data == true){
                  location.reload();
               }else{

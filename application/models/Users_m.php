@@ -24,7 +24,7 @@ class Users_m extends CI_model {
    }
 
   public function getallusers(){
-      
+
         $this->db->select('tbl_users.userID,tbl_users.plainpassword, tbl_users.fname,tbl_users.lname,tbl_users.phone,tbl_users.username,tbl_users.date_created,tbl_privilleges.office');
         $this->db->from($this->tbl_users);
         $this->db->join('tbl_privilleges','tbl_users.userID = tbl_privilleges.userID');
@@ -39,7 +39,7 @@ class Users_m extends CI_model {
 
 
    public function updateuserrecord($userdata){
-         //echo "<pre>"; print_r($userdata['user_update']);die; 
+         //echo "<pre>"; print_r($userdata['user_update']);die;
       $this->db->where('userID',$userdata['user_update']['userID']);
        $query  =  $this->db->update($this->tbl_users,$userdata['user_update']);
          if($query){
@@ -48,8 +48,8 @@ class Users_m extends CI_model {
          }else{
            echo " cannot update ";
          }
-     
-       
+
+
    }
 
   public function getallstaffrole(){

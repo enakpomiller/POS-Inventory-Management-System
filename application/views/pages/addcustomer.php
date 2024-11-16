@@ -13,6 +13,8 @@
 </style>
 
 
+
+
 <!-- begin app-main -->
 <div class="app-main" id="main">
 <!-- begin container-fluid -->
@@ -23,7 +25,6 @@
             <!-- begin page title -->
             <div class="d-block d-sm-flex flex-nowrap align-items-center">
           <div class="page-title mb-2 mb-sm-0">
-
                 <h4> <?=$title?>  </h4>
 
                 </div>
@@ -48,7 +49,6 @@
     <!-- end row -->
 
 
-
     <div class="row">
         <div class="col-xxl-8 m-b-30">
             <div class="card card-statistics h-100 mb-0">
@@ -60,7 +60,7 @@
                           <input type="text" class="form-control"  name="fname" value="<?=set_value('fname')?>" autocomplete="off" id="fname" placeholder="Enter your first name">
                            <div class="text-danger"><?=form_error('fname')?></div>
                     </div>
-                    
+
 
                     <div class="form-group">
                         <label for="email">Last Name</label>
@@ -75,18 +75,22 @@
                                 <option value="<?=$county->id?>">  <?=$county->country." "."(".$county->shortName.")" ?> </option>
                              <?php }?>
                           </select>
-                          <div class="text-danger"><?=form_error('country')?></div> 
+                          <div class="text-danger"><?=form_error('country')?></div>
                     </div>
 
                     <div class="form-group">
                         <label for="email"> PHone number* </label>
                            <input type="text" class="form-control" value="<?=set_value('phone')?>" name="phone"  id="phone" autocomplete="off" placeholder="Enter Phone Number">
-                        <div class=" text-danger"><?=form_error('phone')?></div>
+                        <div class="text-danger">
+                           <?php echo "<div class='text-danger'>".form_error('phone')."</div>"; ?>
+
+                        </div>
+
                     </div>
 
                     <div class="form-group">
                         <label for="email"> Email </label>
-                        <input type="email" class="form-control" value="<?=set_?>" name="email"  id="email" autocomplete="off" placeholder="Enter Email">
+                        <input type="text" class="form-control" value="<?=set_?>" name="email"  id="email" autocomplete="off" placeholder="Enter Email">
                         <div class="text-danger"><?=form_error('email')?></div>
                     </div>
 
@@ -174,11 +178,11 @@
 //                         if(res == "200") {
 //                             window.location = "<?=base_url('products/order')?>";
 //                         } else if(res == "201") {
-//                             toastr.error('Sorry! unable to create customer');
-//                             $("#butsave").removeAttr("disabled");
-//                             $('#fupForm').find('input:text').val('');
-//                         } 
-                 
+                            // toastr.error('Sorry! unable to create customer');
+                            // $("#butsave").removeAttr("disabled");
+                            // $('#fupForm').find('input:text').val('');
+//                         }
+
 //                     },
 //                     error: function(xhr, status, error) {
 //                         toastr.error('Error: ' + error);
