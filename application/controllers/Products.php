@@ -458,6 +458,7 @@ public function sendcustemail(){
       $this->data['custdetails'] = $this->products_m->getcustdetails($userID);
 
       $this->data['order'] = $this->products_m->getpaymentrecord($userID);
+       //echo "<pre>"; print_r($this->data['order']);die;
       $this->data['title'] = " Order Invoice ";
       $this->data['page_name'] = "invoice";
       $this->load->view('admin_index',$this->data);
@@ -472,11 +473,36 @@ public function sendcustemail(){
     $this->data['page_name'] = 'viewallinvoice';
     $this->load->view('admin_index',$this->data);
 
-
   }
 
+
+public function searchkey(){
+  if($_POST){
+       $keyword = $this->input->post('key', TRUE); // TRUE applies XSS filtering
+                      //$this->db->like('invoiceNumber',$keyword);
+                     //$this->data['getinv'] =  $this->db->get('tbl_cart')->result();
+       $this->data['getinv']  = $this->products_m->searchinvoice($keyword);
+            //echo "<pre>"; print_r($this->data['getinv']);exit;
+           //$this->data['getinv'] = $this->db->get_where('tbl_cart', array('invoiceNumber' => $keyword))->result();
+        $this->load->view('pages/loadmore_invoice', $this->data);
+
+       if($this->data['getinv']){
+          echo 400;
+
+       }else{
+       return false;
+       }
+
+ }else{
+    var_dump(' load data ');die;
+ }
+
+}
+
   public function loadallinvoice(){
-    if($this->session->office == 'MANAGER' || $this->session->office =='PHARMACIST'){
+
+
+    if($this->session->office == 'MANAGER' || $this->session->office =='PHARMACIST' || $this->session->role =='Supper Admin'){
       $offset = $this->input->post('offset');
 
       $limit = 3; // Number of articles to load on each click
@@ -498,8 +524,12 @@ public function sendcustemail(){
           <td style="position:relative;left:60px;"> '.$article->totalprice.'.</td>
           <td align="right"> '.$article->countryName.'.</td>
           <td align="right"> '.date('Y-M-D', strtotime($article->date_created)).'.</td>
-          <td style="position:relative;left:7px;">
-             <a href="'.base_url("products/viewcustinvoice/".$article->customerID).'." class="btn btn-info pr-2 pl-2"><i class="fa fa-eye"></i></a>
+          <td>
+           <div class="bg-info" style="position:relative;50px;">
+             <a href="'.base_url("products/viewcustinvoice/".$article->customerID).'." class="btn btn-danger pr-2 pl-2"><i class="fa fa-trash"></i></a>
+             <a href="'.base_url("products/viewcustinvoice/".$article->customerID).'." class="btn btn-info pr-2 pl-2"><i class="fa fa-pencil"></i></a>
+             <a href="'.base_url("products/viewcustinvoice/".$article->customerID).'." class="btn btn-primary pr-2 pl-2"><i class="fa fa-eye"></i></a>
+            </div>
           </td>
           </tr>
           </tbody>
@@ -515,6 +545,42 @@ public function sendcustemail(){
       return redirect(base_url('login'));
     }
   }
+
+  public function filter_by_date(){
+    $start_date = $this->input->post('start_date');
+    $end_date = $this->input->post('end_date');
+
+    if ($start_date && $end_date) {
+        $startDate = date('Y-m-d', strtotime($start_date));
+        $endDate = date('Y-m-d', strtotime($end_date));
+        $data['inv'] = $this->products_m->get_records_by_date($startDate , $endDate);
+        
+        $counter =1; foreach($data['inv'] as $invoices){
+        
+           echo '<tr>'.
+              '<td class="w-25">'.'<input type="checkbox">'.'</td>'
+              .'<td align="right">'.$invoices->fname.'</td>'.
+              '<td>'.$invoices->lname.'</td>'.
+              '<td>'.$invoices->fname.'</td>'.
+              '<td>'.$invoices->fname.'</td>'. 
+              '<td>'.$invoices->fname.'</td>'. 
+              '<td>'.$invoices->fname.'</td>'. 
+              '<td>'.$invoices->fname.'</td>'. 
+              '<td>'.$invoices->fname.'</td>'. 
+                '<td>'.
+                  '<a href="'.base_url("products/viewcustinvoice/".$invoices->customerID).'" class="btn btn-danger pr-2 pl-2"><i class="fa fa-trash"></i> </a>'.
+                  '<a href="'.base_url("products/viewcustinvoice/".$article->customerID).'" class="btn btn-info pr-2 pl-2"><i class="fa fa-pencil"></i> </a>'.
+                  '<a href="'.base_url("products/viewcustinvoice/".$invoices->customerID).'" class="btn btn-primary pr-2 pl-2"><i class="fa fa-eye"></i> </a>'.
+                '</td>'
+           .'</tr>';
+          
+         }
+        
+    } else {
+        echo "Invalid date range.";
+    }
+
+}
 
   public function updateorder(){
     if($this->session->office == 'MANAGER' || $this->session->office == 'PHARMACIST'){
@@ -544,6 +610,128 @@ public function sendcustemail(){
     }
   }
 
+
+//  public function deleteinvoice($id){
+//     $delete = $this->products_m->deleteinvoicedetails($id);
+//     if($delete){
+//        echo true;
+//     }else{
+//        echo false;
+//     }
+
+//  }
+
+
+ public function deleteinvoice($id)
+{
+    // Start transaction
+    $this->db->trans_begin();
+
+      try {
+         echo true;
+          // Delete records from tbl_cart
+          $this->db->where('customerID', $id);
+          $this->db->delete('tbl_cart');
+
+          // Delete records from tbl_customers
+          $this->db->where('customerID', $id);
+          $this->db->delete('tbl_customers');
+
+          // Delete records from tbl_payment
+          $this->db->where('customerID', $id);
+          $this->db->delete('tbl_payment');
+
+          // Delete records from tbl_order
+          $this->db->where('customerID', $id);
+          $this->db->delete('tbl_order');
+
+          // Commit transaction if all deletions are successful
+          if ($this->db->trans_status() === FALSE) {
+              $this->db->trans_rollback();
+              return false; // Return false on failure
+          } else {
+              $this->db->trans_commit();
+              return true; // Return true on success
+          }
+          
+      } catch (Exception $e) {
+          // Rollback on exception
+          $this->db->trans_rollback();
+          log_message('error', $e->getMessage());
+          // return false;
+          echo false;
+      }
+}
+
+
+public function editcustinvoice($id){
+  $this->data['editcustinvoice'] = $this->products_m->getCustinvoice($id);
+  $this->data['custinvoice'] = $this->products_m->getCustinvoice($id);
+    //echo "<pre>"; print_r($this->data['editcustinvoice']);die;
+  $this->data['country'] = $this->products_m->getallcountries();
+  $this->data['title'] = 'Edit Customers Invoice';
+  $this->data['page_name'] = "editcustinvoice";
+  $this->load->view('admin_index',$this->data);
+}
+
+public function updatecustbio(){
+    $customerID = $this->input->post('customerID', true);
+      $update_arr = [
+          'fname' => $this->input->post('fname', true),
+          'lname' => $this->input->post('lname', yrue),
+          'email' => $this->input->post('email', true),
+          'phone' => $this->input->post('phone', true),
+          'country' => $this->input->post('countries', true)
+      ];
+
+     $where = ['customerID'=> $customerID];
+     $update_msg = $this->products_m->updatecustbio($update_arr,$where);
+    if($update_msg){
+      $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Customer bio updated Successfully']);
+      return redirect(base_url('products/editcustinvoice/'.$customerID ));
+    }else{
+      $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Cannot update, Error occured']);
+      return redirect(base_url('products/editcustinvoice/'.$customerID));
+    }
+    
+}
+
+public function updateprodDetails(){
+      $update_arr = [
+        'prodname' => $this->input->post('prodname', true),
+        'prodprice' => $this->input->post('prodprice', true),
+        'prodqty' => $this->input->post('prodqty', true),
+        'customerID' => $this->input->post('customerID', true)
+      ];
+
+      $where = ['cartID' => $this->input->post('cartID')];
+     $updateProdDetails = $this->products_m->updateProductsdetails('tbl_cart', $where, $update_arr);
+     if($updateProdDetails){
+      $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Productsupdated Successfully']);
+      return redirect(base_url('products/editcustinvoice/'.$update_arr['customerID'] ));
+     }else{
+      $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Cannot update, Error occured']);
+      return redirect(base_url('products/editcustinvoice/'.$update_arr['customerID']));
+    }
+}
+
+public function deletecustinvoice($id){
+    //  $where = ['cartID' => $id];
+    //  $deletecartprod = $this->products_m->deletecustcart($where);
+    //  if($deletecartprod){
+    //   echo true;
+    // }else{
+    //  echo false;
+    // }
+
+    $deletcart = $this->db->delete('tbl_cart', array('cartID'=>$id));
+    if($deletcart){
+     echo true;
+    }else{
+     echo false;
+    }
+
+}
 
   public function customercart(){
     if($this->session->office == 'MANAGER' || $this->session->office == 'PHARMACIST'){
@@ -622,7 +810,6 @@ public function sendcustemail(){
 
 
   public function deletecustorder($id){
-
     $delete = $this->db->delete('tbl_order', array('orderID' => $id));
     if($delete){
       echo true;
@@ -633,8 +820,51 @@ public function sendcustemail(){
   }
 
 
+  // generate matric numbers from here 
+  
+  public function generate() {
+    if($_POST){
+  
+      $year = $this->input->post('year');
+      $departments = explode(',', $this->input->post('departments')); // Split into an array
+      $studentsPerDept = $this->input->post('studentsPerDept');
+  
+      // Call a function to generate matric numbers
+      $this->data['matricNumbers'] = $this->generateMatricNumbers($year, $departments, $studentsPerDept);
+      $this->data['title'] = 'Customer Invoice ';
+      $this->data['page_name'] = "matriculation";
+      $this->load->view('admin_index',$this->data);
+    }else{
+    
+      $this->data['title'] = 'Customer Invoice ';
+      $this->data['page_name'] = "matriculation";
+      $this->load->view('admin_index',$this->data);
+    }
 
 
+
+}
+
+private function generateMatricNumbers($year, $departments, $studentsPerDept) {
+    $matricNumbers = [];
+    $shortYear = substr($year, -2); // Get last two digits of the year
+ 
+    foreach ($departments as $deptCode) {
+        for ($i = 1; $i <= $studentsPerDept; $i++) {
+            $serial = str_pad($i, 3, '0', STR_PAD_LEFT);
+            $matricNumbers[] = [
+                'matric_number' => "{$shortYear}/{$deptCode}/{$serial}",
+                'department' => $deptCode,
+            ];
+        }
+    }
+    return $matricNumbers;
+}
+
+
+  
+
+  
 
   public function addproduct_rules() {
     $rules = array(

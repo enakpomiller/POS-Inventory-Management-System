@@ -243,24 +243,23 @@ class Users extends CI_Controller {
           'lname' => $this->input->post('lname'),
           'country' => $this->input->post('country'),
           'phone' => $this->input->post('phone'),
-          'email' => $this->input->post('email'),
-          'created_at' => date('Y-M-D')
+          'email' => $this->input->post('email')
         ];
         $_SESSION['custdetails'] = $costumer_arr;
         $checkemail = $this->db->get_where('tbl_customers',array('email'=>$_POST['email']))->row();
-        if($checkemail){
-          $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Customr Already exist ']);
-          return redirect(base_url('users/addcustomers'));
-        }else{
-          $createcust = $this->users_m->CreatCustomer($costumer_arr);
-          if($createcust){
-            $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Customr Created Successfully']);
-            $_SESSION['custID'] = $createcust;
-            return redirect(base_url('products/order'));
+          if($checkemail){
+            $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Customr Already exist ']);
+            return redirect(base_url('users/addcustomers'));
           }else{
-            $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Error! unable to insert record']);
-            return redirect(base_url('products/order'));
-          }
+             $createcust = $this->users_m->CreatCustomer($costumer_arr);
+            if($createcust){
+              $this->session->set_flashdata('toastr', ['type' => 'success','message' => ' Customr Created Successfully']);
+              $_SESSION['custID'] = $createcust;
+              return redirect(base_url('products/order'));
+            }else{
+                $this->session->set_flashdata('toastr', ['type' => 'error','message' => ' Error! unable to insert record']);
+                return redirect(base_url('products/addcustomers'));
+            }
         }
 
 

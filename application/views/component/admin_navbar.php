@@ -171,7 +171,7 @@
                         <li> <a href="<?=base_url('products/printbarcode')?>"> Print Barcodes </a> </li>
                     </ul>
                 </li>
-
+                <li> <a href="<?=base_url('products/viewallinvoice')?>"> <i class="fa fa-eye"></i> View  All Invoices  </a> </li>
                <li> <a href="<?=base_url('users/create_manager')?>" class="nav-link<?=$this->uri->segment(2)=='create_manager'?'active':''?>" aria-expanded="false"><i class="nav-icon ti ti-email"></i><span class="nav-title"> Create User </span></a> </li>
                <li> <a href='<?=base_url('users/manageusers')?>'><i class="fa fa-eye"></i> View All  Users </a> </li>
 

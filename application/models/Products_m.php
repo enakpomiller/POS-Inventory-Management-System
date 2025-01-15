@@ -44,11 +44,36 @@ class Products_m extends CI_Model {
        return $this->db->get()->result();
    }
 
+
+   public function searchinvoice ($key){
+        $this->db->select('
+        countries.country as countryName,
+        tbl_customers.customerID, tbl_customers.fname,tbl_customers.lname,tbl_cart.date_created,
+        tbl_cart.invoiceNumber,tbl_cart.prodprice,
+        tbl_payment.paymentstatus,tbl_payment.paymentmethod,
+        tbl_order.totalprice
+
+        ');
+
+        //Joins
+        $this->db->from('tbl_customers');
+        $this->db->join('countries', 'tbl_customers.country = countries.id', 'left');
+        $this->db->join('tbl_cart','tbl_customers.customerID = tbl_cart.customerID','right');
+        $this->db->join('tbl_order', 'tbl_customers.customerID = tbl_order.customerID', 'inner');
+        $this->db->join('tbl_payment','tbl_customers.customerID = tbl_payment.customerID');
+
+        $this->db->like('tbl_cart.invoiceNumber',$key);
+
+        return $this->db->get()->result();
+  }
+
+
    public function getCustinvoice($data){
+      
        $this->db->select('
        tbl_customers.customerID,tbl_customers.fname,tbl_customers.lname,tbl_customers.phone,tbl_customers.email,
 
-       tbl_cart.invoiceNumber,tbl_cart.prodname,tbl_cart.prodprice,tbl_cart.prodqty,tbl_cart.date_created,tbl_cart.invoiceNumber,
+       tbl_cart.invoiceNumber,tbl_cart.prodname,tbl_cart.prodprice,tbl_cart.prodqty,tbl_cart.date_created,tbl_cart.invoiceNumber,tbl_cart.cartID,
        countries.country,
 
        tbl_payment.paymentstatus
@@ -58,6 +83,9 @@ class Products_m extends CI_Model {
        $this->db->join('tbl_cart','tbl_cart.customerID = tbl_customers.customerID');
        $this->db->join('countries','countries.id = tbl_customers.country');
        $this->db->join('tbl_payment','tbl_customers.customerID = tbl_payment.customerID');
+       //$this->db->join('tbl_order','tbl_order.customerID = tbl_customers.customerID');
+       //$this->db->group_by('tbl_order.orderID');
+
        $this->db->where('tbl_customers.customerID',$data);
        $query = $this->db->get()->result();
        return $query;
@@ -185,6 +213,38 @@ class Products_m extends CI_Model {
    }
 
 
+   public function get_records_by_date($startDate, $endDate) {
+        $this->db->where("DATE(date) >=", $startDate);
+        $this->db->where("DATE(date) <=", $endDate);
+        $query = $this->db->get('tbl_customers'); // Replace 'your_table' with the actual table name
+        return $query->result();
+
+    }
+
+
+
+//  public function deleteinvoicedetails($id){
+//     $this->db->where('customerID',$id);
+//     $del = $this->db->delete('tbl_cart');
+//     if($del){
+//       var_dump($id);die;
+//        $this->db->where('customerID',$id);
+//        $this->db->delete('tbl_customers');
+
+//       $this->db->where('customerID',$id);
+//       $this->db->delete('tbl_payment');
+       
+//       $this->db->where('customerID',$id);
+//       $this->db->delete('tbl_order');
+      
+//     }else{
+//      return false;
+//     }
+// } 
+
+public function getallcountries(){
+   return $this->db->get('countries')->result();
+ }
 
   public function getCustOrder($id) {
         $this->db->select('
@@ -230,6 +290,30 @@ class Products_m extends CI_Model {
      return $this->db->update($this->tbl_product,$update_prodname);
   }
 
+
+  public function updatecustbio($update_arr, $where){
+    if(isset($where)){
+      $this->db->where($where);
+      return $this->db->update('tbl_customers', $update_arr);
+    }else{
+      return false;
+     }
+     
+  }
+
+  public function updateProductsdetails($table, $where, $prodDetails){
+     if(isset($where)){
+       $this->db->where($where);
+       return $this->db->update($table, $prodDetails);
+    }else{
+     return false;
+    }
+  }
+
+  public function deletecustcart($where){
+    $this->db->where($where);
+    return $this->db->delete($this->tbl_cart);
+  }
 
 }
 

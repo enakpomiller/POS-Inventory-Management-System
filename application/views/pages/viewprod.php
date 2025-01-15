@@ -94,7 +94,7 @@
                                           <?=$product->nafdacno?>
                                         </td> 
                                         <td>
-                                            <?php if($this->session->office =="MANAGER" || $this->session->role == "SUPPER ADMIN"){ ?>
+                                            <?php if($this->session->office =="MANAGER" || $this->session->role == "Supper Admin"){ ?>
                                            <button type="submit" class="btn btn-danger remove" tooltip="delete"><i class="fa fa-trash"></i></button>
                                            <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-pencil"></i></button>
                                            <?php }else{ ?>

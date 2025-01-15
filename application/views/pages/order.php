@@ -126,8 +126,8 @@
                         <?=number_format(($orders->price)*($orders->prodqty),2)?>
                       </td>
                     <td> 
-                    <a href=""  class="btn btn-danger remove" style="float:right;" title="delete record"><i class="fa fa-trash"></i></a> 
-                    <a href="" class="btn btn-primary" style="float:right;" title="Edit record" data-toggle="modal"  data-target="#exampleModal<?=$orders->orderID?>"><i class="fa fa-pencil"></i></a>
+                    <a href=""  class="btn btn-danger remove pt-1 pb-1 pl-2 pr-2" style="float:right;" data-bs-toggle="tooltip" title="delete record"><i class="fa fa-trash"></i></a> 
+                    <a href="" class="btn btn-primary pt-1 pb-1 pl-2 pr-2 mr-2 ml-2" style="float:right;" title="Edit record" data-toggle="modal"  data-target="#exampleModal<?=$orders->orderID?>"><i class="fa fa-pencil"></i></a>
                   </td>
                  </tr>
 
