@@ -71,7 +71,7 @@
                                             <li> <a href="<?=base_url('products/viewallinvoice')?>"> <i class="fa fa-eye"></i> View  All Invoices  </a> </li>
                                         </ul>
                                     </li>
-                                    <?php  }if(in_array('2', json_decode($getuserID->user_roles))) { ?>
+                                    <?php  }if(in_array('2', json_decode($getuserID->user_roles)) ||  (in_array('7', json_decode($getuserID->user_roles))) ) { ?>
 
                                             <li class="active">
                                                 <a class="has-arrow" href="" aria-expanded="false">
@@ -81,7 +81,7 @@
                                                 </a>
                                                 <ul aria-expanded="false">
                                                     <li> <a href='<?=base_url("products/addproduct")?>'> Create Product  </a> </li>
-                                                    <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Multiple   </a> </li>
+                                                    <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Bulk Products  </a> </li>
                                                     <li> <a href="<?=base_url('products/viewprod')?>"> View Products </a> </li>
                                                     <li> <a href="<?=base_url('products/printbarcode')?>"> Print Barcodes </a> </li>
                                                 </ul>
@@ -117,7 +117,7 @@
                                             </li>
                                      <?php }else{ ?>
                                          <?="<p class='text-center'>No Role Yet </p>"?>
-                                       <?php } ?>
+                                    <?php } ?>
 
 
                           <?php } else{ ?>
@@ -166,7 +166,7 @@
                     </a>
                     <ul aria-expanded="false">
                         <li> <a href='<?=base_url("products/addproduct")?>'> Create Product  </a> </li>
-                        <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Multiple   </a> </li>
+                        <li> <a href='<?=base_url("products/add_multiple_prod")?>'> Add Bulk Products  </a> </li>
                         <li> <a href="<?=base_url('products/viewprod')?>"> View Products </a> </li>
                         <li> <a href="<?=base_url('products/printbarcode')?>"> Print Barcodes </a> </li>
                     </ul>

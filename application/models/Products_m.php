@@ -109,6 +109,10 @@ class Products_m extends CI_Model {
        return $response;
    }
 
+   public function getallproducts (){
+    $this->db->order_by('prodID','DESC');
+     return $this->db->get($this->tbl_products)->result();
+  }
   public function insert_csv($insert_data){
     return $this->db->insert($this->tbl_products,$insert_data);
   }
@@ -310,10 +314,7 @@ public function getallcountries(){
     }
   }
 
-  public function deletecustcart($where){
-    $this->db->where($where);
-    return $this->db->delete($this->tbl_cart);
-  }
+
 
 }
 

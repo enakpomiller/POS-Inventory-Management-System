@@ -280,10 +280,10 @@ public function sendcustemail(){
   }
 
 
-
   public function viewprod(){
     $this->data['title'] =  " Products Display   ";
-    $this->data['allprod'] = $this->db->get('tbl_products')->result();
+      //$this->data['allprod'] = $this->db->get('tbl_products')->result();
+    $this->data['allprod'] =  $this->products_m->getallproducts();
     $this->data['page_name'] = "viewprod";
     $this->load->view("admin_index",$this->data);
   }
@@ -368,6 +368,41 @@ public function sendcustemail(){
       echo true;
     }else{
       echo false;
+    }
+
+  }
+
+
+  public  function deleteexpiredproduct($id){
+   $val =  $this->db->get_where('tbl_products', array('prodID'=>$id ))->row();
+
+     $insert_arr = [
+       'prodname' => $val->prodname,
+       'prodprice' => $val->prodprice,
+       'prodcategory' => $val->prodcategory,
+       'nafdacno' => $val->nafdacno,
+       'prodserialno' => $val->prodserialno,
+       'prodqty' => $val->prodqty,
+       'purchase_date' => $val->purchase_date,
+       'expiring_date' => $val->expiring_date,
+       'prodbrand' => $val->prodbrand,
+       'date_created' => $val->date_created,
+       'produnique' => $val->produnique,
+       'userID' => $val->userID,
+       'barcode' => $val->barcode
+     ];
+
+    $insert =  $this->db->insert('tbl_expred_products',$insert_arr);
+     if($insert){
+      $this->db->where('prodID',$id);
+      $del = $this->db->delete('tbl_products');
+      if($del){
+        echo true;
+      }else{
+        echo false;
+      }
+    }else{
+      echo " cannot insert record ";
     }
 
 
@@ -638,14 +673,14 @@ public function searchkey(){
           $this->db->delete('tbl_customers');
 
           // Delete records from tbl_payment
-          $this->db->where('customerID', $id);
+          $this->db->where('customerID', $id); 
           $this->db->delete('tbl_payment');
 
           // Delete records from tbl_order
           $this->db->where('customerID', $id);
           $this->db->delete('tbl_order');
 
-          // Commit transaction if all deletions are successful
+          // Commit transaction if all deletions are successful 
           if ($this->db->trans_status() === FALSE) {
               $this->db->trans_rollback();
               return false; // Return false on failure
@@ -716,14 +751,6 @@ public function updateprodDetails(){
 }
 
 public function deletecustinvoice($id){
-    //  $where = ['cartID' => $id];
-    //  $deletecartprod = $this->products_m->deletecustcart($where);
-    //  if($deletecartprod){
-    //   echo true;
-    // }else{
-    //  echo false;
-    // }
-
     $deletcart = $this->db->delete('tbl_cart', array('cartID'=>$id));
     if($deletcart){
      echo true;

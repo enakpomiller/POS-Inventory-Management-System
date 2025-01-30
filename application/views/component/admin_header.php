@@ -325,10 +325,10 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fe fe-bell"></i>
-                                    <span class="notify">
+                                    <!-- <span class="notify">
                                                 <span class="blink"></span>
                                     <span class="dot"></span>
-                                    </span>
+                                    </span> -->
                                 </a>
                                 <div class="dropdown-menu extended animated fadeIn" aria-labelledby="navbarDropdown">
                                     <ul>
@@ -426,8 +426,8 @@
                                 <a class="nav-link search" href="javascript:void(0)">
                                     <i class="ti ti-search"></i>
                                 </a>
-                                <div class="search-wrapper">
-                                    <div class="close-btn">
+                                   <div class="search-wrapper">
+                                      <div class="close-btn">
                                         <i class="ti ti-close"></i>
                                     </div>
                                     <div class="search-content">
@@ -484,7 +484,7 @@
                                             <div class="col">
                                                 <a class="bg-light p-3 text-center d-block" href="<?=base_url('login/signout')?>" onclick="return confirm(' Do you wish to signout?')">
                                                     <i class="fe fe-plus font-20 text-primary"></i>
-                                                    <span class="d-block font-13 mt-2"> Signout</span>
+                                                    <span class="d-block font-13 mt-2"> Signout </span>
                                                 </a>
                                             </div>
                                         </div>

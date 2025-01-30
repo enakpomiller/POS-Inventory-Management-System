@@ -1,3 +1,26 @@
+       
+       <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .copy-container {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    </style>
+       
        <!-- datatable bootstrap -->
            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
 		<!-- enddatatable bootstrap -->
@@ -15,10 +38,9 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                   <div class="page-title mb-2 mb-sm-0">
-
                         <h4> <?=$title?>  </h4>
-
                         </div>
+
 
                         <div class="ml-auto d-flex align-items-center">
                             <nav>
@@ -39,6 +61,11 @@
             </div>
             <!-- end row -->
 
+            
+            <!-- The text field -->
+            <!-- <input type="text" value="Hello World" id="myInput"> -->
+            <!-- The button used to copy the text -->
+            <!-- <button onclick="myFunction()">Copy text</button> -->
 
 
             <div class="row">
@@ -58,6 +85,7 @@
                                     <th scope="col">Date Purchased</th>
                                     <th scope="col">Expiring Date </th>
                                     <th scope="col"> NafDac  </th>
+                                    <th scope="col"> Status  </th>
                                     <th scope="col" class="text-center"> Action  </th>
                                 </tr>
                             </thead>
@@ -69,8 +97,8 @@
                                      ?>
                                    <tr id="<?=$product->prodID?>">
                                        <td>  <?=$counter++?>  </td>
-                                        <td>  <?=$product->prodname?></td>
-                                        <td>  <?=$product->prodprice?></td>
+                                        <td id="text1"> <?=$product->prodname?></td>
+                                        <td>  <?= number_format($product->prodprice) ?></td>
                                         <td>
                                           <?//=$product->barcode?>
 
@@ -93,13 +121,60 @@
                                         <td> 
                                           <?=$product->nafdacno?>
                                         </td> 
-                                        <td>
+                                        <td> 
+                                            <?php 
+                                                $currentdate =  date("Y-m-d");
+                                                if($currentdate >= $product->expiring_date){ ?>
+
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <p class="text-primary"> Expired </p>
+                                                </div>
+                                                    <div class="col-md-2">
+                                                    <span class="notify">
+                                                        <span class="blink"></span>
+                                                        <span class="dot"></span>
+                                                        </span>
+                                                    </div>
+                                            </div>
+                                                    
+
+                                            <?php  }else{?>
+
+                                             <p class="text-success"> Not Expired  </p>
+                                             <?php 
+                                                
+                                             }
+                                            ?>
+                                      
+                                                 
+
+                                            
+                                         </td>
+                                        <td align="center">
                                             <?php if($this->session->office =="MANAGER" || $this->session->role == "Supper Admin"){ ?>
                                            <button type="submit" class="btn btn-danger remove" tooltip="delete"><i class="fa fa-trash"></i></button>
                                            <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-pencil"></i></button>
-                                           <?php }else{ ?>
-                                           <button type="submit" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-pencil"></i></button>
-                                            <?php } ?>
+                                           <?php }else ?>
+
+                                            <?php 
+                                             { 
+                                            ?>
+                                           <!-- delete expired item --> 
+                                           <?php 
+                                                $currentdate =  date("Y-m-d");
+                                                if($currentdate >= $product->expiring_date){ ?>
+                                                <button type="submit" class="btn btn-danger removeexpiredprod btn-sm" tooltip="delete"><i class="fa fa-trash"></i></button>
+                                         
+                                            <?php  }else{?>
+                                                <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#exampleModal<?=$product->prodID?>"><i class="fa fa-pencil"></i></button>
+                                             <?php 
+                                                
+                                             }
+                                            ?>
+                                            <!-- end notify for delete expired item --> 
+
+                                        <?php } ?>
                                         </td>
                                    </tr>
 
@@ -205,6 +280,35 @@
         });
 
 
+        $(".removeexpiredprod").click(function(){
+            var id = $(this).parents("tr").attr("id");
+
+            if(confirm(' REMOVE EXPIRED ITEM FROM CHELF ?'))
+
+            {
+                $.ajax({
+                url: '<?=base_url('products/deleteexpiredproduct/')?>'+id,
+                type: 'DELETE',
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function(data) {
+                    if(data == true){
+                        $("#"+id).remove();
+                        //alert("Record removed successfully");
+                        swal.fire("success"," ITEM REMOVED SUCCESSFULLY","success");
+                    }else{
+                        swal.fire("error","UNABLE TO REMOVE ITEM ","error");
+                    }
+
+                }
+                });
+            }else{
+            //alert(" ACTION IS BEEN CANCELLED");
+            swal.fire("error","ACTION IS CANCELLED","error");
+            }
+        });
+
 
         // Get the barcode number from PHP
         var barcodeNumber = "<?=$allbarcode?>";
@@ -217,4 +321,37 @@
             displayValue: true
         });
 
+
+
+    function myFunction() {
+        // Get the text field
+        var copyText = document.getElementById("myInput");
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+
+        // Alert the copied text
+        alert("Copied the text: " + copyText.value);
+    }
+
+
+
+
+    function copyText(elementId) {
+      // Get the text content from the specified element
+      const copyText = document.getElementById(elementId).innerText;
+
+      // Copy the text to the clipboard
+      navigator.clipboard.writeText(copyText).then(() => {
+        alert("Copied the text: " + copyText);
+      }).catch(err => {
+        console.error("Failed to copy text: ", err);
+        alert("Failed to copy text.");
+      });
+    }
+    
 </script>
